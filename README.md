@@ -95,6 +95,117 @@ python3 wazuh_smart_installer.py status
 python3 wazuh_smart_installer.py uninstall
 ```
 
+## Wazuh Configurator
+
+Outil avancé de configuration avec **design patterns** pour optimiser les installations Wazuh existantes.
+
+### Fonctionnalités
+
+**Sécurité:**
+- SSL/TLS configuration
+- Mots de passe forts générés automatiquement
+- Authentification API
+- Règles pare-feu optimisées
+
+**Performance:**
+- Mémoire JVM optimisée selon le système
+- Rotation des logs automatique
+- Nettoyage disque programmé
+- Pool connexions optimisé
+
+**Monitoring:**
+- Surveillance des services automatique
+- Niveau de logs optimisé
+- Alertes activées
+- Health checks configurés
+
+### Prérequis
+
+- Wazuh **déjà installé** sur le système
+- Accès root (sudo)
+- Python 3.6+
+
+### Utilisation
+
+```bash
+# Rendre le script exécutable
+chmod +x wazuh_configurator.py
+```
+
+#### Détection de l'Installation
+
+```bash
+# Détecter l'installation Wazuh existante
+python3 wazuh_configurator.py detect
+```
+
+#### Vérification des Configurations
+
+```bash
+# Vérifier toutes les configurations
+python3 wazuh_configurator.py check
+
+# Vérifier une configuration spécifique
+python3 wazuh_configurator.py check --config security
+python3 wazuh_configurator.py check --config performance
+python3 wazuh_configurator.py check --config monitoring
+```
+
+#### Application des Configurations
+
+```bash
+# Appliquer toutes les configurations
+python3 wazuh_configurator.py apply
+
+# Appliquer une configuration spécifique
+python3 wazuh_configurator.py apply --config security
+```
+
+#### Mode Fix (Recommandé pour Wazuh Existant)
+
+```bash
+# Vérifier + Corriger + Valider automatiquement
+python3 wazuh_configurator.py fix
+
+# Corriger une configuration spécifique
+python3 wazuh_configurator.py fix --config security
+```
+
+#### Validation et Rollback
+
+```bash
+# Valider les configurations appliquées
+python3 wazuh_configurator.py validate
+
+# Rollback des configurations
+python3 wazuh_configurator.py rollback
+```
+
+### Architecture Technique
+
+**Design Patterns:**
+- **Strategy Pattern**: Configuration strategies (sécurité, performance, monitoring)
+- **Singleton Pattern**: ConfigManager thread-safe
+- **Factory Pattern**: Enregistrement dynamique des configurateurs
+
+**Qualité Code:**
+- Gestion d'erreurs robuste avec exceptions spécifiques
+- Vérification des permissions avant opérations
+- Timeout sur tous les subprocess (10s)
+- Typage complet avec Optional
+- Validation des entrées
+- Logging structuré
+
+### Workflow Recommandé
+
+```bash
+# Pour Wazuh déjà installé:
+python3 wazuh_configurator.py detect
+python3 wazuh_configurator.py fix
+```
+
+L'outil détecte automatiquement Wazuh, vérifie les configurations, applique les corrections et valide les changements.
+
 ## Architecture
 
 ### All-in-One (Single Machine)

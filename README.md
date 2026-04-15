@@ -128,3 +128,7 @@ Ce projet est sous [License MIT](LICENSE).
 ---
 
 **Développé avec passion pour la sécurité DevSec** !
+=======
+# wazuh-install
+Installation et configuration de wazuh pour pme/tpe
+>>>>>>> 046816c3d9a51e80d36315bbbf362aefa0c11681

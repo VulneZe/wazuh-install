@@ -16,7 +16,8 @@ from wazuh_configurator.strategies import (
     SecurityConfigurator,
     PerformanceConfigurator,
     MonitoringConfigurator,
-    SecurityModulesConfigurator
+    SecurityModulesConfigurator,
+    DashboardConfigurator
 )
 
 
@@ -104,27 +105,27 @@ def main():
     
     # Commande check
     check_parser = subparsers.add_parser('check', help='Verifier configurations')
-    check_parser.add_argument('--config', '-c', choices=['security', 'performance', 'monitoring', 'security-modules', 'all'], 
+    check_parser.add_argument('--config', '-c', choices=['security', 'performance', 'monitoring', 'security-modules', 'dashboard', 'all'], 
                             default='all', help='Configuration a verifier')
     
     # Commande apply
     apply_parser = subparsers.add_parser('apply', help='Appliquer configurations')
-    apply_parser.add_argument('--config', '-c', choices=['security', 'performance', 'monitoring', 'security-modules', 'all'], 
+    apply_parser.add_argument('--config', '-c', choices=['security', 'performance', 'monitoring', 'security-modules', 'dashboard', 'all'], 
                             default='all', help='Configuration a appliquer')
     
     # Commande validate
     validate_parser = subparsers.add_parser('validate', help='Valider configurations')
-    validate_parser.add_argument('--config', '-c', choices=['security', 'performance', 'monitoring', 'security-modules', 'all'], 
+    validate_parser.add_argument('--config', '-c', choices=['security', 'performance', 'monitoring', 'security-modules', 'dashboard', 'all'], 
                                default='all', help='Configuration a valider')
     
     # Commande rollback
     rollback_parser = subparsers.add_parser('rollback', help='Rollback configurations')
-    rollback_parser.add_argument('--config', '-c', choices=['security', 'performance', 'monitoring', 'security-modules', 'all'], 
+    rollback_parser.add_argument('--config', '-c', choices=['security', 'performance', 'monitoring', 'security-modules', 'dashboard', 'all'], 
                               default='all', help='Configuration a rollback')
     
     # Commande fix
     fix_parser = subparsers.add_parser('fix', help='Corriger configurations sur Wazuh existant')
-    fix_parser.add_argument('--config', '-c', choices=['security', 'performance', 'monitoring', 'security-modules', 'all'], 
+    fix_parser.add_argument('--config', '-c', choices=['security', 'performance', 'monitoring', 'security-modules', 'dashboard', 'all'], 
                           default='all', help='Configuration a corriger')
     
     args = parser.parse_args()
@@ -146,6 +147,7 @@ def main():
     config_manager.register_configurator('performance', PerformanceConfigurator())
     config_manager.register_configurator('monitoring', MonitoringConfigurator())
     config_manager.register_configurator('security-modules', SecurityModulesConfigurator())
+    config_manager.register_configurator('dashboard', DashboardConfigurator())
     
     # Execute command
     if args.command == 'detect':

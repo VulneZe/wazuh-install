@@ -126,6 +126,12 @@ Outil avancé de configuration avec **design patterns** pour optimiser les insta
 - File Integrity Monitoring (FIM): Configuration des répertoires critiques et règles d'alerte personnalisées
 - MITRE ATT&CK: Mapping des attaques et configuration des règles MITRE
 
+**Dashboard:**
+- Configuration automatique des dashboards Wazuh via API OpenSearch Dashboards
+- Création de visualisations personnalisées (SSH, AD, alertes par niveau)
+- Dashboard SOC avec visualisations intégrées
+- Validation et rollback des configurations de dashboard
+
 ### Prérequis
 
 - Wazuh **déjà installé** sur le système
@@ -157,6 +163,7 @@ python3 wazuh_configurator.py check --config security
 python3 wazuh_configurator.py check --config performance
 python3 wazuh_configurator.py check --config monitoring
 python3 wazuh_configurator.py check --config security-modules
+python3 wazuh_configurator.py check --config dashboard
 ```
 
 #### Application des Configurations
@@ -168,6 +175,7 @@ python3 wazuh_configurator.py apply
 # Appliquer une configuration spécifique
 python3 wazuh_configurator.py apply --config security
 python3 wazuh_configurator.py apply --config security-modules
+python3 wazuh_configurator.py apply --config dashboard
 ```
 
 #### Mode Fix (Recommandé pour Wazuh Existant)
@@ -179,6 +187,7 @@ python3 wazuh_configurator.py fix
 # Corriger une configuration spécifique
 python3 wazuh_configurator.py fix --config security
 python3 wazuh_configurator.py fix --config security-modules
+python3 wazuh_configurator.py fix --config dashboard
 ```
 
 #### Validation et Rollback
@@ -189,12 +198,14 @@ python3 wazuh_configurator.py validate
 
 # Valider une configuration spécifique
 python3 wazuh_configurator.py validate --config security-modules
+python3 wazuh_configurator.py validate --config dashboard
 
 # Rollback des configurations
 python3 wazuh_configurator.py rollback
 
 # Rollback une configuration spécifique
 python3 wazuh_configurator.py rollback --config security-modules
+python3 wazuh_configurator.py rollback --config dashboard
 ```
 
 ### Architecture Technique

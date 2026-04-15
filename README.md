@@ -1,14 +1,34 @@
-# Wazuh Installer
+# Wazuh Smart Installer
 
-Installateur simple et automatisé de Wazuh basé sur la documentation officielle.
+Installateur intelligent de Wazuh avec **résolution automatique des problèmes** d'installation.
 
-## Fonctionnalités
+## 🚀 Fonctionnalités Intelligentes
 
-- **Installation All-in-One**: Indexer, Server, Dashboard sur la même machine
-- **Installation Distribuée**: Composants sur différentes machines
-- **Installation par Composant**: Installer uniquement ce dont vous avez besoin
-- **Gestion des Services**: Vérifier le statut des services Wazuh
-- **Désinstallation**: Supprimer proprement Wazuh
+### ✅ Détection Automatique des Problèmes
+- **Vérification mémoire**: Minimum 4GB recommandé
+- **Espace disque**: Minimum 20GB disponible
+- **Conflits de ports**: Détecte les ports déjà utilisés
+- **Installation Java**: Vérifie et installe Java si nécessaire
+- **Configuration pare-feu**: Configure automatiquement les ports Wazuh
+- **Connectivité réseau**: Vérifie l'accès internet et DNS
+- **Permissions**: Vérifie les droits sudo
+
+### 🔧 Résolution Automatique
+- **Installation Java**: Installe automatiquement OpenJDK si manquant
+- **Configuration pare-feu**: Ouvre automatiquement les ports Wazuh
+- **Diagnostic**: Identifie et signale les problèmes non résolubles
+- **Solutions**: Propose des solutions pour chaque problème détecté
+
+### 📊 Monitoring en Temps Réel
+- **Surveillance**: Monitore l'installation en temps réel
+- **Détection d'erreurs**: Détecte et signale les erreurs pendant l'installation
+- **Validation post-installation**: Vérifie que tous les services sont actifs
+- **Vérification des ports**: Confirme que tous les ports sont ouverts
+
+### 🎯 Installation
+- **All-in-One**: Indexer, Server, Dashboard sur la même machine
+- **Vérification préalable**: Analyse l'environnement avant installation
+- **Mode auto-fix**: Résout automatiquement les problèmes détectés
 
 ## Installation
 
@@ -34,44 +54,45 @@ pip install click
 
 ## Utilisation
 
-### Installation All-in-One (Recommandé)
+### Vérification de l'Environnement
 
 ```bash
-# Installer tous les composants sur la même machine
-python3 wazuh_installer.py install --type all-in-one
-
-# Ou avec sudo
-sudo python3 wazuh_installer.py install --type all-in-one
+# Vérifier l'environnement sans installer
+python3 wazuh_smart_installer.py check
 ```
 
-### Installation par Composant
+### Installation avec Résolution Automatique (Recommandé)
 
 ```bash
-# Installer uniquement l'indexer
-python3 wazuh_installer.py install --type indexer
+# Vérifier + résoudre automatiquement les problèmes + installer
+python3 wazuh_smart_installer.py install --auto-fix
 
-# Installer uniquement le server
-python3 wazuh_installer.py install --type server
+# Ou avec sudo
+sudo python3 wazuh_smart_installer.py install --auto-fix
+```
 
-# Installer uniquement le dashboard
-python3 wazuh_installer.py install --type dashboard
+### Installation Standard
+
+```bash
+# Installer avec vérification mais sans résolution automatique
+python3 wazuh_smart_installer.py install
+
+# Sauter la vérification (non recommandé)
+python3 wazuh_smart_installer.py install --skip-check
 ```
 
 ### Gestion des Services
 
 ```bash
 # Vérifier le statut des services
-python3 wazuh_installer.py status
-
-# Afficher les identifiants d'accès
-python3 wazuh_installer.py credentials
+python3 wazuh_smart_installer.py status
 ```
 
 ### Désinstallation
 
 ```bash
 # Désinstaller Wazuh
-python3 wazuh_installer.py uninstall
+python3 wazuh_smart_installer.py uninstall
 ```
 
 ## Architecture

@@ -23,7 +23,7 @@ class MonitoringConfigurator(BaseConfigurator):
         super().__init__(wazuh_path)
         self.monitoring_config = {}
     
-    def check_current_config(self) -> ConfigResult:
+    def check(self) -> ConfigResult:
         """Check current monitoring configuration"""
         print("[*] Verification configuration monitoring...")
         
@@ -68,7 +68,7 @@ class MonitoringConfigurator(BaseConfigurator):
             warnings=warnings
         )
     
-    def apply_config(self) -> ConfigResult:
+    def apply(self) -> ConfigResult:
         """Apply monitoring configuration"""
         print("[*] Application configuration monitoring...")
         
@@ -99,12 +99,12 @@ class MonitoringConfigurator(BaseConfigurator):
             details=results
         )
     
-    def validate_config(self) -> ConfigResult:
+    def validate(self) -> ConfigResult:
         """Validate monitoring configuration"""
         print("[*] Validation configuration monitoring...")
-        return self.check_current_config()
+        return self.check()
     
-    def rollback_config(self) -> ConfigResult:
+    def rollback(self) -> ConfigResult:
         """Rollback monitoring configuration"""
         print("[*] Rollback configuration monitoring...")
         

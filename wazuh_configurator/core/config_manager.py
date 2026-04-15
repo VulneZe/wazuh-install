@@ -74,7 +74,7 @@ class ConfigManager:
         results = {}
         for name, configurator in self.configurators.items():
             print(f"[*] Verification configuration: {name}")
-            results[name] = configurator.check_current_config()
+            results[name] = configurator.check()
         
         return results
     
@@ -85,7 +85,7 @@ class ConfigManager:
         results = {}
         for name, configurator in self.configurators.items():
             print(f"[*] Application configuration: {name}")
-            results[name] = configurator.apply_config()
+            results[name] = configurator.apply()
         
         return results
     
@@ -99,7 +99,7 @@ class ConfigManager:
             )
         
         print(f"[*] Application configuration: {name}")
-        return configurator.apply_config()
+        return configurator.apply()
     
     def validate_all_configs(self) -> Dict[str, ConfigResult]:
         """Validate all applied configurations"""
@@ -108,7 +108,7 @@ class ConfigManager:
         results = {}
         for name, configurator in self.configurators.items():
             print(f"[*] Validation configuration: {name}")
-            results[name] = configurator.validate_config()
+            results[name] = configurator.validate()
         
         return results
     
@@ -119,7 +119,7 @@ class ConfigManager:
         results = {}
         for name, configurator in self.configurators.items():
             print(f"[*] Rollback configuration: {name}")
-            results[name] = configurator.rollback_config()
+            results[name] = configurator.rollback()
         
         return results
     

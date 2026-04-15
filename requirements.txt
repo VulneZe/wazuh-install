@@ -1,2 +1,6 @@
-# Dépendances pour Wazuh Smart Installer
-# Aucune dépendance externe requise - utilise uniquement la bibliothèque standard Python
+# Dépendances pour Wazuh Smart Installer et Configurator
+# La plupart des outils utilisent uniquement la bibliothèque standard Python
+# Seul le Dashboard Configurator nécessite des dépendances externes
+
+requests>=2.31.0
+urllib3>=2.0.0

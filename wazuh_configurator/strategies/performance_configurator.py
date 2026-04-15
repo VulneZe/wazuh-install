@@ -25,7 +25,7 @@ class PerformanceConfigurator(BaseConfigurator):
         self.system_memory = self._get_system_memory()
         self.performance_config = {}
     
-    def check_current_config(self) -> ConfigResult:
+    def check(self) -> ConfigResult:
         """Check current performance configuration"""
         print("[*] Verification configuration performance...")
         
@@ -70,7 +70,7 @@ class PerformanceConfigurator(BaseConfigurator):
             warnings=warnings
         )
     
-    def apply_config(self) -> ConfigResult:
+    def apply(self) -> ConfigResult:
         """Apply performance configuration"""
         print("[*] Application configuration performance...")
         
@@ -101,12 +101,12 @@ class PerformanceConfigurator(BaseConfigurator):
             details=results
         )
     
-    def validate_config(self) -> ConfigResult:
+    def validate(self) -> ConfigResult:
         """Validate performance configuration"""
         print("[*] Validation configuration performance...")
-        return self.check_current_config()
+        return self.check()
     
-    def rollback_config(self) -> ConfigResult:
+    def rollback(self) -> ConfigResult:
         """Rollback performance configuration"""
         print("[*] Rollback configuration performance...")
         

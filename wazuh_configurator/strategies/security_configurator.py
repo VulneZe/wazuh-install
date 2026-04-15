@@ -25,7 +25,7 @@ class SecurityConfigurator(BaseConfigurator):
         super().__init__(wazuh_path)
         self.security_config = {}
     
-    def check_current_config(self) -> ConfigResult:
+    def check(self) -> ConfigResult:
         """Check current security configuration"""
         print("[*] Verification configuration securite...")
         
@@ -70,7 +70,7 @@ class SecurityConfigurator(BaseConfigurator):
             warnings=warnings
         )
     
-    def apply_config(self) -> ConfigResult:
+    def apply(self) -> ConfigResult:
         """Apply security configuration"""
         print("[*] Application configuration securite...")
         
@@ -101,12 +101,12 @@ class SecurityConfigurator(BaseConfigurator):
             details=results
         )
     
-    def validate_config(self) -> ConfigResult:
+    def validate(self) -> ConfigResult:
         """Validate security configuration"""
         print("[*] Validation configuration securite...")
-        return self.check_current_config()
+        return self.check()
     
-    def rollback_config(self) -> ConfigResult:
+    def rollback(self) -> ConfigResult:
         """Rollback security configuration"""
         print("[*] Rollback configuration securite...")
         

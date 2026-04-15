@@ -157,7 +157,7 @@ def main():
         if args.config == 'all':
             check_configs(config_manager)
         else:
-            result = config_manager.get_configurator(args.config).check_current_config()
+            result = config_manager.get_configurator(args.config).check()
             status = "[+]" if result.success else "[-]"
             print(f"{status} {args.config}: {result.message}")
             
@@ -177,7 +177,7 @@ def main():
         if args.config == 'all':
             config_manager.validate_all_configs()
         else:
-            result = config_manager.get_configurator(args.config).validate_config()
+            result = config_manager.get_configurator(args.config).validate()
             status = "[+]" if result.success else "[-]"
             print(f"{status} {args.config}: {result.message}")
     
@@ -185,7 +185,7 @@ def main():
         if args.config == 'all':
             config_manager.rollback_all_configs()
         else:
-            result = config_manager.get_configurator(args.config).rollback_config()
+            result = config_manager.get_configurator(args.config).rollback()
             status = "[+]" if result.success else "[-]"
             print(f"{status} {args.config}: {result.message}")
     

@@ -3,6 +3,7 @@ Wazuh Dashboard Configurator
 Configuration des dashboards Wazuh via API OpenSearch Dashboards
 """
 
+import os
 import json
 import requests
 import urllib3

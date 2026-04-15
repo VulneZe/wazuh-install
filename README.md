@@ -2,9 +2,9 @@
 
 Installateur intelligent de Wazuh avec **résolution automatique des problèmes** d'installation.
 
-## 🚀 Fonctionnalités Intelligentes
+## Fonctionnalités Intelligentes
 
-### ✅ Détection Automatique des Problèmes
+### Détection Automatique des Problèmes
 - **Vérification mémoire**: Minimum 4GB recommandé
 - **Espace disque**: Minimum 20GB disponible
 - **Conflits de ports**: Détecte les ports déjà utilisés
@@ -13,19 +13,19 @@ Installateur intelligent de Wazuh avec **résolution automatique des problèmes*
 - **Connectivité réseau**: Vérifie l'accès internet et DNS
 - **Permissions**: Vérifie les droits sudo
 
-### 🔧 Résolution Automatique
+### Résolution Automatique
 - **Installation Java**: Installe automatiquement OpenJDK si manquant
 - **Configuration pare-feu**: Ouvre automatiquement les ports Wazuh
 - **Diagnostic**: Identifie et signale les problèmes non résolubles
 - **Solutions**: Propose des solutions pour chaque problème détecté
 
-### 📊 Monitoring en Temps Réel
+### Monitoring en Temps Réel
 - **Surveillance**: Monitore l'installation en temps réel
 - **Détection d'erreurs**: Détecte et signale les erreurs pendant l'installation
 - **Validation post-installation**: Vérifie que tous les services sont actifs
 - **Vérification des ports**: Confirme que tous les ports sont ouverts
 
-### 🎯 Installation
+### Installation
 - **All-in-One**: Indexer, Server, Dashboard sur la même machine
 - **Vérification préalable**: Analyse l'environnement avant installation
 - **Mode auto-fix**: Résout automatiquement les problèmes détectés
@@ -48,11 +48,9 @@ cd wazuh-install
 # Rendre le script exécutable
 chmod +x wazuh_smart_installer.py
 
-# Installation Java si nécéssaire
-apt install -y openjdk-21-jdk
-
 # Aucune dépendance externe requise !
 # Le script utilise uniquement la bibliothèque standard Python
+# Les dépendances manquantes (curl, wget, etc.) sont installées automatiquement
 ```
 
 ## Utilisation
@@ -105,22 +103,22 @@ Outil avancé de configuration avec **design patterns** pour optimiser les insta
 ### Fonctionnalités
 
 **Sécurité:**
-- SSL/TLS configuration
-- Mots de passe forts générés automatiquement
-- Authentification API
-- Règles pare-feu optimisées
+- Configuration SSL/TLS
+- Génération automatique de mots de passe forts
+- Configuration de l'authentification API
+- Optimisation des règles pare-feu
 
 **Performance:**
-- Mémoire JVM optimisée selon le système
-- Rotation des logs automatique
-- Nettoyage disque programmé
-- Pool connexions optimisé
+- Optimisation de la mémoire JVM selon le système
+- Configuration automatique de la rotation des logs
+- Programmation du nettoyage disque
+- Optimisation du pool de connexions
 
 **Monitoring:**
-- Surveillance des services automatique
-- Niveau de logs optimisé
-- Alertes activées
-- Health checks configurés
+- Surveillance automatique des services
+- Optimisation du niveau de logs
+- Activation des alertes
+- Configuration des health checks
 
 ### Prérequis
 
@@ -251,6 +249,9 @@ Après installation all-in-one:
 - Compatible avec Wazuh 4.14
 - Nécessite des droits root pour l'installation
 - Le script d'installation Wazuh est téléchargé automatiquement
+- Les dépendances manquantes (curl, wget, etc.) sont installées automatiquement
+- Le configurateur détecte et optimise les installations Wazuh existantes
+- Le code suit les bonnes pratiques Python avec design patterns
 
 ## License
 

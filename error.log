@@ -15,6 +15,58 @@
 ============================================================
 [+] OS détecté: debian
 [+] Droits root: OK
+[*] Vérification des dépendances...
+[-] Dépendance manquante: curl
+[+] Dépendance présente: wget
+[+] Dépendance présente: bash
+[+] Dépendance présente: python3
+[+] Dépendance présente: tar
+[+] Dépendance présente: gzip
+[!] 1 dépendances manquantes
+[-] Dépendances manquantes: ['curl']
+[+] Mémoire: 4.6 GB
+[+] Espace disque: 39 GB disponibles
+[+] Java: Installé
+[+] Ports: Aucun conflit
+[+] Pare-feu: OK
+[+] Réseau: OK
+============================================================
+[!] Problèmes détectés: 1
+   - Dépendances manquantes
+
+[*] Tentative de résolution automatique des problèmes...
+[*] Vérification des dépendances...
+[-] Dépendance manquante: curl
+[+] Dépendance présente: wget
+[+] Dépendance présente: bash
+[+] Dépendance présente: python3
+[+] Dépendance présente: tar
+[+] Dépendance présente: gzip
+[!] 1 dépendances manquantes
+[*] Installation des 1 dépendances manquantes...
+[*] Installation de curl...
+[+] curl installé
+[+] Dépendances installées avec succès
+[*] Vérification des dépendances...
+[+] Dépendance présente: curl
+[+] Dépendance présente: wget
+[+] Dépendance présente: bash
+[+] Dépendance présente: python3
+[+] Dépendance présente: tar
+[+] Dépendance présente: gzip
+[+] Toutes les dépendances sont présentes
+[*] Verification de l'environnement avant installation...
+============================================================
+[+] OS détecté: debian
+[+] Droits root: OK
+[*] Vérification des dépendances...
+[+] Dépendance présente: curl
+[+] Dépendance présente: wget
+[+] Dépendance présente: bash
+[+] Dépendance présente: python3
+[+] Dépendance présente: tar
+[+] Dépendance présente: gzip
+[+] Toutes les dépendances sont présentes
 [+] Mémoire: 4.6 GB
 [+] Espace disque: 39 GB disponibles
 [+] Java: Installé
@@ -24,34 +76,52 @@
 ============================================================
 [+] Environnement prêt pour l'installation
 [*] Téléchargement du script d'installation Wazuh...
-Traceback (most recent call last):
-  File "/home/wazuh/wazuh-install/wazuh_smart_installer.py", line 529, in <module>
-    main()
-    ~~~~^^
-  File "/home/wazuh/wazuh-install/wazuh_smart_installer.py", line 500, in main
-    if not installer.download_install_script():
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "/home/wazuh/wazuh-install/wazuh_smart_installer.py", line 348, in download_install_script
-    subprocess.run([
-    ~~~~~~~~~~~~~~^^
-        "curl", "-sO", self.INSTALL_SCRIPT_URL
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ], check=True)
-    ^^^^^^^^^^^^^^
-  File "/usr/lib/python3.13/subprocess.py", line 554, in run
-    with Popen(*popenargs, **kwargs) as process:
-         ~~~~~^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.13/subprocess.py", line 1039, in __init__
-    self._execute_child(args, executable, preexec_fn, close_fds,
-    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                        pass_fds, cwd, env,
-                        ^^^^^^^^^^^^^^^^^^^
-    ...<5 lines>...
-                        gid, gids, uid, umask,
-                        ^^^^^^^^^^^^^^^^^^^^^^
-                        start_new_session, process_group)
-                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.13/subprocess.py", line 1972, in _execute_child
-    raise child_exception_type(errno_num, err_msg, err_filename)
-FileNotFoundError: [Errno 2] No such file or directory: 'curl'
-root@SRV-wazuh:/home/wazuh/wazuh-install#
+[+] Script téléchargé avec succès (curl)
+[*] Installation Wazuh All-in-One avec monitoring...
+   - Wazuh Indexer
+   - Wazuh Server
+   - Wazuh Dashboard
+15/04/2026 14:48:20 INFO: Starting Wazuh installation assistant. Wazuh version: 4.14.4
+15/04/2026 14:48:20 INFO: Verbose logging redirected to /var/log/wazuh-install.log
+15/04/2026 14:48:20 INFO: The recommended systems are: Red Hat Enterprise Linux 7, 8, 9; CentOS 7, 8; Amazon Linux 2; Amazon Linux 2023; Ubuntu 16.04, 18.04, 20.04, 22.04; Rocky Linux 9.4.
+15/04/2026 14:48:20 WARNING: The current system does not match with the list of recommended systems. The installation may not work properly.
+15/04/2026 14:48:24 INFO: --- Dependencies ----
+15/04/2026 14:48:24 INFO: Installing gawk.
+15/04/2026 14:48:30 INFO: Verifying that your system meets the recommended minimum hardware requirements.
+15/04/2026 14:48:30 INFO: Wazuh web interface port will be 443.
+15/04/2026 14:48:36 INFO: --- Dependencies ----
+15/04/2026 14:48:36 INFO: Installing apt-transport-https.
+15/04/2026 14:48:37 INFO: Installing debhelper.
+15/04/2026 14:49:03 INFO: Wazuh repository added.
+15/04/2026 14:49:03 INFO: --- Configuration files ---
+15/04/2026 14:49:03 INFO: Generating configuration files.
+15/04/2026 14:49:04 INFO: Generating the root certificate.
+15/04/2026 14:49:04 INFO: Generating Admin certificates.
+15/04/2026 14:49:04 INFO: Generating Wazuh indexer certificates.
+15/04/2026 14:49:04 INFO: Generating Filebeat certificates.
+15/04/2026 14:49:04 INFO: Generating Wazuh dashboard certificates.
+15/04/2026 14:49:04 INFO: Created wazuh-install-files.tar. It contains the Wazuh cluster key, certificates, and passwords necessary for installation.
+15/04/2026 14:49:05 INFO: --- Wazuh indexer ---
+15/04/2026 14:49:05 INFO: Starting Wazuh indexer installation.
+
+
+15/04/2026 15:19:29 INFO: Wazuh indexer installation finished.
+15/04/2026 15:19:30 INFO: Wazuh indexer post-install configuration finished.
+15/04/2026 15:19:30 INFO: Starting service wazuh-indexer.
+15/04/2026 15:19:45 INFO: wazuh-indexer service started.
+15/04/2026 15:19:45 INFO: Initializing Wazuh indexer cluster security settings.
+15/04/2026 15:19:50 INFO: Wazuh indexer cluster security configuration initialized.
+15/04/2026 15:19:50 INFO: Wazuh indexer cluster initialized.
+15/04/2026 15:19:50 INFO: --- Wazuh server ---
+15/04/2026 15:19:50 INFO: Starting the Wazuh manager installation.
+15/04/2026 15:42:15 INFO: Wazuh manager installation finished.
+15/04/2026 15:42:15 INFO: Wazuh manager vulnerability detection configuration finished.
+15/04/2026 15:42:15 INFO: Starting service wazuh-manager.
+15/04/2026 15:42:33 INFO: wazuh-manager service started.
+15/04/2026 15:42:33 INFO: Starting Filebeat installation.
+15/04/2026 15:46:53 INFO: Filebeat installation finished.
+15/04/2026 15:46:54 INFO: Filebeat post-install configuration finished.
+15/04/2026 15:46:54 INFO: Starting service filebeat.
+15/04/2026 15:46:56 INFO: filebeat service started.
+15/04/2026 15:46:56 INFO: --- Wazuh dashboard ---
+15/04/2026 15:46:56 INFO: Starting Wazuh dashboard installation.

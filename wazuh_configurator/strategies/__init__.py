@@ -5,9 +5,11 @@ Strategies module - Configuration strategy implementations
 from .security_configurator import SecurityConfigurator
 from .performance_configurator import PerformanceConfigurator
 from .monitoring_configurator import MonitoringConfigurator
+from .security_modules_configurator import SecurityModulesConfigurator
 
 __all__ = [
     'SecurityConfigurator',
     'PerformanceConfigurator',
-    'MonitoringConfigurator'
+    'MonitoringConfigurator',
+    'SecurityModulesConfigurator'
 ]

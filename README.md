@@ -120,6 +120,12 @@ Outil avancé de configuration avec **design patterns** pour optimiser les insta
 - Activation des alertes
 - Configuration des health checks
 
+**Modules de Sécurité Avancés:**
+- Vulnerability Detector: Configuration automatique du détecteur de vulnérabilités avec intégration CVE/NVD
+- CIS Benchmarks: Configuration des benchmarks CIS et rapports de conformité automatiques
+- File Integrity Monitoring (FIM): Configuration des répertoires critiques et règles d'alerte personnalisées
+- MITRE ATT&CK: Mapping des attaques et configuration des règles MITRE
+
 ### Prérequis
 
 - Wazuh **déjà installé** sur le système
@@ -150,6 +156,7 @@ python3 wazuh_configurator.py check
 python3 wazuh_configurator.py check --config security
 python3 wazuh_configurator.py check --config performance
 python3 wazuh_configurator.py check --config monitoring
+python3 wazuh_configurator.py check --config security-modules
 ```
 
 #### Application des Configurations
@@ -160,6 +167,7 @@ python3 wazuh_configurator.py apply
 
 # Appliquer une configuration spécifique
 python3 wazuh_configurator.py apply --config security
+python3 wazuh_configurator.py apply --config security-modules
 ```
 
 #### Mode Fix (Recommandé pour Wazuh Existant)
@@ -170,6 +178,7 @@ python3 wazuh_configurator.py fix
 
 # Corriger une configuration spécifique
 python3 wazuh_configurator.py fix --config security
+python3 wazuh_configurator.py fix --config security-modules
 ```
 
 #### Validation et Rollback
@@ -178,8 +187,14 @@ python3 wazuh_configurator.py fix --config security
 # Valider les configurations appliquées
 python3 wazuh_configurator.py validate
 
+# Valider une configuration spécifique
+python3 wazuh_configurator.py validate --config security-modules
+
 # Rollback des configurations
 python3 wazuh_configurator.py rollback
+
+# Rollback une configuration spécifique
+python3 wazuh_configurator.py rollback --config security-modules
 ```
 
 ### Architecture Technique

@@ -193,75 +193,75 @@ class WazuhSmartInstaller:
     
     def pre_install_check(self):
         """Vérification complète avant installation"""
-        print("🔍 Vérification de l'environnement avant installation...")
+        print("[*] Verification de l'environnement avant installation...")
         print("=" * 60)
         
         # Vérifier OS
-        print(f"🖥️ OS détecté: {self.os_type}")
+        print(f"[+] OS détecté: {self.os_type}")
         
         # Vérifier root
         if self.check_root():
-            print("✅ Droits root: OK")
+            print("[+] Droits root: OK")
         else:
-            print("❌ Droits root: Manquant (sudo requis)")
+            print("[-] Droits root: Manquant (sudo requis)")
             self.issues_found.append("permissions")
         
         # Vérifier mémoire
         mem_ok, mem_gb = self.check_memory()
         if mem_ok:
-            print(f"✅ Mémoire: {mem_gb:.1f} GB")
+            print(f"[+] Mémoire: {mem_gb:.1f} GB")
         else:
-            print(f"❌ Mémoire: {mem_gb:.1f} GB (insuffisant)")
+            print(f"[-] Mémoire: {mem_gb:.1f} GB (insuffisant)")
         
         # Vérifier espace disque
         disk_ok, disk_gb = self.check_disk_space()
         if disk_ok:
-            print(f"✅ Espace disque: {disk_gb} GB disponibles")
+            print(f"[+] Espace disque: {disk_gb} GB disponibles")
         else:
-            print(f"❌ Espace disque: {disk_gb} GB (insuffisant)")
+            print(f"[-] Espace disque: {disk_gb} GB (insuffisant)")
         
         # Vérifier Java
         java_ok = self.check_java()
         if java_ok:
-            print("✅ Java: Installé")
+            print("[+] Java: Installé")
         else:
-            print("❌ Java: Manquant")
+            print("[-] Java: Manquant")
         
         # Vérifier ports
         ports_ok, conflicts = self.check_port_conflicts()
         if ports_ok:
-            print("✅ Ports: Aucun conflit")
+            print("[+] Ports: Aucun conflit")
         else:
-            print(f"❌ Ports: Conflits détectés {conflicts}")
+            print(f"[-] Ports: Conflits détectés {conflicts}")
         
         # Vérifier pare-feu
         firewall_ok = self.check_firewall()
         if firewall_ok:
-            print("✅ Pare-feu: OK")
+            print("[+] Pare-feu: OK")
         else:
-            print("⚠️ Pare-feu: Peut bloquer les ports")
+            print("[!] Pare-feu: Peut bloquer les ports")
         
         # Vérifier réseau
         network_ok = self.check_network()
         if network_ok:
-            print("✅ Réseau: OK")
+            print("[+] Réseau: OK")
         else:
-            print("❌ Réseau: Problèmes détectés")
+            print("[-] Réseau: Problèmes détectés")
         
         print("=" * 60)
         
         if self.issues_found:
-            print(f"⚠️ Problèmes détectés: {len(self.issues_found)}")
+            print(f"[!] Problèmes détectés: {len(self.issues_found)}")
             for issue in self.issues_found:
                 print(f"   - {self.COMMON_ISSUES.get(issue, issue)}")
             return False
         else:
-            print("✅ Environnement prêt pour l'installation")
+            print("[+] Environnement prêt pour l'installation")
             return True
     
     def fix_java(self):
         """Installer Java automatiquement"""
-        print("🔧 Installation de Java...")
+        print("[*] Installation de Java...")
         try:
             if self.os_type in ["ubuntu", "debian"]:
                 subprocess.run(
@@ -278,15 +278,15 @@ class WazuhSmartInstaller:
                     capture_output=True, check=True
                 )
             self.solutions_applied.append("java_installed")
-            print("✅ Java installé avec succès")
+            print("[+] Java installé avec succès")
             return True
         except Exception as e:
-            print(f"❌ Erreur lors de l'installation de Java: {e}")
+            print(f"[-] Erreur lors de l'installation de Java: {e}")
             return False
     
     def fix_firewall(self):
         """Configurer le pare-feu automatiquement"""
-        print("🔧 Configuration du pare-feu...")
+        print("[*] Configuration du pare-feu...")
         try:
             all_ports = []
             for ports in self.WAZUH_PORTS.values():
@@ -310,10 +310,10 @@ class WazuhSmartInstaller:
                 )
             
             self.solutions_applied.append("firewall_configured")
-            print("✅ Pare-feu configuré avec succès")
+            print("[+] Pare-feu configuré avec succès")
             return True
         except Exception as e:
-            print(f"❌ Erreur lors de la configuration du pare-feu: {e}")
+            print(f"[-] Erreur lors de la configuration du pare-feu: {e}")
             return False
     
     def auto_fix_issues(self):
@@ -321,7 +321,7 @@ class WazuhSmartInstaller:
         if not self.issues_found:
             return True
         
-        print("\n🔧 Tentative de résolution automatique des problèmes...")
+        print("\n[*] Tentative de résolution automatique des problèmes...")
         
         for issue in self.issues_found:
             if issue == "java_missing":
@@ -329,13 +329,13 @@ class WazuhSmartInstaller:
             elif issue == "firewall_blocked":
                 self.fix_firewall()
             elif issue == "permissions":
-                print("⚠️ Exécutez avec sudo: sudo python3 wazuh_smart_installer.py")
+                print("[!] Exécutez avec sudo: sudo python3 wazuh_smart_installer.py")
             elif issue in ["memory_insufficient", "disk_space"]:
-                print("⚠️ Problème matériel non résoluble automatiquement")
+                print("[!] Problème matériel non résoluble automatiquement")
             elif issue == "port_conflict":
-                print("⚠️ Libérez les ports en conflit manuellement")
+                print("[!] Libérez les ports en conflit manuellement")
             elif issue == "network":
-                print("⚠️ Vérifiez votre connexion internet")
+                print("[!] Vérifiez votre connexion internet")
         
         # Revérifier après corrections
         self.issues_found = []
@@ -344,20 +344,20 @@ class WazuhSmartInstaller:
     def download_install_script(self):
         """Télécharger le script d'installation Wazuh"""
         try:
-            print("📥 Téléchargement du script d'installation Wazuh...")
+            print("[*] Téléchargement du script d'installation Wazuh...")
             subprocess.run([
                 "curl", "-sO", self.INSTALL_SCRIPT_URL
             ], check=True)
-            print("✅ Script téléchargé avec succès")
+            print("[+] Script téléchargé avec succès")
             return True
         except subprocess.CalledProcessError as e:
-            print(f"❌ Erreur lors du téléchargement: {e}")
+            print(f"[-] Erreur lors du téléchargement: {e}")
             return False
     
     def install_all_in_one(self):
         """Installation all-in-one avec monitoring"""
         try:
-            print("🚀 Installation Wazuh All-in-One avec monitoring...")
+            print("[*] Installation Wazuh All-in-One avec monitoring...")
             print("   - Wazuh Indexer")
             print("   - Wazuh Server")
             print("   - Wazuh Dashboard")
@@ -375,24 +375,24 @@ class WazuhSmartInstaller:
                 print(line, end='')
                 # Détecter les erreurs courantes
                 if "error" in line.lower() or "failed" in line.lower():
-                    print(f"⚠️ Erreur détectée: {line.strip()}")
+                    print(f"[!] Erreur détectée: {line.strip()}")
             
             process.wait()
             
             if process.returncode == 0:
-                print("✅ Installation Wazuh All-in-One terminée avec succès!")
+                print("[+] Installation Wazuh All-in-One terminée avec succès!")
                 self.post_install_validation()
                 return True
             else:
-                print(f"❌ Erreur lors de l'installation (code: {process.returncode})")
+                print(f"[-] Erreur lors de l'installation (code: {process.returncode})")
                 return False
         except Exception as e:
-            print(f"❌ Erreur lors de l'installation: {e}")
+            print(f"[-] Erreur lors de l'installation: {e}")
             return False
     
     def post_install_validation(self):
         """Validation après installation"""
-        print("\n🔍 Validation post-installation...")
+        print("\n[*] Validation post-installation...")
         
         services = ["wazuh-indexer", "wazuh-server", "wazuh-dashboard"]
         all_ok = True
@@ -404,16 +404,16 @@ class WazuhSmartInstaller:
                 ], capture_output=True, text=True)
                 status = result.stdout.strip()
                 if status == "active":
-                    print(f"✅ {service}: Actif")
+                    print(f"[+] {service}: Actif")
                 else:
-                    print(f"❌ {service}: Inactif ({status})")
+                    print(f"[-] {service}: Inactif ({status})")
                     all_ok = False
             except:
-                print(f"⚠️ {service}: Impossible de vérifier")
+                print(f"[!] {service}: Impossible de vérifier")
                 all_ok = False
         
         # Vérifier les ports
-        print("\n🔍 Vérification des ports...")
+        print("\n[*] Vérification des ports...")
         for component, ports in self.WAZUH_PORTS.items():
             for port in ports:
                 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -421,35 +421,35 @@ class WazuhSmartInstaller:
                 result = sock.connect_ex(('127.0.0.1', port))
                 sock.close()
                 if result == 0:
-                    print(f"✅ Port {port} ({component}): Ouvert")
+                    print(f"[+] Port {port} ({component}): Ouvert")
                 else:
-                    print(f"❌ Port {port} ({component}): Fermé")
+                    print(f"[-] Port {port} ({component}): Fermé")
                     all_ok = False
         
         if all_ok:
-            print("\n✅ Installation validée avec succès!")
+            print("\n[+] Installation validée avec succès!")
             self.show_credentials()
         else:
-            print("\n⚠️ Installation terminée mais certains services ne sont pas actifs")
+            print("\n[!] Installation terminée mais certains services ne sont pas actifs")
         
         return all_ok
     
     def show_credentials(self):
         """Afficher les identifiants d'accès"""
         try:
-            print("\n📋 Identifiants d'accès:")
+            print("\n[*] Identifiants d'accès:")
             print("   - Interface web: https://<WAZUH_DASHBOARD_IP_ADDRESS>")
             print("   - Utilisateur: admin")
             print("   - Mot de passe: Voir wazuh-passwords.txt")
             
             if os.path.exists("wazuh-install-files.tar"):
-                print("\n🔑 Extraction des mots de passe...")
+                print("\n[*] Extraction des mots de passe...")
                 subprocess.run([
                     "sudo", "tar", "-O", "-xvf", "wazuh-install-files.tar",
                     "wazuh-install-files/wazuh-passwords.txt"
                 ], check=False)
         except:
-            print("⚠️ Impossible d'extraire les mots de passe automatiquement")
+            print("[!] Impossible d'extraire les mots de passe automatiquement")
 
 
 def main():
@@ -483,7 +483,7 @@ def main():
     if args.command == 'install':
         installer = WazuhSmartInstaller()
         
-        print(f"🖥️ OS détecté: {installer.os_type}")
+        print(f"[+] OS détecté: {installer.os_type}")
         
         # Vérification pré-installation
         if not args.skip_check:
@@ -493,7 +493,7 @@ def main():
                 installer.auto_fix_issues()
             
             if not env_ok and not args.auto_fix:
-                print("\n❌ Problèmes détectés. Utilisez --auto-fix pour tenter une résolution automatique")
+                print("\n[-] Problèmes détectés. Utilisez --auto-fix pour tenter une résolution automatique")
                 sys.exit(1)
         
         # Télécharger le script
@@ -513,13 +513,13 @@ def main():
     
     elif args.command == 'uninstall':
         try:
-            print("🗑️ Désinstallation de Wazuh...")
+            print("[*] Désinstallation de Wazuh...")
             subprocess.run([
                 "sudo", "bash", "./wazuh-install.sh", "-u"
             ], check=True)
-            print("✅ Wazuh désinstallé avec succès!")
+            print("[+] Wazuh désinstallé avec succès!")
         except subprocess.CalledProcessError as e:
-            print(f"❌ Erreur lors de la désinstallation: {e}")
+            print(f"[-] Erreur lors de la désinstallation: {e}")
     
     else:
         parser.print_help()

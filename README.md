@@ -2,6 +2,27 @@
 
 Installateur intelligent de Wazuh avec **résolution automatique des problèmes** d'installation.
 
+## Interface Interactive
+
+Pour faciliter l'utilisation de tous les outils, une **interface shell interactive** est disponible avec des menus numérotés.
+
+```bash
+# Lancer l'interface interactive
+python3 wazuh_menu.py
+```
+
+L'interface interactive permet de:
+- Choisir entre Smart Installer et Configurator
+- Sélectionner les options via des menus numérotés (1, 2, 3...)
+- Accéder à tous les sous-menus de configuration
+- Navigation intuitive sans avoir à mémoriser les commandes
+
+**Structure des menus:**
+- Menu principal: Smart Installer / Configurator / Quitter
+- Smart Installer: Vérifier / Installer / Statut / Désinstaller
+- Configurator: Vérifier / Appliquer / Valider / Rollback / Fix
+- Configuration spécifique: Security / Performance / Monitoring / Security Modules / Dashboard
+
 ## Fonctionnalités Intelligentes
 
 ### Détection Automatique des Problèmes

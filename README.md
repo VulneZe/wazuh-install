@@ -1,134 +1,122 @@
-# Wazuh DevSec Generator v2.0
+# Wazuh Installer
 
-[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://python.org)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-
-Générateur professionnel de configuration Wazuh pour environnement DevSec avec interface terminal améliorée et vérification intelligente.
+Installateur simple et automatisé de Wazuh basé sur la documentation officielle.
 
 ## Fonctionnalités
 
-- **Architecture propre et modulaire** avec design patterns
-- **Interface terminal professionnelle** avec Rich
-- **Vérification intelligente** de l'environnement
-- **Génération de configuration** Wazuh personnalisée
-- **Analyse de qualité des règles** avec détection de faux positifs
-- **Templates de dashboards** prêts à l'emploi
-- **Mode simulation** complet
-- **Tests automatisés** et validation
+- **Installation All-in-One**: Indexer, Server, Dashboard sur la même machine
+- **Installation Distribuée**: Composants sur différentes machines
+- **Installation par Composant**: Installer uniquement ce dont vous avez besoin
+- **Gestion des Services**: Vérifier le statut des services Wazuh
+- **Désinstallation**: Supprimer proprement Wazuh
 
 ## Installation
 
 ### Prérequis
 
-- Python 3.9+
-- Git
+- Linux (Ubuntu, Debian, RHEL, CentOS, Fedora)
+- Accès root (sudo)
+- Connexion internet
 
-### Installation rapide
+### Installation de l'outil
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/VOTRE_USERNAME/wazuh-devsec-config-generator.git
-cd wazuh-devsec-config-generator
+git clone https://github.com/VulneZe/wazuh-install.git
+cd wazuh-install
 
-# Créer l'environnement virtuel
-python3 -m venv venv
-source venv/bin/activate  # Sur Windows: venv\Scripts\activate
+# Rendre le script exécutable
+chmod +x wazuh_installer.py
 
-# Installer les dépendances
-pip install -r requirements.txt
-
-# Installer l'outil
-pip install -e .
+# Installer les dépendances Python
+pip install click
 ```
 
 ## Utilisation
 
-### Interface Terminal Améliorée
+### Installation All-in-One (Recommandé)
 
 ```bash
-# Lancer l'interface principale
-wazuh-tui
+# Installer tous les composants sur la même machine
+python3 wazuh_installer.py install --type all-in-one
 
-# Lancer l'interface intelligente
-wazuh-smart-ui
-
-# Options spécifiques
-wazuh-tui --simulate dev
-wazuh-tui --validate
+# Ou avec sudo
+sudo python3 wazuh_installer.py install --type all-in-one
 ```
 
-### Vérification Intelligente
+### Installation par Composant
 
 ```bash
-# Analyse complète de l'environnement
-wazuh-smart-ui
-# Choisir "1. Vérification Intelligente"
+# Installer uniquement l'indexer
+python3 wazuh_installer.py install --type indexer
+
+# Installer uniquement le server
+python3 wazuh_installer.py install --type server
+
+# Installer uniquement le dashboard
+python3 wazuh_installer.py install --type dashboard
 ```
 
-### Génération de Configuration
+### Gestion des Services
 
 ```bash
-# Générer pour un profil spécifique
-wazuh-tui --profile development
+# Vérifier le statut des services
+python3 wazuh_installer.py status
 
-# Mode simulation
-wazuh-tui --simulate production
+# Afficher les identifiants d'accès
+python3 wazuh_installer.py credentials
 ```
 
-## Structure du Projet
-
-```
-wazuh-devsec-config-generator/
-├── wazuh_devsec_config_generator/    # Package principal
-│   ├── core/                        # Modules core
-│   ├── tui/                         # Interface terminal
-│   ├── ui/                          # Interface améliorée
-│   └── templates/                    # Templates Jinja2
-├── config/                          # Configuration
-├── scripts/                         # Scripts utilitaires
-├── tests/                           # Tests
-├── requirements.txt                  # Dépendances
-└── README.md                        # Documentation
-```
-
-## Développement
-
-### Tests
+### Désinstallation
 
 ```bash
-# Exécuter tous les tests
-python test_suite.py
-
-# Tests spécifiques
-python test_suite.py --quality
-python test_suite.py --performance
-python test_suite.py --integration
+# Désinstaller Wazuh
+python3 wazuh_installer.py uninstall
 ```
 
-## Configuration
+## Architecture
 
-### Profils
+### All-in-One (Single Machine)
 
-- **development**: Environnement de développement
-- **production**: Environnement de production
-- **testing**: Environnement de test
-- **custom**: Profil personnalisé
+```
+┌─────────────────────────────────┐
+│  Machine Unique                 │
+│  ├─ Wazuh Indexer               │
+│  ├─ Wazuh Server                │
+│  └─ Wazuh Dashboard            │
+└─────────────────────────────────┘
+```
 
-### Intégrations
+### Distribuée (Multiple Machines)
 
-Configurez les intégrations dans les settings:
-- VirusTotal API key
-- Elasticsearch URL
-- Autres services externes
+```
+┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+│ Machine 1    │  │ Machine 2    │  │ Machine 3    │
+│ Wazuh Indexer│  │ Wazuh Server │  │ Wazuh Dash   │
+└──────────────┘  └──────────────┘  └──────────────┘
+```
+
+## Accès Web
+
+Après installation all-in-one:
+
+- **URL**: `https://<IP_ADDRESS>`
+- **Utilisateur**: `admin`
+- **Mot de passe**: Voir `wazuh-passwords.txt`
+
+## Documentation Officielle
+
+- [Documentation Wazuh](https://documentation.wazuh.com/current/installation-guide/index.html)
+- [Quickstart](https://documentation.wazuh.com/current/quickstart.html)
+- [Installation Guide](https://documentation.wazuh.com/current/installation-guide/wazuh-indexer/index.html)
+
+## Notes
+
+- L'outil utilise le script officiel d'installation Wazuh
+- Compatible avec Wazuh 4.14
+- Nécessite des droits root pour l'installation
+- Le script d'installation Wazuh est téléchargé automatiquement
 
 ## License
 
-Ce projet est sous [License MIT](LICENSE).
-
----
-
-**Développé avec passion pour la sécurité DevSec** !
-=======
-# wazuh-install
-Installation et configuration de wazuh pour pme/tpe
->>>>>>> 046816c3d9a51e80d36315bbbf362aefa0c11681
+MIT License

@@ -50,13 +50,33 @@ class DashboardConfigurator(BaseConfigurator):
         print("=" * 60)
         
         # Vérifier la connexion au dashboard
-        connection_ok = self._check_dashboard_connection()
+        try:
+            connection_ok = self._check_dashboard_connection()
+        except Exception as e:
+            error_msg = str(e)
+            if "Connection refused" in error_msg or "Max retries exceeded" in error_msg:
+                print(f"[!] Dashboard non accessible (service probablement non démarré)")
+                return ConfigResult(
+                    success=False,
+                    message="Dashboards: Service non disponible",
+                    details={"dashboard_running": False},
+                    warnings=["Dashboard service non démarré - Configuration ignorée"]
+                )
+            connection_ok = False
         
         # Vérifier les visualisations existantes
-        visualizations_ok = self._check_existing_visualizations()
+        try:
+            visualizations_ok = self._check_existing_visualizations()
+        except Exception as e:
+            print(f"[-] Erreur vérification visualisations: {e}")
+            visualizations_ok = False
         
         # Vérifier les dashboards existants
-        dashboards_ok = self._check_existing_dashboards()
+        try:
+            dashboards_ok = self._check_existing_dashboards()
+        except Exception as e:
+            print(f"[-] Erreur vérification dashboards: {e}")
+            dashboards_ok = False
         
         print("=" * 60)
         
@@ -66,7 +86,7 @@ class DashboardConfigurator(BaseConfigurator):
             success=success,
             message=f"Dashboards: {'OK' if success else 'Configuration incomplète'}",
             details={
-                "connection": connection_ok,
+                "dashboard_running": connection_ok,
                 "visualizations": visualizations_ok,
                 "dashboards": dashboards_ok
             }
@@ -77,19 +97,53 @@ class DashboardConfigurator(BaseConfigurator):
         print("[*] Application de la configuration des dashboards...")
         print("=" * 60)
         
+        # Vérifier d'abord si le dashboard est accessible
+        try:
+            connection_ok = self._check_dashboard_connection()
+            if not connection_ok:
+                print("[!] Dashboard non accessible - Configuration ignorée")
+                return ConfigResult(
+                    success=False,
+                    message="Dashboards: Service non disponible",
+                    details={"dashboard_running": False},
+                    warnings=["Dashboard service non démarré - Configuration ignorée"]
+                )
+        except Exception as e:
+            error_msg = str(e)
+            if "Connection refused" in error_msg or "Max retries exceeded" in error_msg:
+                print(f"[!] Dashboard non accessible (service probablement non démarré)")
+                return ConfigResult(
+                    success=False,
+                    message="Dashboards: Service non disponible",
+                    details={"dashboard_running": False},
+                    warnings=["Dashboard service non démarré - Configuration ignorée"]
+                )
+        
         results = []
         
         # Créer l'index pattern
-        index_result = self._create_index_pattern()
-        results.append(index_result)
+        try:
+            index_result = self._create_index_pattern()
+            results.append(index_result)
+        except Exception as e:
+            print(f"[-] Erreur création index pattern: {e}")
+            results.append(False)
         
         # Créer les visualisations
-        vis_result = self._create_visualizations()
-        results.append(vis_result)
+        try:
+            vis_result = self._create_visualizations()
+            results.append(vis_result)
+        except Exception as e:
+            print(f"[-] Erreur création visualisations: {e}")
+            results.append(False)
         
         # Créer le dashboard
-        dashboard_result = self._create_dashboard()
-        results.append(dashboard_result)
+        try:
+            dashboard_result = self._create_dashboard()
+            results.append(dashboard_result)
+        except Exception as e:
+            print(f"[-] Erreur création dashboard: {e}")
+            results.append(False)
         
         print("=" * 60)
         

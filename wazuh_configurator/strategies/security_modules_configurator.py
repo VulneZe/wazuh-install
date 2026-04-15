@@ -176,7 +176,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
             return ConfigResult(success=False, message="Fichier ossec.conf non trouvé")
         
         try:
-            content = self.file_handler.read(self.ossec_conf_path)
+            content = self.file_handler.read_file(self.ossec_conf_path)
             
             # Vérifier si le module est activé
             vuln_enabled = '<vulnerability-detector>' in content
@@ -226,7 +226,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
             # Sauvegarder le fichier
             self.backup_config(self.ossec_conf_path)
             
-            content = self.file_handler.read(self.ossec_conf_path)
+            content = self.file_handler.read_file(self.ossec_conf_path)
             
             # Vérifier si la configuration existe déjà
             if '<vulnerability-detector>' in content:
@@ -279,7 +279,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
         print("[*] Validation Vulnerability Detector...")
         
         try:
-            content = self.file_handler.read(self.ossec_conf_path)
+            content = self.file_handler.read_file(self.ossec_conf_path)
             
             # Vérifications de validation
             checks = {
@@ -315,7 +315,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
             return ConfigResult(success=False, message="Fichier ossec.conf non trouvé")
         
         try:
-            content = self.file_handler.read(self.ossec_conf_path)
+            content = self.file_handler.read_file(self.ossec_conf_path)
             
             # Vérifier si CIS est activé
             cis_enabled = '<rule id="100100"' in content or '<rule id="100200"' in content
@@ -348,7 +348,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
             # Sauvegarder le fichier
             self.backup_config(self.ossec_conf_path)
             
-            content = self.file_handler.read(self.ossec_conf_path)
+            content = self.file_handler.read_file(self.ossec_conf_path)
             
             # Vérifier si CIS existe déjà
             if '<rule id="100100"' in content:
@@ -407,7 +407,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
         print("[*] Validation CIS Benchmarks...")
         
         try:
-            content = self.file_handler.read(self.ossec_conf_path)
+            content = self.file_handler.read_file(self.ossec_conf_path)
             
             checks = {
                 "rules_present": '<rule id="100100"' in content,
@@ -439,7 +439,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
             return ConfigResult(success=False, message="Fichier ossec.conf non trouvé")
         
         try:
-            content = self.file_handler.read(self.ossec_conf_path)
+            content = self.file_handler.read_file(self.ossec_conf_path)
             
             # Vérifier si FIM est activé
             fim_enabled = '<syscheck>' in content
@@ -473,7 +473,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
             # Sauvegarder le fichier
             self.backup_config(self.ossec_conf_path)
             
-            content = self.file_handler.read(self.ossec_conf_path)
+            content = self.file_handler.read_file(self.ossec_conf_path)
             
             # Vérifier si FIM existe déjà
             if '<syscheck>' in content:
@@ -534,7 +534,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
         print("[*] Validation File Integrity Monitoring (FIM)...")
         
         try:
-            content = self.file_handler.read(self.ossec_conf_path)
+            content = self.file_handler.read_file(self.ossec_conf_path)
             
             checks = {
                 "enabled": '<syscheck>' in content and '<disabled>no</disabled>' in content,
@@ -570,7 +570,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
             return ConfigResult(success=False, message="Fichier ossec.conf non trouvé")
         
         try:
-            content = self.file_handler.read(self.ossec_conf_path)
+            content = self.file_handler.read_file(self.ossec_conf_path)
             
             # Vérifier si MITRE est activé
             mitre_enabled = '<rule id="100300"' in content or '<group>mitre</group>' in content
@@ -603,7 +603,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
             # Sauvegarder le fichier
             self.backup_config(self.ossec_conf_path)
             
-            content = self.file_handler.read(self.ossec_conf_path)
+            content = self.file_handler.read_file(self.ossec_conf_path)
             
             # Vérifier si MITRE existe déjà
             if '<group>mitre</group>' in content:
@@ -682,7 +682,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
         print("[*] Validation MITRE ATT&CK...")
         
         try:
-            content = self.file_handler.read(self.ossec_conf_path)
+            content = self.file_handler.read_file(self.ossec_conf_path)
             
             checks = {
                 "rules_present": '<group>mitre</group>' in content,

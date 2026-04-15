@@ -36,22 +36,22 @@ class BaseConfigurator(ABC):
         self.backup_files = {}
     
     @abstractmethod
-    def check_current_config(self) -> ConfigResult:
+    def check(self) -> ConfigResult:
         """Check current configuration status"""
         pass
     
     @abstractmethod
-    def apply_config(self) -> ConfigResult:
+    def apply(self) -> ConfigResult:
         """Apply the configuration"""
         pass
     
     @abstractmethod
-    def validate_config(self) -> ConfigResult:
+    def validate(self) -> ConfigResult:
         """Validate the applied configuration"""
         pass
     
     @abstractmethod
-    def rollback_config(self) -> ConfigResult:
+    def rollback(self) -> ConfigResult:
         """Rollback to previous configuration"""
         pass
     

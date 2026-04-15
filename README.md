@@ -1,38 +1,130 @@
-# wazuh-devsec-config-generator
+# Wazuh DevSec Generator v2.0
 
-Générateur Python professionnel qui configure **ENTIÈREMENT** Wazuh (4.x/5.x) pour une entreprise de dev/édition logiciel.
+[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://python.org)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**Structure de sortie (la plus facile à déployer sur Wazuh) :**
-```
-output/wazuh-custom-devsec/
-├── etc/
-│   ├── rules/                  ← tous les .xml customs + local_rules.xml
-│   ├── decoders/               ← decoders + sibling
-│   ├── lists/cdb/              ← .txt prêts pour ossec-makelists
-│   ├── ossec.conf.d/           ← fragments à merger (recommandé)
-│   ├── active-response/
-│   │   ├── bin/                ← scripts Python AR
-│   │   └── commands/           ← <command> XML
-│   └── custom_lists.conf       ← à inclure dans ossec.conf
-└── tests/sample-logs/          ← 20 logs de test + résultats attendus
-```
+Générateur professionnel de configuration Wazuh pour environnement DevSec avec interface terminal améliorée et vérification intelligente.
 
-## Installation & lancement
+## Fonctionnalités
+
+- **Architecture propre et modulaire** avec design patterns
+- **Interface terminal professionnelle** avec Rich
+- **Vérification intelligente** de l'environnement
+- **Génération de configuration** Wazuh personnalisée
+- **Analyse de qualité des règles** avec détection de faux positifs
+- **Templates de dashboards** prêts à l'emploi
+- **Mode simulation** complet
+- **Tests automatisés** et validation
+
+## Installation
+
+### Prérequis
+
+- Python 3.9+
+- Git
+
+### Installation rapide
 
 ```bash
-git clone <votre-repo>
+# Cloner le dépôt
+git clone https://github.com/VOTRE_USERNAME/wazuh-devsec-config-generator.git
 cd wazuh-devsec-config-generator
+
+# Créer l'environnement virtuel
+python3 -m venv venv
+source venv/bin/activate  # Sur Windows: venv\Scripts\activate
+
+# Installer les dépendances
+pip install -r requirements.txt
+
+# Installer l'outil
 pip install -e .
-wazuh-generator
 ```
 
-## Déploiement (30 secondes sur le manager)
+## Utilisation
+
+### Interface Terminal Améliorée
 
 ```bash
-sudo rsync -av --chown=ossec:ossec output/wazuh-custom-devsec/etc/ /var/ossec/etc/
-sudo /var/ossec/bin/ossec-makelists
-sudo systemctl restart wazuh-manager
-/var/ossec/bin/wazuh-logtest < tests/sample-logs/git-suspicious.txt
+# Lancer l'interface principale
+wazuh-tui
+
+# Lancer l'interface intelligente
+wazuh-smart-ui
+
+# Options spécifiques
+wazuh-tui --simulate dev
+wazuh-tui --validate
 ```
 
-Tout est prêt à la production : 40+ règles personnalisées (ID 100000-119999), whitelists CDB, low FP (<5%), MITRE ATT&CK, Linux + Windows, FIM renforcé, etc.
+### Vérification Intelligente
+
+```bash
+# Analyse complète de l'environnement
+wazuh-smart-ui
+# Choisir "1. Vérification Intelligente"
+```
+
+### Génération de Configuration
+
+```bash
+# Générer pour un profil spécifique
+wazuh-tui --profile development
+
+# Mode simulation
+wazuh-tui --simulate production
+```
+
+## Structure du Projet
+
+```
+wazuh-devsec-config-generator/
+├── wazuh_devsec_config_generator/    # Package principal
+│   ├── core/                        # Modules core
+│   ├── tui/                         # Interface terminal
+│   ├── ui/                          # Interface améliorée
+│   └── templates/                    # Templates Jinja2
+├── config/                          # Configuration
+├── scripts/                         # Scripts utilitaires
+├── tests/                           # Tests
+├── requirements.txt                  # Dépendances
+└── README.md                        # Documentation
+```
+
+## Développement
+
+### Tests
+
+```bash
+# Exécuter tous les tests
+python test_suite.py
+
+# Tests spécifiques
+python test_suite.py --quality
+python test_suite.py --performance
+python test_suite.py --integration
+```
+
+## Configuration
+
+### Profils
+
+- **development**: Environnement de développement
+- **production**: Environnement de production
+- **testing**: Environnement de test
+- **custom**: Profil personnalisé
+
+### Intégrations
+
+Configurez les intégrations dans les settings:
+- VirusTotal API key
+- Elasticsearch URL
+- Autres services externes
+
+## License
+
+Ce projet est sous [License MIT](LICENSE).
+
+---
+
+**Développé avec passion pour la sécurité DevSec** !

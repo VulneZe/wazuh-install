@@ -196,19 +196,13 @@ def main():
         check_results = check_configs(config_manager)
         
         print("\n[*] Application des corrections...")
-        
-        if args.config == 'all':
-            apply_configs(config_manager)
-        else:
-            result = config_manager.apply_config(args.config)
-            status = "[+]" if result.success else "[-]"
-            print(f"{status} {args.config}: {result.message}")
+        apply_results = apply_configs(config_manager)
         
         print("\n[*] Validation des corrections...")
         if args.config == 'all':
             config_manager.validate_all_configs()
         else:
-            result = config_manager.get_configurator(args.config).validate_config()
+            result = config_manager.get_configurator(args.config).validate()
             status = "[+]" if result.success else "[-]"
             print(f"{status} {args.config}: {result.message}")
 

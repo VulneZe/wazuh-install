@@ -1,258 +1,4 @@
-reésultat 
 
-véirfié confoguiraiot ;: 
-
- ██████╗ ██████╗ ███████╗██████╗
-██╔════╝██╔═══██╗██╔════╝██╔══██╗
-██║     ██║   ██║█████╗  ██║  ██║
-██║     ██║   ██║██╔══╝  ██║  ██║
-╚██████╗╚██████╔╝███████╗██████╔╝
- ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
-
-    Configurator v1.0 - Advanced Configuration Management
-    By VulneZe - github.com/VulneZe/wazuh-install
-    ====================================================
-
-[*] Initialisation du gestionnaire de configuration...
-[*] Detection de l'installation Wazuh...
-[+] Wazuh détecté dans: /var/ossec
-[+] Version Wazuh: Unknown
-[+] Composants détectés: ['indexer', 'manager', 'dashboard']
-[+] Gestionnaire de configuration initialisé
-[+] Configurator 'security' enregistré
-[+] Configurator 'performance' enregistré
-[+] Configurator 'monitoring' enregistré
-[+] Configurator 'security-modules' enregistré
-[+] Configurator 'dashboard' enregistré
-[*] Verification de toutes les configurations...
-[*] Verification de toutes les configurations...
-[*] Verification configuration: security
-[*] Verification configuration securite...
-[*] Verification configuration: performance
-[*] Verification configuration performance...
-[*] Verification configuration: monitoring
-[*] Verification configuration monitoring...
-[*] Verification configuration: security-modules
-[*] Vérification des modules de sécurité Wazuh...
-============================================================
-[*] Vérification Vulnerability Detector...
-[-] Erreur vérification Vulnerability Detector: 'FileHandler' object has no attribute 'read'
-[*] Vérification CIS Benchmarks...
-[-] Erreur vérification CIS Benchmarks: 'FileHandler' object has no attribute 'read'
-[*] Vérification File Integrity Monitoring (FIM)...
-[-] Erreur vérification FIM: 'FileHandler' object has no attribute 'read'
-[*] Vérification MITRE ATT&CK...
-[-] Erreur vérification MITRE ATT&CK: 'FileHandler' object has no attribute 'read'
-============================================================
-[*] Verification configuration: dashboard
-[*] Vérification de la configuration des dashboards...
-============================================================
-[-] Erreur connexion dashboard: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/status (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f7b3ea742f0>: Failed to establish a new connection: [Errno 111] Connection refused'))
-[-] Erreur vérification visualisations: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/saved_objects/_find?type=visualization (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f7b3e9dfc50>: Failed to establish a new connection: [Errno 111] Connection refused'))
-[-] Erreur vérification dashboards: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/saved_objects/_find?type=dashboard (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f7b3e84c550>: Failed to establish a new connection: [Errno 111] Connection refused'))
-============================================================
-[-] security: Securite: 1/4 verifications OK
-   [!] Mots de passe faibles detectes
-   [!] API authentication non configuree
-   [!] Regles pare-feu incompletes
-[+] performance: Performance: 4/4 verifications OK
-[+] monitoring: Monitoring: 4/4 verifications OK
-[-] security-modules: Modules de sécurité: 0/4 vérifications OK
-[-] dashboard: Dashboards: Configuration incomplète
-
-[+] Code de retour: 0
-
-Appuyez sur Entrée pour continuer...
-
-
-2 : 
-
-
-
- ██████╗ ██████╗ ███████╗██████╗
-██╔════╝██╔═══██╗██╔════╝██╔══██╗
-██║     ██║   ██║█████╗  ██║  ██║
-██║     ██║   ██║██╔══╝  ██║  ██║
-╚██████╗╚██████╔╝███████╗██████╔╝
- ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
-
-    Configurator v1.0 - Advanced Configuration Management
-    By VulneZe - github.com/VulneZe/wazuh-install
-    ====================================================
-
-[*] Initialisation du gestionnaire de configuration...
-[*] Detection de l'installation Wazuh...
-[+] Wazuh détecté dans: /var/ossec
-[+] Version Wazuh: Unknown
-[+] Composants détectés: ['indexer', 'manager', 'dashboard']
-[+] Gestionnaire de configuration initialisé
-[+] Configurator 'security' enregistré
-[+] Configurator 'performance' enregistré
-[+] Configurator 'monitoring' enregistré
-[+] Configurator 'security-modules' enregistré
-[+] Configurator 'dashboard' enregistré
-[*] Application de toutes les configurations...
-[*] Application de toutes les configurations...
-[*] Application configuration: security
-[*] Application configuration securite...
-[*] Configuration SSL/TLS...
-[*] Generation mots de passe forts...
-[+] Mots de passe forts generes
-[*] Configuration API authentication...
-[*] Configuration regles pare-feu...
-[-] Erreur configuration pare-feu: Command '['sudo', 'ufw', 'allow', '9200/tcp']' returned non-zero exit status 1.
-[*] Application configuration: performance
-[*] Application configuration performance...
-[*] Configuration JVM memory...
-[+] JVM memory configure: 1GB min, 2GB max
-[*] Configuration rotation logs...
-[-] Configuration rotation logs existante
-[*] Configuration nettoyage disque...
-[+] Nettoyage disque configure (cron daily)
-[*] Configuration pool connexions...
-[+] Pool connexions configure
-[*] Application configuration: monitoring
-[*] Application configuration monitoring...
-[*] Configuration monitoring services...
-[+] Monitoring services configure (cron 5min)
-[*] Configuration niveau logs...
-[+] Niveau logs configure (INFO)
-[*] Configuration alertes...
-[+] Alertes deja configurees
-[*] Configuration health checks...
-[+] Health checks configurees
-[*] Application configuration: security-modules
-[*] Application de la configuration des modules de sécurité...
-============================================================
-[*] Configuration Vulnerability Detector...
-[-] Erreur configuration Vulnerability Detector: 'FileHandler' object has no attribute 'read'
-[*] Configuration CIS Benchmarks...
-[-] Erreur configuration CIS Benchmarks: 'FileHandler' object has no attribute 'read'
-[*] Configuration File Integrity Monitoring (FIM)...
-[-] Erreur configuration FIM: 'FileHandler' object has no attribute 'read'
-[*] Configuration MITRE ATT&CK...
-[-] Erreur configuration MITRE ATT&CK: 'FileHandler' object has no attribute 'read'
-============================================================
-[*] Application configuration: dashboard
-[*] Application de la configuration des dashboards...
-============================================================
-[*] Création de l'index pattern...
-[-] Erreur création index pattern: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/saved_objects/index-pattern/wazuh-alerts-* (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f649a2ac2f0>: Failed to establish a new connection: [Errno 111] Connection refused'))
-[*] Création des visualisations...
-[-] Erreur création visualisations: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/saved_objects/visualization/ssh-events-result (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f649a217c50>: Failed to establish a new connection: [Errno 111] Connection refused'))
-[*] Création du dashboard SOC...
-[-] Erreur création dashboard: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/saved_objects/dashboard/soc-ad-ssh (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f649a2bc690>: Failed to establish a new connection: [Errno 111] Connection refused'))
-============================================================
-[-] security: Securite: 3/4 configurations appliquees
-[-] performance: Performance: 3/4 configurations appliquees
-[+] monitoring: Monitoring: 4/4 configurations appliquees
-[-] security-modules: Modules de sécurité: 0/4 configurations appliquées
-[-] dashboard: Dashboards: 0/3 configurations appliquées
-
-[+] Code de retour: 0
-
-Appuyez sur Entrée pour continuer...
-
-
-3 : 
- ██████╗ ██████╗ ███████╗██████╗
-██╔════╝██╔═══██╗██╔════╝██╔══██╗
-██║     ██║   ██║█████╗  ██║  ██║
-██║     ██║   ██║██╔══╝  ██║  ██║
-╚██████╗╚██████╔╝███████╗██████╔╝
- ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
-
-    Configurator v1.0 - Advanced Configuration Management
-    By VulneZe - github.com/VulneZe/wazuh-install
-    ====================================================
-
-[*] Initialisation du gestionnaire de configuration...
-[*] Detection de l'installation Wazuh...
-[+] Wazuh détecté dans: /var/ossec
-[+] Version Wazuh: Unknown
-[+] Composants détectés: ['indexer', 'manager', 'dashboard']
-[+] Gestionnaire de configuration initialisé
-[+] Configurator 'security' enregistré
-[+] Configurator 'performance' enregistré
-[+] Configurator 'monitoring' enregistré
-[+] Configurator 'security-modules' enregistré
-[+] Configurator 'dashboard' enregistré
-[*] Validation de toutes les configurations...
-[*] Validation configuration: security
-[*] Validation configuration securite...
-[*] Verification configuration securite...
-[*] Validation configuration: performance
-[*] Validation configuration performance...
-[*] Verification configuration performance...
-[*] Validation configuration: monitoring
-[*] Validation configuration monitoring...
-[*] Verification configuration monitoring...
-[*] Validation configuration: security-modules
-[*] Validation de la configuration des modules de sécurité...
-============================================================
-[*] Validation Vulnerability Detector...
-[-] Erreur validation Vulnerability Detector: 'FileHandler' object has no attribute 'read'
-[*] Validation CIS Benchmarks...
-[-] Erreur validation CIS Benchmarks: 'FileHandler' object has no attribute 'read'
-[*] Validation File Integrity Monitoring (FIM)...
-[-] Erreur validation FIM: 'FileHandler' object has no attribute 'read'
-[*] Validation MITRE ATT&CK...
-[-] Erreur validation MITRE ATT&CK: 'FileHandler' object has no attribute 'read'
-============================================================
-[*] Validation configuration: dashboard
-[*] Validation de la configuration des dashboards...
-============================================================
-============================================================
-
-[+] Code de retour: 0
-
-Appuyez sur Entrée pour continuer...
-
-
-ràollabkc 4 : 
- ██████╗ ██████╗ ███████╗██████╗
-██╔════╝██╔═══██╗██╔════╝██╔══██╗
-██║     ██║   ██║█████╗  ██║  ██║
-██║     ██║   ██║██╔══╝  ██║  ██║
-╚██████╗╚██████╔╝███████╗██████╔╝
- ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
-
-    Configurator v1.0 - Advanced Configuration Management
-    By VulneZe - github.com/VulneZe/wazuh-install
-    ====================================================
-
-[*] Initialisation du gestionnaire de configuration...
-[*] Detection de l'installation Wazuh...
-[+] Wazuh détecté dans: /var/ossec
-[+] Version Wazuh: Unknown
-[+] Composants détectés: ['indexer', 'manager', 'dashboard']
-[+] Gestionnaire de configuration initialisé
-[+] Configurator 'security' enregistré
-[+] Configurator 'performance' enregistré
-[+] Configurator 'monitoring' enregistré
-[+] Configurator 'security-modules' enregistré
-[+] Configurator 'dashboard' enregistré
-[*] Rollback de toutes les configurations...
-[*] Rollback configuration: security
-[*] Rollback configuration securite...
-[*] Rollback configuration: performance
-[*] Rollback configuration performance...
-[*] Rollback configuration: monitoring
-[*] Rollback configuration monitoring...
-[*] Rollback configuration: security-modules
-[*] Annulation de la configuration des modules de sécurité...
-============================================================
-============================================================
-[*] Rollback configuration: dashboard
-[*] Annulation de la configuration des dashboards...
-============================================================
-============================================================
-
-[+] Code de retour: 0
-
-Appuyez sur Entrée pour continuer...
-
-fix : 
  ██████╗ ██████╗ ███████╗██████╗
 ██╔════╝██╔═══██╗██╔════╝██╔══██╗
 ██║     ██║   ██║█████╗  ██║  ██║
@@ -289,20 +35,22 @@ fix :
 [*] Vérification des modules de sécurité Wazuh...
 ============================================================
 [*] Vérification Vulnerability Detector...
-[-] Erreur vérification Vulnerability Detector: 'FileHandler' object has no attribute 'read'
+[-] Vulnerability Detector non activé
+[-] Intégration CVE/NVD non configurée
+[-] Rapports de vulnérabilités non configurés
 [*] Vérification CIS Benchmarks...
-[-] Erreur vérification CIS Benchmarks: 'FileHandler' object has no attribute 'read'
+[-] CIS Benchmarks non activé
 [*] Vérification File Integrity Monitoring (FIM)...
-[-] Erreur vérification FIM: 'FileHandler' object has no attribute 'read'
+[+] FIM activé (0 répertoires surveillés)
 [*] Vérification MITRE ATT&CK...
-[-] Erreur vérification MITRE ATT&CK: 'FileHandler' object has no attribute 'read'
+[-] MITRE ATT&CK non activé
 ============================================================
 [*] Verification configuration: dashboard
 [*] Vérification de la configuration des dashboards...
 ============================================================
-[-] Erreur connexion dashboard: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/status (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f250070c2f0>: Failed to establish a new connection: [Errno 111] Connection refused'))
-[-] Erreur vérification visualisations: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/saved_objects/_find?type=visualization (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f2500677c50>: Failed to establish a new connection: [Errno 111] Connection refused'))
-[-] Erreur vérification dashboards: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/saved_objects/_find?type=dashboard (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f2500720550>: Failed to establish a new connection: [Errno 111] Connection refused'))
+[-] Erreur connexion dashboard: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/status (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fc2036d82f0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+[-] Erreur vérification visualisations: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/saved_objects/_find?type=visualization (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fc20363fc50>: Failed to establish a new connection: [Errno 111] Connection refused'))
+[-] Erreur vérification dashboards: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/saved_objects/_find?type=dashboard (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fc2036e8550>: Failed to establish a new connection: [Errno 111] Connection refused'))
 ============================================================
 [-] security: Securite: 1/4 verifications OK
    [!] Mots de passe faibles detectes
@@ -310,156 +58,27 @@ fix :
    [!] Regles pare-feu incompletes
 [+] performance: Performance: 4/4 verifications OK
 [+] monitoring: Monitoring: 4/4 verifications OK
-[-] security-modules: Modules de sécurité: 0/4 vérifications OK
+[-] security-modules: Modules de sécurité: 1/4 vérifications OK
 [-] dashboard: Dashboards: Configuration incomplète
 
 [*] Application des corrections...
-[*] Application de toutes les configurations...
-[*] Application de toutes les configurations...
-[*] Application configuration: security
-[*] Application configuration securite...
-[*] Configuration SSL/TLS...
-[*] Generation mots de passe forts...
-[+] Mots de passe forts generes
-[*] Configuration API authentication...
-[*] Configuration regles pare-feu...
-[-] Erreur configuration pare-feu: Command '['sudo', 'ufw', 'allow', '9200/tcp']' returned non-zero exit status 1.
-[*] Application configuration: performance
-[*] Application configuration performance...
-[*] Configuration JVM memory...
-[+] JVM memory configure: 1GB min, 2GB max
-[*] Configuration rotation logs...
-[-] Configuration rotation logs existante
-[*] Configuration nettoyage disque...
-[+] Nettoyage disque configure (cron daily)
-[*] Configuration pool connexions...
-[+] Pool connexions configure
-[*] Application configuration: monitoring
-[*] Application configuration monitoring...
-[*] Configuration monitoring services...
-[+] Monitoring services configure (cron 5min)
-[*] Configuration niveau logs...
-[+] Niveau logs configure (INFO)
-[*] Configuration alertes...
-[+] Alertes deja configurees
-[*] Configuration health checks...
-[+] Health checks configurees
-[*] Application configuration: security-modules
-[*] Application de la configuration des modules de sécurité...
-============================================================
-[*] Configuration Vulnerability Detector...
-[-] Erreur configuration Vulnerability Detector: 'FileHandler' object has no attribute 'read'
-[*] Configuration CIS Benchmarks...
-[-] Erreur configuration CIS Benchmarks: 'FileHandler' object has no attribute 'read'
-[*] Configuration File Integrity Monitoring (FIM)...
-[-] Erreur configuration FIM: 'FileHandler' object has no attribute 'read'
-[*] Configuration MITRE ATT&CK...
-[-] Erreur configuration MITRE ATT&CK: 'FileHandler' object has no attribute 'read'
-============================================================
 [*] Application configuration: dashboard
 [*] Application de la configuration des dashboards...
 ============================================================
-[*] Création de l'index pattern...
-[-] Erreur création index pattern: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/saved_objects/index-pattern/wazuh-alerts-* (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f25007207d0>: Failed to establish a new connection: [Errno 111] Connection refused'))
-[*] Création des visualisations...
-[-] Erreur création visualisations: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/saved_objects/visualization/ssh-events-result (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f2500720a50>: Failed to establish a new connection: [Errno 111] Connection refused'))
-[*] Création du dashboard SOC...
-[-] Erreur création dashboard: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/saved_objects/dashboard/soc-ad-ssh (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f2500720e10>: Failed to establish a new connection: [Errno 111] Connection refused'))
-============================================================
-[-] security: Securite: 3/4 configurations appliquees
-[-] performance: Performance: 3/4 configurations appliquees
-[+] monitoring: Monitoring: 4/4 configurations appliquees
-[-] security-modules: Modules de sécurité: 0/4 configurations appliquées
-[-] dashboard: Dashboards: 0/3 configurations appliquées
+[-] Erreur connexion dashboard: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/status (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fc2036e87d0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+[!] Dashboard non accessible - Configuration ignorée
+[-] dashboard: Dashboards: Service non disponible
 
 [*] Validation des corrections...
-[*] Validation de toutes les configurations...
-[*] Validation configuration: security
-[*] Validation configuration securite...
-[*] Verification configuration securite...
-[*] Validation configuration: performance
-[*] Validation configuration performance...
-[*] Verification configuration performance...
-[*] Validation configuration: monitoring
-[*] Validation configuration monitoring...
-[*] Verification configuration monitoring...
-[*] Validation configuration: security-modules
-[*] Validation de la configuration des modules de sécurité...
-============================================================
-[*] Validation Vulnerability Detector...
-[-] Erreur validation Vulnerability Detector: 'FileHandler' object has no attribute 'read'
-[*] Validation CIS Benchmarks...
-[-] Erreur validation CIS Benchmarks: 'FileHandler' object has no attribute 'read'
-[*] Validation File Integrity Monitoring (FIM)...
-[-] Erreur validation FIM: 'FileHandler' object has no attribute 'read'
-[*] Validation MITRE ATT&CK...
-[-] Erreur validation MITRE ATT&CK: 'FileHandler' object has no attribute 'read'
-============================================================
-[*] Validation configuration: dashboard
-[*] Validation de la configuration des dashboards...
-============================================================
-============================================================
+Traceback (most recent call last):
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 217, in <module>
+    main()
+    ~~~~^^
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 211, in main
+    result = config_manager.get_configurator(args.config).validate_config()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DashboardConfigurator' object has no attribute 'validate_config'
 
-[+] Code de retour: 0
+[+] Code de retour: 1
 
 Appuyez sur Entrée pour continuer...
-
-
-6 : exmeple dashbaord;:  Pool(host='localhost', port=5601): Max retries exceeded with url: /api/saved_objects/index-pattern/wazuh-alerts-* (Caused
-
-sécurite 4 de 6 : 
- ██████╗ ██████╗ ███████╗██████╗
-██╔════╝██╔═══██╗██╔════╝██╔══██╗
-██║     ██║   ██║█████╗  ██║  ██║
-██║     ██║   ██║██╔══╝  ██║  ██║
-╚██████╗╚██████╔╝███████╗██████╔╝
- ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
-
-    Configurator v1.0 - Advanced Configuration Management
-    By VulneZe - github.com/VulneZe/wazuh-install
-    ====================================================
-
-[*] Initialisation du gestionnaire de configuration...
-[*] Detection de l'installation Wazuh...
-[+] Wazuh détecté dans: /var/ossec
-[+] Version Wazuh: Unknown
-[+] Composants détectés: ['indexer', 'manager', 'dashboard']
-[+] Gestionnaire de configuration initialisé
-[+] Configurator 'security' enregistré
-[+] Configurator 'performance' enregistré
-[+] Configurator 'monitoring' enregistré
-[+] Configurator 'security-modules' enregistré
-[+] Configurator 'dashboard' enregistré
-[*] Application configuration: security-modules
-[*] Application de la configuration des modules de sécurité...
-============================================================
-[*] Configuration Vulnerability Detector...
-[-] Erreur configuration Vulnerability Detector: 'FileHandler' object has no attribute 'read'
-[*] Configuration CIS Benchmarks...
-[-] Erreur configuration CIS Benchmarks: 'FileHandler' object has no attribute 'read'
-[*] Configuration File Integrity Monitoring (FIM)...
-[-] Erreur configuration FIM: 'FileHandler' object has no attribute 'read'
-[*] Configuration MITRE ATT&CK...
-[-] Erreur configuration MITRE ATT&CK: 'FileHandler' object has no attribute 'read'
-============================================================
-[-] security-modules: Modules de sécurité: 0/4 configurations appliquées
-
-[+] Code de retour: 0
-
-Appuyez sur Entrée pour continuer...
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

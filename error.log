@@ -125,3 +125,39 @@
 15/04/2026 15:46:56 INFO: filebeat service started.
 15/04/2026 15:46:56 INFO: --- Wazuh dashboard ---
 15/04/2026 15:46:56 INFO: Starting Wazuh dashboard installation.
+15/04/2026 15:59:49 INFO: Wazuh dashboard installation finished.
+15/04/2026 15:59:49 INFO: Wazuh dashboard post-install configuration finished.
+15/04/2026 15:59:49 INFO: Starting service wazuh-dashboard.
+15/04/2026 15:59:50 INFO: wazuh-dashboard service started.
+15/04/2026 15:59:51 INFO: Updating the internal users.
+15/04/2026 16:00:13 INFO: A backup of the internal users has been saved in the /etc/wazuh-indexer/internalusers-backup folder.
+15/04/2026 16:00:36 INFO: The filebeat.yml file has been updated to use the Filebeat Keystore username and password.
+15/04/2026 16:01:39 INFO: Initializing Wazuh dashboard web application.
+15/04/2026 16:01:39 INFO: Wazuh dashboard web application not yet initialized. Waiting...
+15/04/2026 16:01:56 INFO: Wazuh dashboard web application not yet initialized. Waiting...
+15/04/2026 16:02:11 INFO: Wazuh dashboard web application initialized.
+15/04/2026 16:02:11 INFO: --- Summary ---
+15/04/2026 16:02:11 INFO: You can access the web interface https://<wazuh-dashboard-ip>:443
+    User: admin
+    Password: lhcFYvZ+IewWNeS9CEu28GSCeedjnwF7
+15/04/2026 16:02:11 INFO: --- Dependencies ----
+15/04/2026 16:02:11 INFO: Removing gawk.
+15/04/2026 16:02:27 INFO: Installation finished.
+[+] Installation Wazuh All-in-One terminée avec succès!
+
+[*] Validation post-installation...
+[+] wazuh-indexer: Actif
+[-] wazuh-server: Inactif (inactive)
+[+] wazuh-dashboard: Actif
+
+[*] Vérification des ports...
+[+] Port 9200 (indexer): Ouvert
+[+] Port 9300 (indexer): Ouvert
+[+] Port 1514 (server): Ouvert
+[+] Port 1515 (server): Ouvert
+[+] Port 55000 (server): Ouvert
+[+] Port 443 (dashboard): Ouvert
+[-] Port 5601 (dashboard): Fermé
+
+[!] Installation terminée mais certains services ne sont pas actifs
+root@SRV-wazuh:/home/wazuh/wazuh-install#

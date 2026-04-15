@@ -48,6 +48,9 @@ cd wazuh-install
 # Rendre le script exécutable
 chmod +x wazuh_smart_installer.py
 
+# Installation Java si nécéssaire
+apt install -y openjdk-21-jdk
+
 # Aucune dépendance externe requise !
 # Le script utilise uniquement la bibliothèque standard Python
 ```

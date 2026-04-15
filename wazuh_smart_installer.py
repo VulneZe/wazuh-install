@@ -15,6 +15,23 @@ import argparse
 from pathlib import Path
 import re
 
+
+# ===================== BANNER =====================
+def banner():
+    os.system('clear' if os.name == 'posix' else 'cls')
+    print(r"""
+ ██████╗ ██████╗ ███████╗██████╗ 
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝ 
+                               
+    Smart Installer v2.0 - Intelligent Wazuh Installation
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+    """)
+
 class WazuhSmartInstaller:
     """Installateur intelligent Wazuh avec détection et résolution de problèmes"""
     
@@ -437,6 +454,8 @@ class WazuhSmartInstaller:
 
 def main():
     """Wazuh Smart Installer - Installation intelligente avec résolution automatique des problèmes"""
+    banner()
+    
     parser = argparse.ArgumentParser(
         description="Wazuh Smart Installer - Installation intelligente avec résolution automatique des problèmes",
         formatter_class=argparse.RawDescriptionHelpFormatter

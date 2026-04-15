@@ -46,10 +46,10 @@ git clone https://github.com/VulneZe/wazuh-install.git
 cd wazuh-install
 
 # Rendre le script exécutable
-chmod +x wazuh_installer.py
+chmod +x wazuh_smart_installer.py
 
-# Installer les dépendances Python
-pip install click
+# Aucune dépendance externe requise !
+# Le script utilise uniquement la bibliothèque standard Python
 ```
 
 ## Utilisation

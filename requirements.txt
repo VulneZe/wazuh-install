@@ -1,2 +1,2 @@
-# Dépendances pour Wazuh Installer
-click>=8.0.0
+# Dépendances pour Wazuh Smart Installer
+# Aucune dépendance externe requise - utilise uniquement la bibliothèque standard Python

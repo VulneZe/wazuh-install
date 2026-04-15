@@ -11,8 +11,8 @@ import platform
 import socket
 import time
 import json
+import argparse
 from pathlib import Path
-import click
 import re
 
 class WazuhSmartInstaller:
@@ -435,67 +435,76 @@ class WazuhSmartInstaller:
             print("⚠️ Impossible d'extraire les mots de passe automatiquement")
 
 
-@click.group()
-@click.version_option(version="2.0.0")
-def cli():
+def main():
     """Wazuh Smart Installer - Installation intelligente avec résolution automatique des problèmes"""
-    pass
-
-
-@cli.command()
-@click.option('--auto-fix', '-a', is_flag=True, help='Résoudre automatiquement les problèmes détectés')
-@click.option('--skip-check', '-s', is_flag=True, help='Sauter la vérification pré-installation')
-def install(auto_fix, skip_check):
-    """Installer Wazuh avec vérification et résolution automatique des problèmes"""
-    installer = WazuhSmartInstaller()
+    parser = argparse.ArgumentParser(
+        description="Wazuh Smart Installer - Installation intelligente avec résolution automatique des problèmes",
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument('--version', action='version', version='2.0.0')
     
-    print(f"🖥️ OS détecté: {installer.os_type}")
+    subparsers = parser.add_subparsers(dest='command', help='Commandes disponibles')
     
-    # Vérification pré-installation
-    if not skip_check:
-        env_ok = installer.pre_install_check()
+    # Commande install
+    install_parser = subparsers.add_parser('install', help='Installer Wazuh')
+    install_parser.add_argument('--auto-fix', '-a', action='store_true', help='Résoudre automatiquement les problèmes détectés')
+    install_parser.add_argument('--skip-check', '-s', action='store_true', help='Sauter la vérification pré-installation')
+    
+    # Commande check
+    subparsers.add_parser('check', help='Vérifier l\'environnement sans installer')
+    
+    # Commande status
+    subparsers.add_parser('status', help='Vérifier le statut des services Wazuh')
+    
+    # Commande uninstall
+    subparsers.add_parser('uninstall', help='Désinstaller Wazuh')
+    
+    args = parser.parse_args()
+    
+    if args.command == 'install':
+        installer = WazuhSmartInstaller()
         
-        if not env_ok and auto_fix:
-            installer.auto_fix_issues()
+        print(f"🖥️ OS détecté: {installer.os_type}")
         
-        if not env_ok and not auto_fix:
-            print("\n❌ Problèmes détectés. Utilisez --auto-fix pour tenter une résolution automatique")
+        # Vérification pré-installation
+        if not args.skip_check:
+            env_ok = installer.pre_install_check()
+            
+            if not env_ok and args.auto_fix:
+                installer.auto_fix_issues()
+            
+            if not env_ok and not args.auto_fix:
+                print("\n❌ Problèmes détectés. Utilisez --auto-fix pour tenter une résolution automatique")
+                sys.exit(1)
+        
+        # Télécharger le script
+        if not installer.download_install_script():
             sys.exit(1)
+        
+        # Installation
+        installer.install_all_in_one()
     
-    # Télécharger le script
-    if not installer.download_install_script():
-        sys.exit(1)
+    elif args.command == 'check':
+        installer = WazuhSmartInstaller()
+        installer.pre_install_check()
     
-    # Installation
-    installer.install_all_in_one()
-
-
-@cli.command()
-def check():
-    """Vérifier l'environnement sans installer"""
-    installer = WazuhSmartInstaller()
-    installer.pre_install_check()
-
-
-@cli.command()
-def status():
-    """Vérifier le statut des services Wazuh"""
-    installer = WazuhSmartInstaller()
-    installer.post_install_validation()
-
-
-@cli.command()
-def uninstall():
-    """Désinstaller Wazuh"""
-    try:
-        print("🗑️ Désinstallation de Wazuh...")
-        subprocess.run([
-            "sudo", "bash", "./wazuh-install.sh", "-u"
-        ], check=True)
-        print("✅ Wazuh désinstallé avec succès!")
-    except subprocess.CalledProcessError as e:
-        print(f"❌ Erreur lors de la désinstallation: {e}")
+    elif args.command == 'status':
+        installer = WazuhSmartInstaller()
+        installer.post_install_validation()
+    
+    elif args.command == 'uninstall':
+        try:
+            print("🗑️ Désinstallation de Wazuh...")
+            subprocess.run([
+                "sudo", "bash", "./wazuh-install.sh", "-u"
+            ], check=True)
+            print("✅ Wazuh désinstallé avec succès!")
+        except subprocess.CalledProcessError as e:
+            print(f"❌ Erreur lors de la désinstallation: {e}")
+    
+    else:
+        parser.print_help()
 
 
 if __name__ == "__main__":
-    cli()
+    main()

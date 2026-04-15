@@ -1,0 +1,57 @@
+
+ ██████╗ ██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Smart Installer v2.0 - Intelligent Wazuh Installation
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+[+] OS détecté: debian
+[*] Verification de l'environnement avant installation...
+============================================================
+[+] OS détecté: debian
+[+] Droits root: OK
+[+] Mémoire: 4.6 GB
+[+] Espace disque: 39 GB disponibles
+[+] Java: Installé
+[+] Ports: Aucun conflit
+[+] Pare-feu: OK
+[+] Réseau: OK
+============================================================
+[+] Environnement prêt pour l'installation
+[*] Téléchargement du script d'installation Wazuh...
+Traceback (most recent call last):
+  File "/home/wazuh/wazuh-install/wazuh_smart_installer.py", line 529, in <module>
+    main()
+    ~~~~^^
+  File "/home/wazuh/wazuh-install/wazuh_smart_installer.py", line 500, in main
+    if not installer.download_install_script():
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/wazuh/wazuh-install/wazuh_smart_installer.py", line 348, in download_install_script
+    subprocess.run([
+    ~~~~~~~~~~~~~~^^
+        "curl", "-sO", self.INSTALL_SCRIPT_URL
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ], check=True)
+    ^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 554, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1039, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        pass_fds, cwd, env,
+                        ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                        gid, gids, uid, umask,
+                        ^^^^^^^^^^^^^^^^^^^^^^
+                        start_new_session, process_group)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1972, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'curl'
+root@SRV-wazuh:/home/wazuh/wazuh-install#

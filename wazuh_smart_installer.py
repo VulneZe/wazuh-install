@@ -54,13 +54,22 @@ class WazuhSmartInstaller:
         "disk_space": "Espace disque insuffisant (min 20GB recommandé)",
         "permissions": "Permissions insuffisantes (sudo requis)",
         "network": "Problèmes de connectivité réseau",
-        "version_mismatch": "Incompatibilité de versions"
+        "version_mismatch": "Incompatibilité de versions",
+        "dependencies_missing": "Dépendances manquantes"
     }
     
     def __init__(self):
         self.os_type = self.detect_os()
         self.issues_found = []
         self.solutions_applied = []
+        self.REQUIRED_DEPENDENCIES = [
+            "curl",
+            "wget",
+            "bash",
+            "python3",
+            "tar",
+            "gzip"
+        ]
     
     def detect_os(self):
         """Détecter le système d'exploitation"""
@@ -188,6 +197,67 @@ class WazuhSmartInstaller:
             socket.gethostbyname("packages.wazuh.com")
             return True
         except:
+            return False
+    
+    def check_dependencies(self):
+        """Vérifier si toutes les dépendances sont installées"""
+        print("[*] Vérification des dépendances...")
+        missing = []
+        
+        for dep in self.REQUIRED_DEPENDENCIES:
+            if not self._check_command(dep):
+                missing.append(dep)
+                print(f"[-] Dépendance manquante: {dep}")
+            else:
+                print(f"[+] Dépendance présente: {dep}")
+        
+        if missing:
+            print(f"[!] {len(missing)} dépendances manquantes")
+            self.issues_found.append("dependencies_missing")
+            return False, missing
+        else:
+            print("[+] Toutes les dépendances sont présentes")
+            return True, []
+    
+    def install_dependencies(self, missing_deps):
+        """Installer les dépendances manquantes automatiquement"""
+        print(f"[*] Installation des {len(missing_deps)} dépendances manquantes...")
+        
+        try:
+            if self.os_type in ["debian", "ubuntu"]:
+                subprocess.run(
+                    ["apt-get", "update"],
+                    capture_output=True,
+                    check=True,
+                    timeout=120
+                )
+                for dep in missing_deps:
+                    print(f"[*] Installation de {dep}...")
+                    subprocess.run(
+                        ["apt-get", "install", "-y", dep],
+                        capture_output=True,
+                        check=True,
+                        timeout=120
+                    )
+                    print(f"[+] {dep} installé")
+            elif self.os_type in ["rhel", "centos", "fedora"]:
+                for dep in missing_deps:
+                    print(f"[*] Installation de {dep}...")
+                    subprocess.run(
+                        ["yum", "install", "-y", dep],
+                        capture_output=True,
+                        check=True,
+                        timeout=120
+                    )
+                    print(f"[+] {dep} installé")
+            
+            self.solutions_applied.append("dependencies_installed")
+            print("[+] Dépendances installées avec succès")
+            return True
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as e:
+            print(f"[-] Erreur lors de l'installation des dépendances: {e}")
+            return False
+        except:
             self.issues_found.append("network")
             return False
     
@@ -205,6 +275,11 @@ class WazuhSmartInstaller:
         else:
             print("[-] Droits root: Manquant (sudo requis)")
             self.issues_found.append("permissions")
+        
+        # Vérifier dépendances
+        deps_ok, missing_deps = self.check_dependencies()
+        if not deps_ok:
+            print(f"[-] Dépendances manquantes: {missing_deps}")
         
         # Vérifier mémoire
         mem_ok, mem_gb = self.check_memory()
@@ -328,6 +403,10 @@ class WazuhSmartInstaller:
                 self.fix_java()
             elif issue == "firewall_blocked":
                 self.fix_firewall()
+            elif issue == "dependencies_missing":
+                deps_ok, missing_deps = self.check_dependencies()
+                if not deps_ok:
+                    self.install_dependencies(missing_deps)
             elif issue == "permissions":
                 print("[!] Exécutez avec sudo: sudo python3 wazuh_smart_installer.py")
             elif issue in ["memory_insufficient", "disk_space"]:

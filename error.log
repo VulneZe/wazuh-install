@@ -1,0 +1,204 @@
+confoguirator 
+
+1 : 
+
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+[*] Initialisation du gestionnaire de configuration...
+[*] Detection de l'installation Wazuh...
+[+] Wazuh détecté dans: /var/ossec
+[+] Version Wazuh: Unknown
+[+] Composants détectés: ['indexer', 'manager', 'dashboard']
+[+] Gestionnaire de configuration initialisé
+Traceback (most recent call last):
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 217, in <module>
+    main()
+    ~~~~^^
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 146, in main
+    config_manager.register_configurator('security', SecurityConfigurator())
+                                                     ~~~~~~~~~~~~~~~~~~~~^^
+TypeError: Can't instantiate abstract class SecurityConfigurator without an implementation for abstract methods 'apply_config', 'check_current_config', 'rollback_config', 'validate_config'
+
+[+] Code de retour: 1
+
+Appuyez sur Entrée pour continuer...
+
+2 : ═══╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+[*] Initialisation du gestionnaire de configuration...
+[*] Detection de l'installation Wazuh...
+[+] Wazuh détecté dans: /var/ossec
+[+] Version Wazuh: Unknown
+[+] Composants détectés: ['indexer', 'manager', 'dashboard']
+[+] Gestionnaire de configuration initialisé
+Traceback (most recent call last):
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 217, in <module>
+    main()
+    ~~~~^^
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 146, in main
+    config_manager.register_configurator('security', SecurityConfigurator())
+                                                     ~~~~~~~~~~~~~~~~~~~~^^
+TypeError: Can't instantiate abstract class SecurityConfigurator without an implementation for abstract methods 'apply_config', 'check_current_config', 'rollback_config', 'validate_config'
+
+[+] Code de retour: 1
+
+Appuyez sur Entrée pour continuer...
+
+
+ ██████╗ ██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+[*] Initialisation du gestionnaire de configuration...
+[*] Detection de l'installation Wazuh...
+[+] Wazuh détecté dans: /var/ossec
+[+] Version Wazuh: Unknown
+[+] Composants détectés: ['indexer', 'manager', 'dashboard']
+[+] Gestionnaire de configuration initialisé
+Traceback (most recent call last):
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 217, in <module>
+    main()
+    ~~~~^^
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 146, in main
+    config_manager.register_configurator('security', SecurityConfigurator())
+                                                     ~~~~~~~~~~~~~~~~~~~~^^
+TypeError: Can't instantiate abstract class SecurityConfigurator without an implementation for abstract methods 'apply_config', 'check_current_config', 'rollback_config', 'validate_config'
+
+[+] Code de retour: 1
+
+Appuyez sur Entrée pour continuer...
+
+
+
+
+
+valider conf 3 : 
+ ██████╗ ██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+[*] Initialisation du gestionnaire de configuration...
+[*] Detection de l'installation Wazuh...
+[+] Wazuh détecté dans: /var/ossec
+[+] Version Wazuh: Unknown
+[+] Composants détectés: ['indexer', 'manager', 'dashboard']
+[+] Gestionnaire de configuration initialisé
+Traceback (most recent call last):
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 217, in <module>
+    main()
+    ~~~~^^
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 146, in main
+    config_manager.register_configurator('security', SecurityConfigurator())
+                                                     ~~~~~~~~~~~~~~~~~~~~^^
+TypeError: Can't instantiate abstract class SecurityConfigurator without an implementation for abstract methods 'apply_config', 'check_current_config', 'rollback_config', 'validate_config'
+
+[+] Code de retour: 1
+
+Appuyez sur Entrée pour continuer...
+ca partout : 
+ ██████╗ ██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+[*] Initialisation du gestionnaire de configuration...
+[*] Detection de l'installation Wazuh...
+[+] Wazuh détecté dans: /var/ossec
+[+] Version Wazuh: Unknown
+[+] Composants détectés: ['indexer', 'manager', 'dashboard']
+[+] Gestionnaire de configuration initialisé
+Traceback (most recent call last):
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 217, in <module>
+    main()
+    ~~~~^^
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 146, in main
+    config_manager.register_configurator('security', SecurityConfigurator())
+                                                     ~~~~~~~~~~~~~~~~~~~~^^
+TypeError: Can't instantiate abstract class SecurityConfigurator without an implementation for abstract methods 'apply_config', 'check_current_config', 'rollback_config', 'validate_config'
+
+[+] Code de retour: 1
+
+Appuyez sur Entrée pour continuer...
+
+
+
+ ██████╗ ██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+[*] Initialisation du gestionnaire de configuration...
+[*] Detection de l'installation Wazuh...
+[+] Wazuh détecté dans: /var/ossec
+[+] Version Wazuh: Unknown
+[+] Composants détectés: ['indexer', 'manager', 'dashboard']
+[+] Gestionnaire de configuration initialisé
+Traceback (most recent call last):
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 217, in <module>
+    main()
+    ~~~~^^
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 146, in main
+    config_manager.register_configurator('security', SecurityConfigurator())
+                                                     ~~~~~~~~~~~~~~~~~~~~^^
+TypeError: Can't instantiate abstract class SecurityConfigurator without an implementation for abstract methods 'apply_config', 'check_current_config', 'rollback_config', 'validate_config'
+
+[+] Code de retour: 1
+
+Appuyez sur Entrée pour continuer...
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+

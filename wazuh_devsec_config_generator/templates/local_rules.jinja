@@ -1,0 +1,51 @@
+<group name="local,devsec,overrides">
+  <!-- Overrides officiels (ex: auth failed, FIM sur .git) -->
+  <rule id="5715" level="5" overwrite="yes">
+    <description>Authentification SSH failed - extended dev context</description>
+  </rule>
+  
+  <rule id="553" level="7" overwrite="yes">
+    <description>File integrity monitoring - .git directory access</description>
+    <regex>\.git</regex>
+  </rule>
+  
+  <rule id="5710" level="8" overwrite="yes">
+    <description>Su to root - development environment</description>
+    <regex>su.*root</regex>
+  </rule>
+  
+  <rule id="530" level="10" overwrite="yes">
+    <description>User authentication failure - dev servers</description>
+    <regex>authentication.*failure</regex>
+  </rule>
+  
+  <rule id="550" level="9" overwrite="yes">
+    <description>Process started - suspicious development tools</description>
+    <regex>(nc|netcat|socat)</regex>
+  </rule>
+  
+  <rule id="570" level="6" overwrite="yes">
+    <description>Privilege escalation attempt - dev environment</description>
+    <regex>sudo.*-i</regex>
+  </rule>
+  
+  <rule id="580" level="8" overwrite="yes">
+    <description>File modification - system configuration</description>
+    <regex>(passwd|shadow|sudoers)</regex>
+  </rule>
+  
+  <rule id="590" level="11" overwrite="yes">
+    <description>Network connection - unusual port</description>
+    <regex>port.*[0-9]{4,5}</regex>
+  </rule>
+  
+  <rule id="600" level="7" overwrite="yes">
+    <description>System call - suspicious activity</description>
+    <regex>(ptrace|strace)</regex>
+  </rule>
+  
+  <rule id="610" level="9" overwrite="yes">
+    <description>Service restart - unauthorized</description>
+    <regex>systemctl.*restart</regex>
+  </rule>
+</group>

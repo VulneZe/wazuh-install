@@ -1,0 +1,11 @@
+<rule id="{{ rule.rule_id }}" level="{{ rule.level }}">
+    <if_group>syslog,windows</if_group>
+    {% if rule.if_sid %}<if_sid>{{ rule.if_sid }}</if_sid>{% endif %}
+    <description>{{ rule.title }} - {{ rule.description }}</description>
+    <mitre>{{ rule.mitre }}</mitre>
+    <regex>{{ rule.regex }}</regex>
+    {% if rule.anti_fp_list %}<list field="srcip" lookup="not_match_key">{{ rule.anti_fp_list }}</list>{% endif %}
+    {% if rule.frequency %}<frequency>{{ rule.frequency }}</frequency><timeframe>{{ rule.timeframe }}</timeframe>{% endif %}
+    <group>{{ rule.group }}</group>
+    <options>no_full_log</options>
+  </rule>

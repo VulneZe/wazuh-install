@@ -343,15 +343,90 @@ class WazuhSmartInstaller:
     
     def download_install_script(self):
         """Télécharger le script d'installation Wazuh"""
+        print("[*] Téléchargement du script d'installation Wazuh...")
+        
+        # Vérifier si curl est installé
+        curl_installed = self._check_command("curl")
+        wget_installed = self._check_command("wget")
+        
+        if curl_installed:
+            return self._download_with_curl()
+        elif wget_installed:
+            return self._download_with_wget()
+        else:
+            # Installer curl automatiquement
+            print("[!] curl non installé, installation automatique...")
+            if self._install_curl():
+                return self._download_with_curl()
+            else:
+                print("[-] Impossible d'installer curl")
+                return False
+    
+    def _check_command(self, command: str) -> bool:
+        """Vérifier si une commande est disponible"""
         try:
-            print("[*] Téléchargement du script d'installation Wazuh...")
+            subprocess.run(
+                ["which", command],
+                capture_output=True,
+                check=True,
+                timeout=10
+            )
+            return True
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired, FileNotFoundError):
+            return False
+    
+    def _download_with_curl(self) -> bool:
+        """Télécharger avec curl"""
+        try:
             subprocess.run([
                 "curl", "-sO", self.INSTALL_SCRIPT_URL
-            ], check=True)
-            print("[+] Script téléchargé avec succès")
+            ], check=True, timeout=60)
+            print("[+] Script téléchargé avec succès (curl)")
             return True
-        except subprocess.CalledProcessError as e:
-            print(f"[-] Erreur lors du téléchargement: {e}")
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as e:
+            print(f"[-] Erreur téléchargement avec curl: {e}")
+            return False
+    
+    def _download_with_wget(self) -> bool:
+        """Télécharger avec wget"""
+        try:
+            subprocess.run([
+                "wget", "-q", self.INSTALL_SCRIPT_URL
+            ], check=True, timeout=60)
+            print("[+] Script téléchargé avec succès (wget)")
+            return True
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as e:
+            print(f"[-] Erreur téléchargement avec wget: {e}")
+            return False
+    
+    def _install_curl(self) -> bool:
+        """Installer curl automatiquement"""
+        try:
+            print("[*] Installation de curl...")
+            if self.os_type == "debian" or self.os_type == "ubuntu":
+                subprocess.run(
+                    ["apt-get", "update"],
+                    capture_output=True,
+                    check=True,
+                    timeout=120
+                )
+                subprocess.run(
+                    ["apt-get", "install", "-y", "curl"],
+                    capture_output=True,
+                    check=True,
+                    timeout=120
+                )
+            elif self.os_type == "rhel" or self.os_type == "centos" or self.os_type == "fedora":
+                subprocess.run(
+                    ["yum", "install", "-y", "curl"],
+                    capture_output=True,
+                    check=True,
+                    timeout=120
+                )
+            print("[+] Curl installé avec succès")
+            return True
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as e:
+            print(f"[-] Erreur lors de l'installation de curl: {e}")
             return False
     
     def install_all_in_one(self):

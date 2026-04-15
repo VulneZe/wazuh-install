@@ -161,3 +161,130 @@
 
 [!] Installation terminée mais certains services ne sont pas actifs
 root@SRV-wazuh:/home/wazuh/wazuh-install#
+
+
+
+
+
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Smart Installer v2.0 - Intelligent Wazuh Installation
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+
+[*] Validation post-installation...
+[+] wazuh-indexer: Actif
+[-] wazuh-server: Inactif (inactive)
+[+] wazuh-dashboard: Actif
+
+[*] Vérification des ports...
+[+] Port 9200 (indexer): Ouvert
+[+] Port 9300 (indexer): Ouvert
+[+] Port 1514 (server): Ouvert
+[+] Port 1515 (server): Ouvert
+[+] Port 55000 (server): Ouvert
+[+] Port 443 (dashboard): Ouvert
+[-] Port 5601 (dashboard): Fermé
+
+[!] Installation terminée mais certains services ne sont pas actifs
+root@SRV-wazuh:/home/wazuh/wazuh-install#
+
+
+
+
+
+ ██████╗ ██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+[*] Initialisation du gestionnaire de configuration...
+[*] Detection de l'installation Wazuh...
+[+] Wazuh détecté dans: /var/ossec
+[+] Version Wazuh: Unknown
+[+] Composants détectés: ['indexer', 'manager', 'dashboard']
+[+] Gestionnaire de configuration initialisé
+[+] Configurator 'security' enregistré
+[+] Configurator 'performance' enregistré
+[+] Configurator 'monitoring' enregistré
+[*] Mode correction pour Wazuh existant...
+[*] Verification des configurations actuelles...
+[*] Verification de toutes les configurations...
+[*] Verification de toutes les configurations...
+[*] Verification configuration: security
+[*] Verification configuration securite...
+[*] Verification configuration: performance
+[*] Verification configuration performance...
+[*] Verification configuration: monitoring
+[*] Verification configuration monitoring...
+[-] security: Securite: 1/4 verifications OK
+   [!] Mots de passe faibles detectes
+   [!] API authentication non configuree
+   [!] Regles pare-feu incompletes
+[-] performance: Performance: 1/4 verifications OK
+   [!] Rotation logs non configuree
+   [!] Nettoyage disque non configure
+   [!] Pool connexions non optimise
+[-] monitoring: Monitoring: 2/4 verifications OK
+   [!] Niveau logs non optimise
+   [!] Health checks non configurees
+
+[*] Application des corrections...
+[*] Application de toutes les configurations...
+[*] Application de toutes les configurations...
+[*] Application configuration: security
+[*] Application configuration securite...
+[*] Configuration SSL/TLS...
+[*] Generation mots de passe forts...
+[+] Mots de passe forts generes
+[*] Configuration API authentication...
+[*] Configuration regles pare-feu...
+[-] Erreur configuration pare-feu: Command '['sudo', 'ufw', 'allow', '9200/tcp']' returned non-zero exit status 1.
+[*] Application configuration: performance
+[*] Application configuration performance...
+[*] Configuration JVM memory...
+[+] JVM memory configure: 1GB min, 2GB max
+[*] Configuration rotation logs...
+[+] Rotation logs configuree
+[*] Configuration nettoyage disque...
+[+] Nettoyage disque configure (cron daily)
+[*] Configuration pool connexions...
+[+] Pool connexions configure
+[*] Application configuration: monitoring
+[*] Application configuration monitoring...
+[*] Configuration monitoring services...
+[+] Monitoring services configure (cron 5min)
+[*] Configuration niveau logs...
+[+] Niveau logs configure (INFO)
+[*] Configuration alertes...
+[+] Alertes deja configurees
+[*] Configuration health checks...
+[+] Health checks configurees
+[-] security: Securite: 3/4 configurations appliquees
+[+] performance: Performance: 4/4 configurations appliquees
+[+] monitoring: Monitoring: 4/4 configurations appliquees
+
+[*] Validation des corrections...
+[*] Validation de toutes les configurations...
+[*] Validation configuration: security
+[*] Validation configuration securite...
+[*] Verification configuration securite...
+[*] Validation configuration: performance
+[*] Validation configuration performance...
+[*] Verification configuration performance...
+[*] Validation configuration: monitoring
+[*] Validation configuration monitoring...
+[*] Verification configuration monitoring...
+root@SRV-wazuh:/home/wazuh/wazuh-install#
+
+
+
+

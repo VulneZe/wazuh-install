@@ -137,23 +137,17 @@ def specific_config_menu():
         print("=== Configuration Spécifique ===")
         print("[1] Security - SSL/TLS, mots de passe, pare-feu")
         print("[2] Performance - JVM, logs, disque, connexions")
-        print("[3] Monitoring - Services, logs, alertes")
-        print("[4] Security Modules - Vulnerability Detector, CIS, FIM, MITRE")
-        print("[5] Dashboard - Visualisations et dashboards Wazuh")
+        print("[3] Dashboard - Visualisations et dashboards Wazuh")
         print("[0] Retour au menu Configurator")
         print("=" * 60)
         
-        choice = input("Choisissez une option [0-5]: ").strip()
+        choice = input("Choisissez une option [0-3]: ").strip()
         
         if choice == '1':
             config_action_menu('security')
         elif choice == '2':
             config_action_menu('performance')
         elif choice == '3':
-            config_action_menu('monitoring')
-        elif choice == '4':
-            config_action_menu('security-modules')
-        elif choice == '5':
             config_action_menu('dashboard')
         elif choice == '0':
             return

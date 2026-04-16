@@ -25,7 +25,7 @@ class DashboardConfigurator(BaseConfigurator):
     def __init__(self, wazuh_path: str = "/var/ossec"):
         super().__init__(wazuh_path)
         self.paths = WazuhPaths()
-        self.dashboard_url = "https://localhost:5601"
+        self.dashboard_url = "https://127.0.0.1:5601"
         self.dashboard_username = "admin"
         self.dashboard_password = None
         self.verify_ssl = False

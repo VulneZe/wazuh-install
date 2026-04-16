@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Wazuh Smart Installer - Installation intelligente avec résolution automatique des problèmes
+Wazuh Smart Installer - Installation avec résolution automatique des problèmes
 Résout les problèmes courants d'installation Wazuh
 """
 

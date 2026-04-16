@@ -47,8 +47,9 @@ class DashboardConfigurator(BaseConfigurator):
                             if line.startswith("admin:"):
                                 self.dashboard_password = line.split(":")[1].strip()
                                 break
-        except:
-            pass
+        except (OSError, IOError) as e:
+            self._logger.warning(f"Impossible de lire le fichier de mots de passe: {e}")
+            self.dashboard_password = None
     
     @cached(ttl=300)
     def check(self) -> ConfigResult:
@@ -595,7 +596,8 @@ class DashboardConfigurator(BaseConfigurator):
                 timeout=10
             )
             return response.status_code == 200
-        except:
+        except (requests.exceptions.RequestException, Exception) as e:
+            self._logger.warning(f"Erreur vérification index pattern: {e}")
             return False
     
     @cached(ttl=300)
@@ -614,14 +616,15 @@ class DashboardConfigurator(BaseConfigurator):
                 if response.status_code != 200:
                     return False
             return True
-        except:
+        except (requests.exceptions.RequestException, Exception) as e:
+            self._logger.warning(f"Erreur vérification index pattern existe: {e}")
             return False
     
     @cached(ttl=300)
     def _validate_dashboard(self) -> bool:
         """Valider que le dashboard existe"""
         try:
-            url = f"{self.dashboard_url}/api/saved_objects/dashboard/soc-ad-ssh"
+            url = f"{self.dashboard_url}/api/saved_objects/_find?type=dashboard"
             response = requests.get(
                 url,
                 auth=(self.dashboard_username, self.dashboard_password),
@@ -629,13 +632,14 @@ class DashboardConfigurator(BaseConfigurator):
                 timeout=10
             )
             return response.status_code == 200
-        except:
+        except (requests.exceptions.RequestException, Exception) as e:
+            self._logger.warning(f"Erreur vérification dashboards: {e}")
             return False
     
-    def _delete_dashboard(self) -> bool:
+    def _delete_dashboard(self, dashboard_id: str) -> bool:
         """Supprimer le dashboard"""
         try:
-            url = f"{self.dashboard_url}/api/saved_objects/dashboard/soc-ad-ssh"
+            url = f"{self.dashboard_url}/api/saved_objects/dashboard/{dashboard_id}"
             response = requests.delete(
                 url,
                 auth=(self.dashboard_username, self.dashboard_password),
@@ -643,7 +647,8 @@ class DashboardConfigurator(BaseConfigurator):
                 timeout=10
             )
             return response.status_code in [200, 404]
-        except:
+        except (requests.exceptions.RequestException, Exception) as e:
+            self._logger.warning(f"Erreur suppression dashboard {dashboard_id}: {e}")
             return False
     
     def _delete_visualizations(self) -> bool:
@@ -662,7 +667,8 @@ class DashboardConfigurator(BaseConfigurator):
                 if response.status_code not in [200, 404]:
                     all_deleted = False
             return all_deleted
-        except:
+        except (requests.exceptions.RequestException, Exception) as e:
+            self._logger.warning(f"Erreur suppression visualizations: {e}")
             return False
     
     def _delete_index_pattern(self) -> bool:
@@ -676,5 +682,6 @@ class DashboardConfigurator(BaseConfigurator):
                 timeout=10
             )
             return response.status_code in [200, 404]
-        except:
+        except (requests.exceptions.RequestException, Exception) as e:
+            self._logger.warning(f"Erreur suppression index pattern: {e}")
             return False

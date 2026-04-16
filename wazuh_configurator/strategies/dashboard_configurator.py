@@ -23,12 +23,17 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 class DashboardConfigurator(BaseConfigurator):
     """Configuration des dashboards Wazuh via API OpenSearch Dashboards"""
     
-    def __init__(self, wazuh_path: str = "/var/ossec", dashboard_host: str = "localhost", dashboard_port: int = 443):
+    def __init__(self, wazuh_path: str = "/var/ossec", dashboard_host: str = "localhost", dashboard_port: int = None):
         super().__init__(wazuh_path)
         self.paths = WazuhPaths()
         self.dashboard_host = dashboard_host
-        self.dashboard_port = dashboard_port
-        self.dashboard_url = f"https://{dashboard_host}:{dashboard_port}"
+        
+        # Lire le port depuis opensearch_dashboards.yml si non fourni
+        if dashboard_port is None:
+            dashboard_port = self._read_dashboard_port()
+        
+        self.dashboard_port = dashboard_port or 443
+        self.dashboard_url = f"https://{dashboard_host}:{self.dashboard_port}"
         self.dashboard_username = "admin"
         self.dashboard_password = None
         self.verify_ssl = False
@@ -39,6 +44,38 @@ class DashboardConfigurator(BaseConfigurator):
         
         # Charger les identifiants depuis le fichier de mots de passe Wazuh
         self._load_credentials()
+    
+    def _read_dashboard_port(self) -> int:
+        """Lire le port dashboard depuis opensearch_dashboards.yml"""
+        try:
+            # Chemins possibles pour le fichier de configuration
+            config_paths = [
+                "/etc/wazuh-dashboard/opensearch_dashboards.yml",
+                "/etc/opensearch-dashboards/opensearch_dashboards.yml",
+                "/var/ossec/etc/opensearch_dashboards.yml"
+            ]
+            
+            for config_path in config_paths:
+                if os.path.exists(config_path):
+                    with open(config_path, 'r') as f:
+                        content = f.read()
+                        # Chercher server.port
+                        for line in content.split('\n'):
+                            if line.strip().startswith("server.port:"):
+                                port_str = line.split(":")[1].strip()
+                                try:
+                                    port = int(port_str)
+                                    self._logger.info(f"[+] Port dashboard lu depuis {config_path}: {port}")
+                                    return port
+                                except ValueError:
+                                    self._logger.warning(f"[-] Port invalide dans {config_path}: {port_str}")
+                                    break
+            
+            self._logger.info("[] Port par défaut utilisé: 443")
+            return 443
+        except Exception as e:
+            self._logger.warning(f"[-] Erreur lecture port dashboard: {e}")
+            return 443
     
     def _load_credentials(self):
         """Charger les identifiants depuis le fichier de mots de passe Wazuh"""
@@ -60,6 +97,40 @@ class DashboardConfigurator(BaseConfigurator):
         except (OSError, IOError) as e:
             self._logger.warning(f"Impossible de lire le fichier de mots de passe: {e}")
             self.dashboard_password = None
+        
+        # Valider les identifiants via un appel test authentifié
+        self._validate_credentials()
+    
+    def _validate_credentials(self):
+        """Valider les identifiants via un appel test authentifié"""
+        if not self.dashboard_password:
+            self._logger.error("[-] Impossible de valider les identifiants: mot de passe non disponible")
+            return
+        
+        try:
+            url = f"{self.dashboard_url}/api/saved_objects/_find?type=dashboard"
+            headers = {"osd-xsrf": "true"}
+            response = requests.get(
+                url,
+                headers=headers,
+                auth=(self.dashboard_username, self.dashboard_password),
+                verify=False,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                self._logger.info("[+] Validation des identifiants admin réussie")
+            elif response.status_code == 401:
+                self._logger.error("[-] ERREUR: Mot de passe admin invalide (401)")
+                self._logger.error("[-] Le mot de passe chargé depuis wazuh-passwords.txt n'est pas accepté par le Dashboard")
+                self._logger.error("[-] Veuillez mettre à jour le mot de passe dans /var/ossec/etc/wazuh-passwords.txt")
+                self._logger.error("[-] Ou utiliser le mot de passe actuel du Dashboard")
+            else:
+                self._logger.warning(f"[!] Code de réponse inattendu: {response.status_code}")
+        except requests.exceptions.ConnectionError:
+            self._logger.warning("[!] Impossible de valider les identifiants: Dashboard non accessible")
+        except Exception as e:
+            self._logger.warning(f"[!] Erreur lors de la validation des identifiants: {e}")
     
     @cached(ttl=300)
     def check(self) -> ConfigResult:
@@ -175,23 +246,84 @@ class DashboardConfigurator(BaseConfigurator):
                 warnings=["Dashboard service non démarré - Validation ignorée"]
             )
         
-        # Si le service est actif, on considère la validation comme OK
-        # On ne vérifie pas l'API HTTP car elle peut ne pas être accessible
-        self._logger.info("[+] Dashboard service actif")
-        self._logger.info("[+] Note: La validation de l'API HTTP est désactivée")
+        # Vérification authentifiée de l'API Dashboard
+        api_validated = self._validate_dashboard_api()
+        
+        if not api_validated:
+            self._logger.warning("[-] API Dashboard non accessible ou mot de passe invalide")
+            return ConfigResult(
+                success=False,
+                message="Dashboards: API non accessible",
+                details={
+                    "dashboard_running": True,
+                    "api_validated": False
+                },
+                warnings=["API Dashboard non accessible - vérifiez le mot de passe admin"]
+            )
+        
+        # Vérifier que les dashboards existent
+        dashboard_exists = self._check_dashboard_exists()
+        index_pattern_exists = self._check_index_pattern_exists()
         
         self._logger.info("=" * 60)
         
-        return ConfigResult(
-            success=True,
-            message="Dashboards: Service actif - Validation OK",
-            details={
-                "dashboard_running": True,
-                "api_validated": False,
-                "note": "Validation API non effectuée"
-            },
-            warnings=["Validation API non effectuée - configuration manuelle requise"]
-        )
+        if dashboard_exists and index_pattern_exists:
+            return ConfigResult(
+                success=True,
+                message="Dashboards: Configuration validée",
+                details={
+                    "dashboard_running": True,
+                    "api_validated": True,
+                    "dashboard_exists": True,
+                    "index_pattern_exists": True
+                }
+            )
+        else:
+            return ConfigResult(
+                success=False,
+                message="Dashboards: Configuration incomplète",
+                details={
+                    "dashboard_running": True,
+                    "api_validated": True,
+                    "dashboard_exists": dashboard_exists,
+                    "index_pattern_exists": index_pattern_exists
+                },
+                warnings=["Dashboards ou index pattern manquants"]
+            )
+    
+    def _validate_dashboard_api(self) -> bool:
+        """Valider l'API Dashboard avec authentification"""
+        if not self.dashboard_password:
+            self._logger.warning("[-] Impossible de valider l'API: mot de passe non disponible")
+            return False
+        
+        try:
+            url = f"{self.dashboard_url}/api/saved_objects/_find?type=dashboard"
+            headers = {"osd-xsrf": "true"}
+            response = requests.get(
+                url,
+                headers=headers,
+                auth=(self.dashboard_username, self.dashboard_password),
+                verify=False,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                self._logger.info("[+] API Dashboard accessible et authentifiée")
+                return True
+            elif response.status_code == 401:
+                self._logger.error("[-] ERREUR: Mot de passe admin invalide (401)")
+                self._logger.error("[-] Le mot de passe dans wazuh-passwords.txt n'est pas accepté")
+                return False
+            else:
+                self._logger.warning(f"[!] Code de réponse API inattendu: {response.status_code}")
+                return False
+        except requests.exceptions.ConnectionError:
+            self._logger.warning("[-] Impossible de joindre l'API Dashboard")
+            return False
+        except Exception as e:
+            self._logger.warning(f"[-] Erreur validation API: {e}")
+            return False
     
     def rollback(self) -> ConfigResult:
         """Annuler les changements de configuration des dashboards"""

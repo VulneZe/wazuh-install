@@ -1,13 +1,15 @@
 """
-Unit tests for ConfigManager
+Unit tests for ConfigManager - Real functional tests
 """
 
 import pytest
+from unittest.mock import Mock, patch
 from wazuh_configurator.core.config_manager import ConfigManager
+from wazuh_configurator.core.base_configurator import ConfigResult
 
 
 class TestConfigManagerSingleton:
-    """Test Singleton pattern implementation"""
+    """Test Singleton pattern implementation - critical for ConfigManager"""
     
     def test_singleton_returns_same_instance(self):
         """Test that Singleton returns the same instance"""
@@ -34,17 +36,55 @@ class TestConfigManagerSingleton:
         assert all(inst is instances[0] for inst in instances)
 
 
-class TestConfigManagerPublicMethods:
-    """Test ConfigManager public methods"""
+class TestConfigManagerRollbackConfig:
+    """Test rollback_config method - critical bug fix"""
     
-    def test_can_be_instantiated(self):
-        """Test that ConfigManager can be instantiated"""
+    def test_rollback_config_existing_configurator(self):
+        """Test rollback_config with existing configurator"""
         manager = ConfigManager()
-        assert manager is not None
+        manager._logger = Mock()
+        
+        # Create a mock configurator
+        mock_configurator = Mock()
+        mock_result = ConfigResult(
+            success=True,
+            message="Rollback successful",
+            details={},
+            warnings=[]
+        )
+        mock_configurator.rollback = Mock(return_value=mock_result)
+        
+        manager.configurators = {'security': mock_configurator}
+        
+        result = manager.rollback_config('security')
+        
+        assert result.success is True
+        mock_configurator.rollback.assert_called_once()
     
-    def test_has_rollback_config_method(self):
-        """Test that rollback_config method exists (critical bug fix)"""
+    def test_rollback_config_nonexistent_configurator(self):
+        """Test rollback_config with non-existent configurator"""
         manager = ConfigManager()
-        assert hasattr(manager, 'rollback_config')
-        assert callable(manager.rollback_config)
+        manager._logger = Mock()
+        manager.configurators = {}
+        
+        result = manager.rollback_config('nonexistent')
+        
+        assert result.success is False
+        assert "non trouvé" in result.message.lower()
+
+
+class TestConfigManagerRegisterAndGet:
+    """Test configurator registration and retrieval"""
+    
+    def test_register_and_get_configurator(self):
+        """Test registering and retrieving a configurator"""
+        manager = ConfigManager()
+        manager._logger = Mock()
+        
+        mock_configurator = Mock()
+        result = manager.register_configurator('test', mock_configurator)
+        
+        assert result is True
+        retrieved = manager.get_configurator('test')
+        assert retrieved is mock_configurator
 

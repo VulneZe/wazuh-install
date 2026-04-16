@@ -508,7 +508,7 @@ class WazuhSmartInstaller:
             print(f"[-] Erreur lors de l'installation de curl: {e}")
             return False
     
-    def install_all_in_one(self):
+    def install_all_in_one(self, overwrite=False):
         """Installation all-in-one avec monitoring"""
         try:
             print("[*] Installation Wazuh All-in-One avec monitoring...")
@@ -516,9 +516,15 @@ class WazuhSmartInstaller:
             print("   - Wazuh Server")
             print("   - Wazuh Dashboard")
             
+            if overwrite:
+                print("[!] Mode overwrite activé - L'installation existante sera écrasée")
+                install_cmd = ["sudo", "bash", "./wazuh-install.sh", "-a", "-o"]
+            else:
+                install_cmd = ["sudo", "bash", "./wazuh-install.sh", "-a"]
+            
             # Lancer l'installation avec monitoring
             process = subprocess.Popen(
-                ["sudo", "bash", "./wazuh-install.sh", "-a"],
+                install_cmd,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 universal_newlines=True
@@ -622,6 +628,7 @@ def main():
     install_parser = subparsers.add_parser('install', help='Installer Wazuh')
     install_parser.add_argument('--auto-fix', '-a', action='store_true', help='Résoudre automatiquement les problèmes détectés')
     install_parser.add_argument('--skip-check', '-s', action='store_true', help='Sauter la vérification pré-installation')
+    install_parser.add_argument('--overwrite', '-o', action='store_true', help='Forcer la réinstallation (écraser l\'installation existante)')
     
     # Commande check
     subparsers.add_parser('check', help='Vérifier l\'environnement sans installer')
@@ -630,7 +637,8 @@ def main():
     subparsers.add_parser('status', help='Vérifier le statut des services Wazuh')
     
     # Commande uninstall
-    subparsers.add_parser('uninstall', help='Désinstaller Wazuh')
+    uninstall_parser = subparsers.add_parser('uninstall', help='Désinstaller Wazuh')
+    uninstall_parser.add_argument('--force', '-f', action='store_true', help='Forcer la désinstallation complète (supprimer toutes les configurations et données)')
     
     args = parser.parse_args()
     
@@ -651,11 +659,10 @@ def main():
                 sys.exit(1)
         
         # Télécharger le script
-        if not installer.download_install_script():
-            sys.exit(1)
+        installer.download_install_script()
         
         # Installation
-        installer.install_all_in_one()
+        installer.install_all_in_one(overwrite=args.overwrite)
     
     elif args.command == 'check':
         installer = WazuhSmartInstaller()
@@ -668,12 +675,20 @@ def main():
     elif args.command == 'uninstall':
         try:
             print("[*] Désinstallation de Wazuh...")
-            subprocess.run([
-                "sudo", "bash", "./wazuh-install.sh", "-u"
-            ], check=True)
+            if args.force:
+                print("[!] Mode force activé - Suppression complète des configurations et données")
+                subprocess.run([
+                    "sudo", "bash", "./wazuh-install.sh", "-u", "-o"
+                ], check=True)
+            else:
+                subprocess.run([
+                    "sudo", "bash", "./wazuh-install.sh", "-u"
+                ], check=True)
             print("[+] Wazuh désinstallé avec succès!")
+            print("[!] Note: Si vous rencontrez des erreurs lors de la réinstallation, utilisez: python3 wazuh_smart_installer.py uninstall --force")
         except subprocess.CalledProcessError as e:
             print(f"[-] Erreur lors de la désinstallation: {e}")
+            print("[!] Si le dashboard est encore détecté, essayez: python3 wazuh_smart_installer.py uninstall --force")
     
     else:
         parser.print_help()

@@ -66,10 +66,11 @@ def smart_installer_menu():
         print("[4] Installer en sautant les vérifications")
         print("[5] Vérifier le statut des services")
         print("[6] Désinstaller Wazuh")
+        print("[7] Désinstaller Wazuh (Force - Suppression complète)")
         print("[0] Retour au menu principal")
         print("=" * 60)
         
-        choice = input("Choisissez une option [0-6]: ").strip()
+        choice = input("Choisissez une option [0-7]: ").strip()
         
         if choice == '1':
             run_smart_installer('check')
@@ -83,6 +84,8 @@ def smart_installer_menu():
             run_smart_installer('status')
         elif choice == '6':
             run_smart_installer('uninstall')
+        elif choice == '7':
+            run_smart_installer('uninstall --force')
         elif choice == '0':
             return
         else:

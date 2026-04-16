@@ -74,7 +74,7 @@ class DashboardConfigurator(BaseConfigurator):
         
         # Vérifier les visualisations existantes
         try:
-            visualizations_ok = self._check_visualizations()
+            visualizations_ok = self._check_existing_visualizations()
         except ServiceNotAvailableError as e:
             self._logger.error(f"Erreur service vérification visualisations: {e}")
             visualizations_ok = False
@@ -84,7 +84,7 @@ class DashboardConfigurator(BaseConfigurator):
         
         # Vérifier les dashboards existants
         try:
-            dashboards_ok = self._check_dashboards()
+            dashboards_ok = self._check_existing_dashboards()
         except ServiceNotAvailableError as e:
             self._logger.error(f"Erreur service vérification dashboards: {e}")
             dashboards_ok = False

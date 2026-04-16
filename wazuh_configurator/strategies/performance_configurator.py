@@ -4,6 +4,7 @@ Implements memory and storage optimization
 """
 
 import os
+import re
 import subprocess
 from typing import Dict, Optional
 from ..core.base_configurator import BaseConfigurator, ConfigResult

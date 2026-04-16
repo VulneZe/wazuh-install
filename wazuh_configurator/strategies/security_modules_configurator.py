@@ -6,6 +6,7 @@ Security Modules Configurator - Security modules configuration strategy
 
 import os
 import re
+from ..utils.file_handler import FileHandler
 from typing import Dict, Optional
 from ..core.base_configurator import BaseConfigurator, ConfigResult
 from ..utils.logger import WazuhLogger

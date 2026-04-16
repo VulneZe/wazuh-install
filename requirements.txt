@@ -6,3 +6,7 @@ requests>=2.31.0
 urllib3>=2.0.0
 PyYAML>=6.0
 paramiko>=3.0.0
+
+# Dépendances pour les tests unitaires
+pytest>=7.4.0
+pytest-cov>=4.1.0

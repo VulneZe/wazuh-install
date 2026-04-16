@@ -230,7 +230,7 @@ class DashboardConfigurator(BaseConfigurator):
             url = f"{self.dashboard_url}/api/status"
             response = requests.get(
                 url,
-                auth=(self.dashboard_user, self.dashboard_password),
+                auth=(self.dashboard_username, self.dashboard_password),
                 verify=False,
                 timeout=10
             )
@@ -252,7 +252,7 @@ class DashboardConfigurator(BaseConfigurator):
             url = f"{self.dashboard_url}/api/saved_objects/_find?type=visualization"
             response = requests.get(
                 url,
-                auth=(self.dashboard_user, self.dashboard_password),
+                auth=(self.dashboard_username, self.dashboard_password),
                 verify=False,
                 timeout=10
             )
@@ -276,7 +276,7 @@ class DashboardConfigurator(BaseConfigurator):
             url = f"{self.dashboard_url}/api/saved_objects/_find?type=dashboard"
             response = requests.get(
                 url,
-                auth=(self.dashboard_user, self.dashboard_password),
+                auth=(self.dashboard_username, self.dashboard_password),
                 verify=False,
                 timeout=10
             )
@@ -314,7 +314,7 @@ class DashboardConfigurator(BaseConfigurator):
             response = requests.post(
                 url,
                 headers=headers,
-                auth=(self.dashboard_user, self.dashboard_password),
+                auth=(self.dashboard_username, self.dashboard_password),
                 verify=False,
                 json=body,
                 timeout=30
@@ -372,7 +372,7 @@ class DashboardConfigurator(BaseConfigurator):
             response = requests.post(
                 url,
                 headers=headers,
-                auth=(self.dashboard_user, self.dashboard_password),
+                auth=(self.dashboard_username, self.dashboard_password),
                 verify=False,
                 json={"attributes": vis_ssh_pie},
                 timeout=30
@@ -416,7 +416,7 @@ class DashboardConfigurator(BaseConfigurator):
             response = requests.post(
                 url,
                 headers=headers,
-                auth=(self.dashboard_user, self.dashboard_password),
+                auth=(self.dashboard_username, self.dashboard_password),
                 verify=False,
                 json={"attributes": vis_ad_pie},
                 timeout=30
@@ -460,7 +460,7 @@ class DashboardConfigurator(BaseConfigurator):
             response = requests.post(
                 url,
                 headers=headers,
-                auth=(self.dashboard_user, self.dashboard_password),
+                auth=(self.dashboard_username, self.dashboard_password),
                 verify=False,
                 json={"attributes": vis_level_bar},
                 timeout=30
@@ -539,7 +539,7 @@ class DashboardConfigurator(BaseConfigurator):
             response = requests.post(
                 url,
                 headers=headers,
-                auth=(self.dashboard_user, self.dashboard_password),
+                auth=(self.dashboard_username, self.dashboard_password),
                 verify=False,
                 json=body,
                 timeout=30
@@ -563,7 +563,7 @@ class DashboardConfigurator(BaseConfigurator):
             url = f"{self.dashboard_url}/api/saved_objects/index-pattern/wazuh-alerts-*"
             response = requests.get(
                 url,
-                auth=(self.dashboard_user, self.dashboard_password),
+                auth=(self.dashboard_username, self.dashboard_password),
                 verify=False,
                 timeout=10
             )
@@ -580,7 +580,7 @@ class DashboardConfigurator(BaseConfigurator):
                 url = f"{self.dashboard_url}/api/saved_objects/visualization/{vis_id}"
                 response = requests.get(
                     url,
-                    auth=(self.dashboard_user, self.dashboard_password),
+                    auth=(self.dashboard_username, self.dashboard_password),
                     verify=False,
                     timeout=10
                 )
@@ -597,7 +597,7 @@ class DashboardConfigurator(BaseConfigurator):
             url = f"{self.dashboard_url}/api/saved_objects/dashboard/soc-ad-ssh"
             response = requests.get(
                 url,
-                auth=(self.dashboard_user, self.dashboard_password),
+                auth=(self.dashboard_username, self.dashboard_password),
                 verify=False,
                 timeout=10
             )
@@ -611,7 +611,7 @@ class DashboardConfigurator(BaseConfigurator):
             url = f"{self.dashboard_url}/api/saved_objects/dashboard/soc-ad-ssh"
             response = requests.delete(
                 url,
-                auth=(self.dashboard_user, self.dashboard_password),
+                auth=(self.dashboard_username, self.dashboard_password),
                 verify=False,
                 timeout=10
             )
@@ -628,7 +628,7 @@ class DashboardConfigurator(BaseConfigurator):
                 url = f"{self.dashboard_url}/api/saved_objects/visualization/{vis_id}"
                 response = requests.delete(
                     url,
-                    auth=(self.dashboard_user, self.dashboard_password),
+                    auth=(self.dashboard_username, self.dashboard_password),
                     verify=False,
                     timeout=10
                 )
@@ -644,7 +644,7 @@ class DashboardConfigurator(BaseConfigurator):
             url = f"{self.dashboard_url}/api/saved_objects/index-pattern/wazuh-alerts-*"
             response = requests.delete(
                 url,
-                auth=(self.dashboard_user, self.dashboard_password),
+                auth=(self.dashboard_username, self.dashboard_password),
                 verify=False,
                 timeout=10
             )

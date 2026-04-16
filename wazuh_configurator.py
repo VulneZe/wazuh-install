@@ -147,8 +147,69 @@ def print_summary(all_warnings, all_errors):
     print("=" * 60 + "\n")
 
 
+def interactive_menu():
+    """Menu interactif pour le configurateur"""
+    print("\n" + "=" * 60)
+    print("MENU INTERACTIF")
+    print("=" * 60)
+    
+    # Choisir la commande
+    print("\nCommandes disponibles:")
+    print("1. check - Vérifier les configurations")
+    print("2. apply - Appliquer les configurations")
+    print("3. validate - Valider les configurations")
+    print("4. rollback - Annuler les configurations")
+    print("5. fix - Corriger les configurations")
+    print("0. Quitter")
+    
+    command_choice = input("\nChoisissez une commande (0-5): ").strip()
+    
+    command_map = {
+        "1": "check",
+        "2": "apply",
+        "3": "validate",
+        "4": "rollback",
+        "5": "fix",
+        "0": None
+    }
+    
+    command = command_map.get(command_choice)
+    if command is None:
+        print("\nAu revoir!")
+        return None, None
+    
+    # Choisir la configuration
+    print("\nConfigurations disponibles:")
+    print("1. security - Configuration de sécurité")
+    print("2. performance - Configuration de performance")
+    print("3. dashboard - Configuration des dashboards")
+    print("4. all - Toutes les configurations")
+    
+    config_choice = input("\nChoisissez une configuration (1-4): ").strip()
+    
+    config_map = {
+        "1": "security",
+        "2": "performance",
+        "3": "dashboard",
+        "4": "all"
+    }
+    
+    config = config_map.get(config_choice, "all")
+    
+    return command, config
+
+
 def main():
     banner()
+    
+    # Si aucun argument, afficher le menu interactif
+    if len(sys.argv) == 1:
+        command, config = interactive_menu()
+        if command is None:
+            return
+        
+        # Simuler les arguments
+        sys.argv.extend([command, "--config", config])
     
     parser = argparse.ArgumentParser(
         description="Wazuh Configurator - Advanced Configuration Management",

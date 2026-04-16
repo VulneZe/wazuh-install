@@ -98,6 +98,15 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
     
+    # Global arguments
+    parser.add_argument('--remote-host', '-r', help='Adresse IP/hostname de la machine Wazuh distante')
+    parser.add_argument('--ssh-user', '-u', help='Utilisateur SSH pour connexion distante')
+    parser.add_argument('--ssh-key', '-k', help='Chemin de la clé SSH pour connexion distante')
+    parser.add_argument('--ssh-password', '-p', help='Mot de passe SSH pour connexion distante')
+    parser.add_argument('--ssh-port', default=22, type=int, help='Port SSH (défaut: 22)')
+    parser.add_argument('--custom-ports', help='Ports personnalisés (format: indexer:9200,manager:1514,api:55000)')
+    parser.add_argument('--wazuh-path', default='/var/ossec', help='Chemin d installation Wazuh (défaut: /var/ossec)')
+    
     subparsers = parser.add_subparsers(dest='command', help='Commandes disponibles')
     
     # Commande detect

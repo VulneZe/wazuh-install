@@ -199,7 +199,7 @@ class SecurityConfigurator(BaseConfigurator):
             # Générer la clé privée
             subprocess.run(
                 ["openssl", "genrsa", "-out", f"{cert_dir}/wazuh-key.pem", "2048"],
-                capture_output=True, check=True, timeout=30
+                capture_output=True, check=True, timeout=60
             )
             
             # Générer le CSR
@@ -207,7 +207,7 @@ class SecurityConfigurator(BaseConfigurator):
                 ["openssl", "req", "-new", "-key", f"{cert_dir}/wazuh-key.pem",
                  "-out", f"{cert_dir}/wazuh.csr",
                  "-subj", "/C=FR/ST=State/L=City/O=Wazuh/OU=Security/CN=wazuh.local"],
-                capture_output=True, check=True, timeout=30
+                capture_output=True, check=True, timeout=60
             )
             
             # Générer le certificat auto-signé (validité 365 jours)
@@ -216,7 +216,7 @@ class SecurityConfigurator(BaseConfigurator):
                  "-in", f"{cert_dir}/wazuh.csr",
                  "-signkey", f"{cert_dir}/wazuh-key.pem",
                  "-out", f"{cert_dir}/wazuh-cert.pem"],
-                capture_output=True, check=True, timeout=30
+                capture_output=True, check=True, timeout=60
             )
             
             # Configurer les permissions
@@ -415,11 +415,11 @@ basic:
                     # Installer UFW
                     subprocess.run(
                         ["sudo", "apt-get", "update"],
-                        capture_output=True, check=True, timeout=60
+                        capture_output=True, check=True, timeout=120
                     )
                     subprocess.run(
                         ["sudo", "apt-get", "install", "-y", "ufw"],
-                        capture_output=True, check=True, timeout=120
+                        capture_output=True, check=True, timeout=180
                     )
                     print("[+] UFW installé")
                 except subprocess.CalledProcessError as e:
@@ -432,20 +432,20 @@ basic:
             # Refuser les connexions entrantes par défaut
             subprocess.run(
                 ["sudo", "ufw", "default", "deny", "incoming"],
-                capture_output=True, check=False
+                capture_output=True, check=False, timeout=30
             )
             
             # Autoriser les connexions sortantes
             subprocess.run(
                 ["sudo", "ufw", "default", "allow", "outgoing"],
-                capture_output=True, check=False
+                capture_output=True, check=False, timeout=30
             )
             
             # Autoriser SSH (port 22) - IMPORTANT pour ne pas se bloquer
             print("[+] Autorisation SSH (port 22)...")
             subprocess.run(
                 ["sudo", "ufw", "allow", "22/tcp"],
-                capture_output=True, check=False
+                capture_output=True, check=False, timeout=30
             )
             
             # Autoriser les ports Wazuh
@@ -461,20 +461,20 @@ basic:
                 print(f"[+] Autorisation port {port} ({description})...")
                 subprocess.run(
                     ["sudo", "ufw", "allow", f"{port}/tcp"],
-                    capture_output=True, check=False
+                    capture_output=True, check=False, timeout=30
                 )
             
             # Activer UFW
             print("[*] Activation UFW...")
             subprocess.run(
                 ["sudo", "ufw", "--force", "enable"],
-                capture_output=True, check=False
+                capture_output=True, check=False, timeout=30
             )
             
             # Afficher le statut
             status = subprocess.run(
                 ["sudo", "ufw", "status"],
-                capture_output=True, text=True, check=False
+                capture_output=True, text=True, check=False, timeout=30
             )
             
             print("[+] Regles pare-feu appliquées:")

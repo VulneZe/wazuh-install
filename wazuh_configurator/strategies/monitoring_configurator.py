@@ -133,7 +133,7 @@ class MonitoringConfigurator(BaseConfigurator):
             result = subprocess.run(
                 ["systemctl", "list-units", "--type=service"],
                 capture_output=True, text=True, check=False,
-                timeout=10
+                timeout=30
             )
             return "wazuh" in result.stdout
         except (subprocess.TimeoutExpired, FileNotFoundError):
@@ -197,18 +197,18 @@ done
             subprocess.run(
                 ["crontab", "-l"],
                 capture_output=True, text=True, check=False,
-                timeout=10
+                timeout=30
             )
             # Append to existing crontab
             subprocess.run(
                 ["bash", "-c", f"(crontab -l 2>/dev/null; echo '{cron_line}') | crontab -"],
-                check=True, timeout=10
+                check=True, timeout=30
             )
         except (subprocess.TimeoutExpired, subprocess.CalledProcessError):
             # Create new crontab
             subprocess.run(
                 ["bash", "-c", f"echo '{cron_line}' | crontab -"],
-                check=True, timeout=10
+                check=True, timeout=30
             )
         
         print("[+] Monitoring services configure (cron 5min)")

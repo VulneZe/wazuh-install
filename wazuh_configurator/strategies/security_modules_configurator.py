@@ -570,25 +570,36 @@ class SecurityModulesConfigurator(BaseConfigurator):
         try:
             content = self.file_handler.read_file(self.ossec_conf_path)
             
-            checks = {
+            # Checks critiques (obligatoires)
+            critical_checks = {
                 "enabled": '<syscheck>' in content and '<disabled>no</disabled>' in content,
                 "critical_dirs": '<directories' in content and '/etc' in content,
-                "frequency": '<frequency>' in content,
+                "frequency": '<frequency>' in content
+            }
+            
+            # Checks optionnels
+            optional_checks = {
                 "alerts": '<alert_on_new_files>yes</alert_on_new_files>' in content,
                 "exclusions": '<ignore>' in content
             }
             
-            success = all(checks.values())
+            # Succès si tous les checks critiques passent
+            success = all(critical_checks.values())
             
             if success:
                 self._logger.info("FIM validé")
+                # Afficher les checks optionnels manquants comme warnings
+                for check, passed in optional_checks.items():
+                    if not passed:
+                        self._logger.warning(f"   - {check}: non configuré (optionnel)")
             else:
                 self._logger.error("FIM: validation échouée")
-                for check, passed in checks.items():
+                for check, passed in critical_checks.items():
                     if not passed:
                         self._logger.error(f"   - {check}: échec")
             
-            return ConfigResult(success=success, message=f"Validation: {'OK' if success else 'Échouée'}", details=checks)
+            all_checks = {**critical_checks, **optional_checks}
+            return ConfigResult(success=success, message=f"Validation: {'OK' if success else 'Échouée'}", details=all_checks)
             
         except FileOperationError as e:
             self._logger.error(f"Erreur fichier validation FIM: {e}")

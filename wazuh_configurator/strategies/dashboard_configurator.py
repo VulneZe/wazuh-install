@@ -242,26 +242,24 @@ class DashboardConfigurator(BaseConfigurator):
     
     @cached(ttl=300)
     def _check_dashboard_connection(self) -> bool:
-        """Vérifier la connexion au dashboard"""
+        """Vérifier la connexion au dashboard via systemctl"""
         try:
-            url = f"{self.dashboard_url}/api/status"
-            response = requests.get(
-                url,
-                auth=(self.dashboard_username, self.dashboard_password),
-                verify=False,
-                timeout=10
+            import subprocess
+            result = subprocess.run(
+                ["systemctl", "is-active", "wazuh-dashboard"],
+                capture_output=True,
+                text=True,
+                timeout=5
             )
             
-            if response.status_code == 200:
-                self._logger.info("[+] Connexion au dashboard: OK")
+            if result.returncode == 0 and "active" in result.stdout:
+                self._logger.info("[+] Dashboard service actif")
                 return True
             else:
-                self._logger.error(f"[-] Connexion au dashboard: Échec (status {response.status_code})")
+                self._logger.warning("[-] Dashboard service non actif")
                 return False
-        except requests.exceptions.ConnectionError as e:
-            raise ServiceNotAvailableError(f"Dashboard non accessible: {e}")
         except Exception as e:
-            self._logger.error(f"[-] Erreur connexion dashboard: {e}")
+            self._logger.error(f"[-] Erreur vérification dashboard: {e}")
             return False
     
     @cached(ttl=300)

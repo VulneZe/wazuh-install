@@ -1,13 +1,13 @@
 """
-Performance Configurator - Performance configuration strategy
+Performance Configurator - Performance optimization configuration strategy
 Implements memory and storage optimization
 """
 
-from typing import Dict, Optional
 import os
 import subprocess
-import re
+from typing import Dict, Optional
 from ..core.base_configurator import BaseConfigurator, ConfigResult
+from ..config.paths import WazuhPaths
 
 
 class PerformanceConfigurator(BaseConfigurator):
@@ -22,6 +22,7 @@ class PerformanceConfigurator(BaseConfigurator):
     
     def __init__(self, wazuh_path: str = "/var/ossec"):
         super().__init__(wazuh_path)
+        self.paths = WazuhPaths()
         self.system_memory = self._get_system_memory()
         self.performance_config = {}
     
@@ -138,9 +139,8 @@ class PerformanceConfigurator(BaseConfigurator):
     def _check_jvm_memory(self) -> bool:
         """Check if JVM memory is properly configured"""
         # Check Wazuh indexer JVM config
-        jvm_config = "/etc/wazuh-indexer/jvm.options"
-        if os.path.exists(jvm_config):
-            content = self.read_config_file(jvm_config)
+        if os.path.exists(self.paths.jvm_config):
+            content = self.read_config_file(self.paths.jvm_config)
             # Check if heap size is configured (should be 50-70% of available memory)
             return "-Xms" in content and "-Xmx" in content
         
@@ -149,9 +149,8 @@ class PerformanceConfigurator(BaseConfigurator):
     def _check_log_rotation(self) -> bool:
         """Check if log rotation is configured"""
         # Check Wazuh manager log rotation
-        logrotate_config = "/etc/logrotate.d/wazuh"
-        if os.path.exists(logrotate_config):
-            content = self.read_config_file(logrotate_config)
+        if os.path.exists(self.paths.logrotate_config):
+            content = self.read_config_file(self.paths.logrotate_config)
             return "rotate" in content and "size" in content
         
         return False
@@ -159,15 +158,14 @@ class PerformanceConfigurator(BaseConfigurator):
     def _check_disk_cleanup(self) -> bool:
         """Check if disk cleanup is configured"""
         # Check if cleanup cron job exists
-        cron_config = "/etc/cron.daily/wazuh-cleanup"
-        return os.path.exists(cron_config)
+        cleanup_script = os.path.join(self.paths.cron_daily, "wazuh-cleanup")
+        return os.path.exists(cleanup_script)
     
     def _check_connection_pool(self) -> bool:
         """Check if connection pool is optimized"""
         # Check indexer configuration
-        indexer_config = "/etc/wazuh-indexer/opensearch.yml"
-        if os.path.exists(indexer_config):
-            content = self.read_config_file(indexer_config)
+        if os.path.exists(self.paths.indexer_config):
+            content = self.read_config_file(self.paths.indexer_config)
             return "thread_pool" in content or "max_connections" in content
         
         return False
@@ -180,11 +178,10 @@ class PerformanceConfigurator(BaseConfigurator):
         heap_size = int(self.system_memory * 0.6)
         heap_min = int(self.system_memory * 0.4)
         
-        jvm_config = "/etc/wazuh-indexer/jvm.options"
-        if os.path.exists(jvm_config):
-            self.backup_config(jvm_config)
+        if os.path.exists(self.paths.jvm_config):
+            self.backup_config(self.paths.jvm_config)
             
-            content = self.read_config_file(jvm_config)
+            content = self.read_config_file(self.paths.jvm_config)
             # Add or replace heap size settings
             new_content = f"-Xms{heap_min}g\n-Xmx{heap_size}g\n"
             
@@ -195,8 +192,9 @@ class PerformanceConfigurator(BaseConfigurator):
             # Add new heap settings at the beginning
             filtered_lines.insert(0, new_content.strip())
             
-            self.write_config_file(jvm_config, '\n'.join(filtered_lines))
-            self.config_files[jvm_config] = True
+            final_content = '\n'.join(filtered_lines)
+            self.write_config_file(self.paths.jvm_config, final_content)
+            self.config_files[self.paths.jvm_config] = True
             
             print(f"[+] JVM memory configure: {heap_min}GB min, {heap_size}GB max")
             return True
@@ -208,19 +206,18 @@ class PerformanceConfigurator(BaseConfigurator):
         """Apply log rotation configuration"""
         print("[*] Configuration rotation logs...")
         
-        logrotate_config = "/etc/logrotate.d/wazuh"
-        if os.path.exists(logrotate_config):
+        if os.path.exists(self.paths.logrotate_config):
             # Check if it has proper configuration
-            content = self.read_config_file(logrotate_config)
+            content = self.read_config_file(self.paths.logrotate_config)
             if "rotate" in content and "size" in content:
                 print("[+] Rotation logs deja configuree")
                 return True
             else:
-                self.backup_config(logrotate_config)
+                self.backup_config(self.paths.logrotate_config)
         
         # Create new logrotate config
-        logrotate_content = """
-/var/ossec/logs/*.log {
+        logrotate_content = f"""
+{self.paths.wazuh_logs}/*.log {{
     daily
     rotate 30
     compress
@@ -228,10 +225,10 @@ class PerformanceConfigurator(BaseConfigurator):
     missingok
     notifempty
     size 100M
-}
+}}
 """
-        self.write_config_file(logrotate_config, logrotate_content)
-        self.config_files[logrotate_config] = True
+        self.write_config_file(self.paths.logrotate_config, logrotate_content)
+        self.config_files[self.paths.logrotate_config] = True
         print("[+] Rotation logs configuree")
         return True
     
@@ -239,17 +236,13 @@ class PerformanceConfigurator(BaseConfigurator):
         """Apply disk cleanup configuration"""
         print("[*] Configuration nettoyage disque...")
         
-        cleanup_script = "/etc/cron.daily/wazuh-cleanup"
-        cleanup_content = """#!/bin/bash
+        cleanup_script = os.path.join(self.paths.cron_daily, "wazuh-cleanup")
+        cleanup_content = f"""#!/bin/bash
 # Wazuh disk cleanup script
 # Remove logs older than 30 days
-find /var/ossec/logs/ -name "*.log" -mtime +30 -delete
-
-# Clean old alerts
-find /var/ossec/logs/alerts/ -name "*.json" -mtime +30 -delete
-
-# Clean old archives
-find /var/ossec/logs/archives/ -name "*.log.gz" -mtime +90 -delete
+find {self.paths.wazuh_logs}/ -name "*.log" -mtime +30 -delete
+find {self.paths.alerts_logs}/ -name "*.json" -mtime +30 -delete
+find {self.paths.archives_logs}/ -name "*.log.gz" -mtime +90 -delete
 """
         
         self.write_config_file(cleanup_script, cleanup_content)
@@ -263,14 +256,13 @@ find /var/ossec/logs/archives/ -name "*.log.gz" -mtime +90 -delete
         """Apply connection pool configuration"""
         print("[*] Configuration pool connexions...")
         
-        indexer_config = "/etc/wazuh-indexer/opensearch.yml"
-        if os.path.exists(indexer_config):
-            content = self.read_config_file(indexer_config)
+        if os.path.exists(self.paths.indexer_config):
+            content = self.read_config_file(self.paths.indexer_config)
             if not content:
                 print("[-] Impossible de lire le fichier config indexer")
                 return False
                 
-            self.backup_config(indexer_config)
+            self.backup_config(self.paths.indexer_config)
             
             # Add connection pool settings
             pool_config = """
@@ -287,10 +279,10 @@ thread_pool:
             if "thread_pool" not in content:
                 content += pool_config
             
-            if self.write_config_file(indexer_config, content):
-                self.config_files[indexer_config] = True
-                print("[+] Pool connexions configure")
-                return True
+            self.write_config_file(self.paths.indexer_config, content)
+            self.config_files[self.paths.indexer_config] = True
+            print("[+] Pool connexions configure")
+            return True
         
         print("[-] Fichier config indexer non trouve")
         return False

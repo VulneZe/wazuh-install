@@ -1,14 +1,15 @@
 """
 Wazuh Dashboard Configurator
 Configuration des dashboards Wazuh via API OpenSearch Dashboards
+Dashboard Configurator - Dashboard configuration strategy
 """
 
 import os
-import json
 import requests
 import urllib3
-from typing import Optional, Dict, List, Tuple
+from typing import Dict, Optional
 from ..core.base_configurator import BaseConfigurator, ConfigResult
+from ..config.paths import WazuhPaths
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -18,6 +19,7 @@ class DashboardConfigurator(BaseConfigurator):
     
     def __init__(self, wazuh_path: str = "/var/ossec"):
         super().__init__(wazuh_path)
+        self.paths = WazuhPaths()
         
         # Configuration par défaut pour OpenSearch Dashboards
         self.dashboard_url = "https://localhost:5601"
@@ -31,9 +33,8 @@ class DashboardConfigurator(BaseConfigurator):
     def _load_credentials(self):
         """Charger les identifiants depuis le fichier de mots de passe Wazuh"""
         try:
-            password_file = "/var/ossec/etc/wazuh-passwords.txt"
-            if os.path.exists(password_file):
-                with open(password_file, 'r') as f:
+            if os.path.exists(self.paths.passwords_file):
+                with open(self.paths.passwords_file, 'r') as f:
                     content = f.read()
                     # Chercher le mot de passe admin
                     if "admin:" in content:

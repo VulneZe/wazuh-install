@@ -1,14 +1,14 @@
 """
 Wazuh Security Modules Configurator
 Configuration des modules de sécurité avancés de Wazuh
+Security Modules Configurator - Security modules configuration strategy
 """
 
 import os
-import re
-import subprocess
-from typing import Optional, Dict, List, Tuple
+from typing import Dict, Optional
 from ..core.base_configurator import BaseConfigurator, ConfigResult
 from ..utils.file_handler import FileHandler
+from ..config.paths import WazuhPaths
 
 
 class SecurityModulesConfigurator(BaseConfigurator):
@@ -16,7 +16,8 @@ class SecurityModulesConfigurator(BaseConfigurator):
     
     def __init__(self, wazuh_path: str = "/var/ossec"):
         super().__init__(wazuh_path)
-        self.ossec_conf_path = os.path.join(wazuh_path, "etc", "ossec.conf")
+        self.paths = WazuhPaths()
+        self.ossec_conf_path = self.paths.ossec_conf
         self.file_handler = FileHandler()
         
         # Chemins des fichiers de configuration des modules

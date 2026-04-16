@@ -1,12 +1,12 @@
 """
 Monitoring Configurator - Monitoring configuration strategy
-Implements alerts and logging configuration
 """
 
-from typing import Dict, Optional
 import os
 import subprocess
+from typing import Dict, Optional
 from ..core.base_configurator import BaseConfigurator, ConfigResult
+from ..config.paths import WazuhPaths
 
 
 class MonitoringConfigurator(BaseConfigurator):
@@ -21,6 +21,7 @@ class MonitoringConfigurator(BaseConfigurator):
     
     def __init__(self, wazuh_path: str = "/var/ossec"):
         super().__init__(wazuh_path)
+        self.paths = WazuhPaths()
         self.monitoring_config = {}
     
     def check(self) -> ConfigResult:
@@ -122,6 +123,7 @@ class MonitoringConfigurator(BaseConfigurator):
     def _check_service_monitoring(self) -> bool:
         """Check if service monitoring is configured"""
         # Check if monitoring services are configured
+        # Note: monit_config is not in WazuhPaths as it's optional
         monit_config = "/etc/monit/monitrc"
         if os.path.exists(monit_config):
             content = self.read_config_file(monit_config)
@@ -144,9 +146,8 @@ class MonitoringConfigurator(BaseConfigurator):
     def _check_log_level(self) -> bool:
         """Check if log level is optimized"""
         # Check Wazuh manager log configuration
-        local_options = "/var/ossec/etc/local_internal_options.conf"
-        if os.path.exists(local_options):
-            content = self.read_config_file(local_options)
+        if os.path.exists(self.paths.local_options):
+            content = self.read_config_file(self.paths.local_options)
             # Check if log level is set to INFO (not DEBUG for production)
             return "log.level" in content and "debug" not in content.lower()
         
@@ -155,9 +156,8 @@ class MonitoringConfigurator(BaseConfigurator):
     def _check_alerts_enabled(self) -> bool:
         """Check if alerts are enabled"""
         # Check Wazuh alerts configuration
-        ossec_config = "/var/ossec/etc/ossec.conf"
-        if os.path.exists(ossec_config):
-            content = self.read_config_file(ossec_config)
+        if os.path.exists(self.paths.ossec_conf):
+            content = self.read_config_file(self.paths.ossec_conf)
             return "<alerts>" in content and "</alerts>" in content
         
         return False
@@ -218,9 +218,8 @@ done
         """Apply log level configuration"""
         print("[*] Configuration niveau logs...")
         
-        local_options = "/var/ossec/etc/local_internal_options.conf"
-        if os.path.exists(local_options):
-            self.backup_config(local_options)
+        if os.path.exists(self.paths.local_options):
+            self.backup_config(self.paths.local_options)
         
         # Set log level to INFO (not DEBUG for production)
         log_config = """
@@ -228,8 +227,8 @@ done
 log.level=info
 """
         
-        self.write_config_file(local_options, log_config)
-        self.config_files[local_options] = True
+        self.write_config_file(self.paths.local_options, log_config)
+        self.config_files[self.paths.local_options] = True
         
         print("[+] Niveau logs configure (INFO)")
         return True
@@ -238,9 +237,8 @@ log.level=info
         """Apply alerts configuration"""
         print("[*] Configuration alertes...")
         
-        ossec_config = "/var/ossec/etc/ossec.conf"
-        if os.path.exists(ossec_config):
-            content = self.read_config_file(ossec_config)
+        if os.path.exists(self.paths.ossec_conf):
+            content = self.read_config_file(self.paths.ossec_conf)
             
             # Check if alerts section exists
             if "<alerts>" not in content:
@@ -249,6 +247,11 @@ log.level=info
                     success=False,
                     message="Configuration alertes necessite modification manuelle"
                 )
+            
+            # Enable critical alerts
+            content = content.replace("<alerts>", '<alerts>\n    <use_alerts>yes</use_alerts>')
+            self.write_config_file(self.paths.ossec_conf, content)
+            self.config_files[self.paths.ossec_conf] = True
         
         print("[+] Alertes deja configurees")
         return ConfigResult(
@@ -260,49 +263,40 @@ log.level=info
         """Apply health checks configuration"""
         print("[*] Configuration health checks...")
         
-        health_check_script = "/usr/local/bin/wazuh-health-check"
-        health_content = """#!/bin/bash
-# Wazuh health check script
+        health_check = os.path.join(self.paths.usr_local_bin, "wazuh-health-check")
+        health_check_content = f"""#!/bin/bash
+# Wazuh Health Check Script
+# Checks if Wazuh services are running
 
-# Check if all Wazuh services are running
-SERVICES=("wazuh-indexer" "wazuh-manager" "wazuh-dashboard")
-ALL_OK=true
-
-for service in "${SERVICES[@]}"; do
-    if systemctl is-active --quiet $service; then
-        echo "[+] $service: OK"
-    else
-        echo "[-] $service: FAILED"
-        ALL_OK=false
-    fi
-done
-
-# Check disk space
-DISK_USAGE=$(df /var/ossec | tail -1 | awk '{print $5}' | sed 's/%//')
-if [ $DISK_USAGE -gt 80 ]; then
-    echo "[!] Disk usage high: ${DISK_USAGE}%"
-    ALL_OK=false
-fi
-
-# Check memory
-MEM_USAGE=$(free | grep Mem | awk '{print $3/$2 * 100.0}')
-if [ $(echo "$MEM_USAGE > 90" | bc -l) -eq 1 ]; then
-    echo "[!] Memory usage high: ${MEM_USAGE}%"
-    ALL_OK=false
-fi
-
-if $ALL_OK; then
-    echo "[+] All health checks passed"
-    exit 0
+# Check Wazuh Manager
+if systemctl is-active --quiet wazuh-manager; then
+    echo "Wazuh Manager: OK"
 else
-    echo "[-] Some health checks failed"
+    echo "Wazuh Manager: FAILED"
     exit 1
 fi
+
+# Check Wazuh Indexer
+if systemctl is-active --quiet wazuh-indexer; then
+    echo "Wazuh Indexer: OK"
+else
+    echo "Wazuh Indexer: FAILED"
+    exit 1
+fi
+
+# Check disk usage
+DISK_USAGE=$(df {self.paths.wazuh_path} | tail -1 | awk '{{print $5}}' | sed 's/%//')
+if [ $DISK_USAGE -gt 80 ]; then
+    echo "Disk usage: WARNING ($DISK_USAGE%)"
+fi
+
+echo "Health check completed"
+exit 0
 """
         
-        self.write_config_file(health_check_script, health_content)
-        os.chmod(health_check_script, 0o755)
-        self.config_files[health_check_script] = True
+        self.write_config_file(health_check, health_check_content)
+        os.chmod(health_check, 0o755)
+        self.config_files[health_check] = True
         
         print("[+] Health checks configurees")
         return True

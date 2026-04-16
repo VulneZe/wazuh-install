@@ -12,6 +12,7 @@ from ..core.base_configurator import BaseConfigurator, ConfigResult
 from ..config.paths import WazuhPaths
 from ..utils.cache import cached
 from ..utils.exceptions import ConfigurationError, FileOperationError
+from ..utils.logger import WazuhLogger
 
 
 class SecurityConfigurator(BaseConfigurator):
@@ -28,11 +29,12 @@ class SecurityConfigurator(BaseConfigurator):
         super().__init__(wazuh_path)
         self.paths = WazuhPaths()
         self.security_config = {}
+        self._logger = WazuhLogger(__name__, use_json=False)
     
     @cached(ttl=300)  # Cache for 5 minutes
     def check(self) -> ConfigResult:
         """Check current security configuration"""
-        print("[*] Verification configuration securite...")
+        self._logger.info("Verification configuration securite...")
         
         results = {}
         warnings = []
@@ -77,7 +79,7 @@ class SecurityConfigurator(BaseConfigurator):
     
     def apply(self) -> ConfigResult:
         """Apply security configuration"""
-        print("[*] Application configuration securite...")
+        self._logger.info("Application configuration securite...")
         
         results = {}
         
@@ -107,13 +109,13 @@ class SecurityConfigurator(BaseConfigurator):
         )
     
     def validate(self) -> ConfigResult:
-        """Validate security configuration"""
-        print("[*] Validation configuration securite...")
+        """Validate applied security configuration"""
+        self._logger.info("Validation configuration securite...")
         return self.check()
     
     def rollback(self) -> ConfigResult:
         """Rollback security configuration"""
-        print("[*] Rollback configuration securite...")
+        self._logger.info("Rollback configuration securite...")
         
         success = True
         for config_file in self.config_files.keys():
@@ -189,7 +191,7 @@ class SecurityConfigurator(BaseConfigurator):
     
     def _apply_ssl_config(self) -> bool:
         """Apply SSL configuration"""
-        print("[*] Configuration SSL/TLS...")
+        self._logger.info("Configuration SSL/TLS...")
         
         try:
             import subprocess
@@ -200,7 +202,7 @@ class SecurityConfigurator(BaseConfigurator):
             
             # Générer un certificat auto-signé (pour développement/test)
             # En production, utiliser Let's Encrypt ou un certificat signé par une CA
-            print("[*] Génération du certificat SSL/TLS...")
+            self._logger.info("Génération du certificat SSL/TLS...")
             
             # Générer la clé privée
             subprocess.run(
@@ -252,9 +254,9 @@ plugins.security.ssl.http.pemtrustedcas_filepath: {self.paths.indexer_certs}/waz
                 self.write_config_file(self.paths.indexer_config, content)
                 self.config_files[self.paths.indexer_config] = True
             
-            print("[+] Certificats SSL/TLS générés et configurés")
-            print("[!] NOTE: Certificat auto-signé pour développement/test")
-            print("[!] Pour production, utiliser Let's Encrypt ou certificat signé par CA")
+            self._logger.info("Certificats SSL/TLS générés et configurés")
+            self._logger.warning("NOTE: Certificat auto-signé pour développement/test")
+            self._logger.warning("Pour production, utiliser Let's Encrypt ou certificat signé par CA")
             return True
             
         except OSError as e:
@@ -266,7 +268,7 @@ plugins.security.ssl.http.pemtrustedcas_filepath: {self.paths.indexer_certs}/waz
     
     def _apply_strong_passwords(self) -> bool:
         """Apply strong passwords"""
-        print("[*] Generation mots de passe forts...")
+        self._logger.info("Generation mots de passe forts...")
         
         def generate_strong_password(length=32):
             alphabet = string.ascii_letters + string.digits + string.punctuation
@@ -311,12 +313,12 @@ dashboard_user: {passwords['dashboard']}
             # Configurer les mots de passe dans les fichiers de configuration Wazuh
             self._configure_wazuh_passwords(passwords)
             
-            print("[+] Mots de passe forts generes et écrits dans les fichiers Wazuh")
-            print(f"[!] Mots de passe sauvegardés dans: {self.paths.passwords_file}")
+            self._logger.info("Mots de passe forts generes et écrits dans les fichiers Wazuh")
+            self._logger.info(f"Mots de passe sauvegardés dans: {self.paths.passwords_file}")
             return True
             
         except Exception as e:
-            print(f"[-] Erreur écriture mots de passe: {e}")
+            self._logger.error(f"Erreur écriture mots de passe: {e}")
             return False
     
     def _configure_wazuh_passwords(self, passwords: dict) -> bool:
@@ -345,12 +347,12 @@ dashboard_user: {passwords['dashboard']}
             
             return True
         except Exception as e:
-            print(f"[-] Erreur configuration mots de passe: {e}")
+            self._logger.error(f"Erreur configuration mots de passe: {e}")
             return False
     
     def _apply_api_auth(self) -> bool:
         """Apply API authentication"""
-        print("[*] Configuration API authentication...")
+        self._logger.info("Configuration API authentication...")
         
         try:
             # Configurer l'API Wazuh Manager
@@ -383,21 +385,21 @@ basic:
                 self.write_config_file(self.paths.api_config, content)
                 self.config_files[self.paths.api_config] = True
                 
-                print("[+] API authentication JWT configurée")
-                print("[!] Clé JWT générée et configurée")
-                print("[!] L'API utilisera JWT avec Basic Auth comme fallback")
+                self._logger.info("API authentication JWT configurée")
+                self._logger.info("Clé JWT générée et configurée")
+                self._logger.info("L'API utilisera JWT avec Basic Auth comme fallback")
                 return True
             else:
-                print("[-] Fichier de configuration API non trouvé")
+                self._logger.error("Fichier de configuration API non trouvé")
                 return False
                 
         except Exception as e:
-            print(f"[-] Erreur configuration API authentication: {e}")
+            self._logger.error(f"Erreur configuration API authentication: {e}")
             return False
     
     def _apply_firewall_rules(self) -> bool:
         """Apply firewall rules"""
-        print("[*] Configuration regles pare-feu...")
+        self._logger.info("Configuration regles pare-feu...")
         
         try:
             import subprocess
@@ -409,7 +411,7 @@ basic:
             )
             
             if check_ufw.returncode != 0:
-                print("[!] UFW non disponible - Installation...")
+                self._logger.warning("UFW non disponible - Installation...")
                 try:
                     # Installer UFW
                     subprocess.run(
@@ -420,13 +422,13 @@ basic:
                         ["sudo", "apt-get", "install", "-y", "ufw"],
                         capture_output=True, check=True, timeout=180
                     )
-                    print("[+] UFW installé")
-                except subprocess.CalledProcessError as e:
-                    print(f"[-] Erreur installation UFW: {e}")
+                    self._logger.info("UFW installé")
+                except Exception as e:
+                    self._logger.error(f"Erreur installation UFW: {e}")
                     return True  # Pas une erreur critique
             
             # Configuration de base UFW
-            print("[*] Configuration de base UFW...")
+            self._logger.info("Configuration de base UFW...")
             
             # Refuser les connexions entrantes par défaut
             subprocess.run(
@@ -441,7 +443,7 @@ basic:
             )
             
             # Autoriser SSH (port 22) - IMPORTANT pour ne pas se bloquer
-            print("[+] Autorisation SSH (port 22)...")
+            self._logger.info("Autorisation SSH (port 22)...")
             subprocess.run(
                 ["sudo", "ufw", "allow", "22/tcp"],
                 capture_output=True, check=False, timeout=30
@@ -457,14 +459,14 @@ basic:
             }
             
             for port, description in wazuh_ports.items():
-                print(f"[+] Autorisation port {port} ({description})...")
+                self._logger.info(f"Autorisation port {port} ({description})...")
                 subprocess.run(
                     ["sudo", "ufw", "allow", f"{port}/tcp"],
                     capture_output=True, check=False, timeout=30
                 )
             
             # Activer UFW
-            print("[*] Activation UFW...")
+            self._logger.info("Activation UFW...")
             subprocess.run(
                 ["sudo", "ufw", "--force", "enable"],
                 capture_output=True, check=False, timeout=30
@@ -476,18 +478,18 @@ basic:
                 capture_output=True, text=True, check=False, timeout=30
             )
             
-            print("[+] Regles pare-feu appliquées:")
-            print(status.stdout)
+            self._logger.info("Regles pare-feu appliquées:")
+            self._logger.info(status.stdout)
             
-            print("[+] Configuration pare-feu terminée")
-            print("[!] SSH autorisé (port 22) - Ne pas oublier de configurer l'authentification par clé SSH")
+            self._logger.info("Configuration pare-feu terminée")
+            self._logger.warning("SSH autorisé (port 22) - Ne pas oublier de configurer l'authentification par clé SSH")
             return True
             
         except subprocess.CalledProcessError as e:
-            print(f"[-] Erreur configuration pare-feu: {e}")
-            print("[!] Configuration pare-feu ignorée (pas critique)")
+            self._logger.error(f"Erreur configuration pare-feu: {e}")
+            self._logger.warning("Configuration pare-feu ignorée (pas critique)")
             return True  # Pas une erreur critique
         except Exception as e:
-            print(f"[-] Erreur configuration pare-feu: {e}")
-            print("[!] Configuration pare-feu ignorée (pas critique)")
+            self._logger.error(f"Erreur configuration pare-feu: {e}")
+            self._logger.warning("Configuration pare-feu ignorée (pas critique)")
             return True  # Pas une erreur critique

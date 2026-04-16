@@ -5,11 +5,13 @@ Dashboard Configurator - Dashboard configuration strategy
 """
 
 import os
+import json
 import requests
-import urllib3
 from typing import Dict, Optional
 from ..core.base_configurator import BaseConfigurator, ConfigResult
 from ..config.paths import WazuhPaths
+from ..utils.logger import WazuhLogger
+from ..utils.cache import cached
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -20,11 +22,11 @@ class DashboardConfigurator(BaseConfigurator):
     def __init__(self, wazuh_path: str = "/var/ossec"):
         super().__init__(wazuh_path)
         self.paths = WazuhPaths()
-        
-        # Configuration par défaut pour OpenSearch Dashboards
         self.dashboard_url = "https://localhost:5601"
-        self.dashboard_user = "admin"
-        self.dashboard_password = ""
+        self.dashboard_username = "admin"
+        self.dashboard_password = None
+        self.verify_ssl = False
+        self._logger = WazuhLogger(__name__, use_json=False)
         self.index_pattern = "wazuh-alerts-*"
         
         # Charger les identifiants depuis le fichier de mots de passe Wazuh
@@ -45,10 +47,11 @@ class DashboardConfigurator(BaseConfigurator):
         except:
             pass
     
+    @cached(ttl=300)
     def check(self) -> ConfigResult:
         """Vérifier la configuration des dashboards"""
-        print("[*] Vérification de la configuration des dashboards...")
-        print("=" * 60)
+        self._logger.info("Vérification de la configuration des dashboards...")
+        self._logger.info("=" * 60)
         
         # Vérifier la connexion au dashboard
         try:
@@ -56,7 +59,7 @@ class DashboardConfigurator(BaseConfigurator):
         except Exception as e:
             error_msg = str(e)
             if "Connection refused" in error_msg or "Max retries exceeded" in error_msg:
-                print(f"[!] Dashboard non accessible (service probablement non démarré)")
+                self._logger.warning("Dashboard non accessible (service probablement non démarré)")
                 return ConfigResult(
                     success=False,
                     message="Dashboards: Service non disponible",
@@ -67,19 +70,19 @@ class DashboardConfigurator(BaseConfigurator):
         
         # Vérifier les visualisations existantes
         try:
-            visualizations_ok = self._check_existing_visualizations()
+            visualizations_ok = self._check_visualizations()
         except Exception as e:
-            print(f"[-] Erreur vérification visualisations: {e}")
+            self._logger.error(f"Erreur vérification visualisations: {e}")
             visualizations_ok = False
         
         # Vérifier les dashboards existants
         try:
-            dashboards_ok = self._check_existing_dashboards()
+            dashboards_ok = self._check_dashboards()
         except Exception as e:
-            print(f"[-] Erreur vérification dashboards: {e}")
+            self._logger.error(f"Erreur vérification dashboards: {e}")
             dashboards_ok = False
         
-        print("=" * 60)
+        self._logger.info("=" * 60)
         
         success = connection_ok and visualizations_ok and dashboards_ok
         
@@ -95,14 +98,14 @@ class DashboardConfigurator(BaseConfigurator):
     
     def apply(self) -> ConfigResult:
         """Appliquer la configuration des dashboards"""
-        print("[*] Application de la configuration des dashboards...")
-        print("=" * 60)
+        self._logger.info("Application de la configuration des dashboards...")
+        self._logger.info("=" * 60)
         
         # Vérifier d'abord si le dashboard est accessible
         try:
             connection_ok = self._check_dashboard_connection()
             if not connection_ok:
-                print("[!] Dashboard non accessible - Configuration ignorée")
+                self._logger.warning("Dashboard non accessible - Configuration ignorée")
                 return ConfigResult(
                     success=False,
                     message="Dashboards: Service non disponible",
@@ -112,7 +115,7 @@ class DashboardConfigurator(BaseConfigurator):
         except Exception as e:
             error_msg = str(e)
             if "Connection refused" in error_msg or "Max retries exceeded" in error_msg:
-                print(f"[!] Dashboard non accessible (service probablement non démarré)")
+                self._logger.warning("Dashboard non accessible (service probablement non démarré)")
                 return ConfigResult(
                     success=False,
                     message="Dashboards: Service non disponible",
@@ -124,29 +127,26 @@ class DashboardConfigurator(BaseConfigurator):
         
         # Créer l'index pattern
         try:
-            index_result = self._create_index_pattern()
-            results.append(index_result)
+            results.append(self._create_index_pattern())
         except Exception as e:
-            print(f"[-] Erreur création index pattern: {e}")
+            self._logger.error(f"Erreur création index pattern: {e}")
             results.append(False)
         
         # Créer les visualisations
         try:
-            vis_result = self._create_visualizations()
-            results.append(vis_result)
+            results.append(self._create_visualizations())
         except Exception as e:
-            print(f"[-] Erreur création visualisations: {e}")
+            self._logger.error(f"Erreur création visualisations: {e}")
             results.append(False)
         
         # Créer le dashboard
         try:
-            dashboard_result = self._create_dashboard()
-            results.append(dashboard_result)
+            results.append(self._create_dashboard())
         except Exception as e:
-            print(f"[-] Erreur création dashboard: {e}")
+            self._logger.error(f"Erreur création dashboard: {e}")
             results.append(False)
         
-        print("=" * 60)
+        self._logger.info("=" * 60)
         
         success_count = sum(1 for r in results if r)
         total_count = len(results)
@@ -163,8 +163,8 @@ class DashboardConfigurator(BaseConfigurator):
     
     def validate(self) -> ConfigResult:
         """Valider la configuration des dashboards"""
-        print("[*] Validation de la configuration des dashboards...")
-        print("=" * 60)
+        self._logger.info("Validation de la configuration des dashboards...")
+        self._logger.info("=" * 60)
         
         # Vérifier que l'index pattern existe
         index_ok = self._validate_index_pattern()
@@ -175,7 +175,7 @@ class DashboardConfigurator(BaseConfigurator):
         # Vérifier que le dashboard existe
         dashboard_ok = self._validate_dashboard()
         
-        print("=" * 60)
+        self._logger.info("=" * 60)
         
         success = index_ok and vis_ok and dashboard_ok
         
@@ -191,8 +191,8 @@ class DashboardConfigurator(BaseConfigurator):
     
     def rollback(self) -> ConfigResult:
         """Annuler les changements de configuration des dashboards"""
-        print("[*] Annulation de la configuration des dashboards...")
-        print("=" * 60)
+        self._logger.info("Annulation de la configuration des dashboards...")
+        self._logger.info("=" * 60)
         
         results = []
         
@@ -208,7 +208,7 @@ class DashboardConfigurator(BaseConfigurator):
         index_deleted = self._delete_index_pattern()
         results.append(index_deleted)
         
-        print("=" * 60)
+        self._logger.info("=" * 60)
         
         success_count = sum(1 for r in results if r)
         total_count = len(results)
@@ -223,6 +223,7 @@ class DashboardConfigurator(BaseConfigurator):
             }
         )
     
+    @cached(ttl=300)
     def _check_dashboard_connection(self) -> bool:
         """Vérifier la connexion au dashboard"""
         try:
@@ -235,15 +236,16 @@ class DashboardConfigurator(BaseConfigurator):
             )
             
             if response.status_code == 200:
-                print("[+] Connexion au dashboard: OK")
+                self._logger.info("[+] Connexion au dashboard: OK")
                 return True
             else:
-                print(f"[-] Connexion au dashboard: Échec (status {response.status_code})")
+                self._logger.error(f"[-] Connexion au dashboard: Échec (status {response.status_code})")
                 return False
         except Exception as e:
-            print(f"[-] Erreur connexion dashboard: {e}")
+            self._logger.error(f"[-] Erreur connexion dashboard: {e}")
             return False
     
+    @cached(ttl=300)
     def _check_existing_visualizations(self) -> bool:
         """Vérifier les visualisations existantes"""
         try:
@@ -258,15 +260,16 @@ class DashboardConfigurator(BaseConfigurator):
             if response.status_code == 200:
                 data = response.json()
                 vis_count = len(data.get('savedObjects', []))
-                print(f"[+] Visualisations existantes: {vis_count}")
+                self._logger.info(f"[+] Visualisations existantes: {vis_count}")
                 return vis_count > 0
             else:
-                print("[-] Erreur récupération visualisations")
+                self._logger.error("[-] Erreur récupération visualisations")
                 return False
         except Exception as e:
-            print(f"[-] Erreur vérification visualisations: {e}")
+            self._logger.error(f"[-] Erreur vérification visualisations: {e}")
             return False
     
+    @cached(ttl=300)
     def _check_existing_dashboards(self) -> bool:
         """Vérifier les dashboards existants"""
         try:
@@ -281,19 +284,19 @@ class DashboardConfigurator(BaseConfigurator):
             if response.status_code == 200:
                 data = response.json()
                 dash_count = len(data.get('savedObjects', []))
-                print(f"[+] Dashboards existants: {dash_count}")
+                self._logger.info(f"[+] Dashboards existants: {dash_count}")
                 return dash_count > 0
             else:
-                print("[-] Erreur récupération dashboards")
+                self._logger.error("[-] Erreur récupération dashboards")
                 return False
         except Exception as e:
-            print(f"[-] Erreur vérification dashboards: {e}")
+            self._logger.error(f"[-] Erreur vérification dashboards: {e}")
             return False
     
     def _create_index_pattern(self) -> bool:
         """Créer l'index pattern wazuh-alerts-*"""
         try:
-            print("[*] Création de l'index pattern...")
+            self._logger.info("[*] Création de l'index pattern...")
             
             url = f"{self.dashboard_url}/api/saved_objects/index-pattern/wazuh-alerts-*"
             headers = {
@@ -318,19 +321,19 @@ class DashboardConfigurator(BaseConfigurator):
             )
             
             if response.status_code in [200, 409]:
-                print("[+] Index pattern créé ou existe déjà")
+                self._logger.info("[+] Index pattern créé ou existe déjà")
                 return True
             else:
-                print(f"[-] Erreur création index pattern: {response.status_code}")
+                self._logger.error(f"[-] Erreur création index pattern: {response.status_code}")
                 return False
         except Exception as e:
-            print(f"[-] Erreur création index pattern: {e}")
+            self._logger.error(f"[-] Erreur création index pattern: {e}")
             return False
     
     def _create_visualizations(self) -> bool:
         """Créer les visualisations pour le dashboard SOC"""
         try:
-            print("[*] Création des visualisations...")
+            self._logger.info("[*] Création des visualisations...")
             
             headers = {
                 "osd-xsrf": "true",
@@ -376,9 +379,9 @@ class DashboardConfigurator(BaseConfigurator):
             )
             
             if response.status_code in [200, 409]:
-                print("[+] Visualisation SSH créée")
+                self._logger.info("[+] Visualisation SSH créée")
             else:
-                print(f"[-] Erreur création visualisation SSH: {response.status_code}")
+                self._logger.error(f"[-] Erreur création visualisation SSH: {response.status_code}")
                 return False
             
             # Visualisation 2: AD Events par type (Pie Chart)
@@ -420,9 +423,9 @@ class DashboardConfigurator(BaseConfigurator):
             )
             
             if response.status_code in [200, 409]:
-                print("[+] Visualisation AD créée")
+                self._logger.info("[+] Visualisation AD créée")
             else:
-                print(f"[-] Erreur création visualisation AD: {response.status_code}")
+                self._logger.error(f"[-] Erreur création visualisation AD: {response.status_code}")
                 return False
             
             # Visualisation 3: Alertes par niveau (Bar Chart)
@@ -464,22 +467,22 @@ class DashboardConfigurator(BaseConfigurator):
             )
             
             if response.status_code in [200, 409]:
-                print("[+] Visualisation alertes niveau créée")
+                self._logger.info("[+] Visualisation alertes niveau créée")
             else:
-                print(f"[-] Erreur création visualisation niveau: {response.status_code}")
+                self._logger.error(f"[-] Erreur création visualisation niveau: {response.status_code}")
                 return False
             
-            print("[+] Toutes les visualisations créées")
+            self._logger.info("[+] Toutes les visualisations créées")
             return True
             
         except Exception as e:
-            print(f"[-] Erreur création visualisations: {e}")
+            self._logger.error(f"[-] Erreur création visualisations: {e}")
             return False
     
     def _create_dashboard(self) -> bool:
         """Créer le dashboard SOC"""
         try:
-            print("[*] Création du dashboard SOC...")
+            self._logger.info("[*] Création du dashboard SOC...")
             
             headers = {
                 "osd-xsrf": "true",
@@ -543,16 +546,17 @@ class DashboardConfigurator(BaseConfigurator):
             )
             
             if response.status_code in [200, 409]:
-                print("[+] Dashboard SOC créé")
+                self._logger.info("[+] Dashboard SOC créé")
                 return True
             else:
-                print(f"[-] Erreur création dashboard: {response.status_code}")
+                self._logger.error(f"[-] Erreur création dashboard: {response.status_code}")
                 return False
                 
         except Exception as e:
-            print(f"[-] Erreur création dashboard: {e}")
+            self._logger.error(f"[-] Erreur création dashboard: {e}")
             return False
     
+    @cached(ttl=300)
     def _validate_index_pattern(self) -> bool:
         """Valider que l'index pattern existe"""
         try:
@@ -567,6 +571,7 @@ class DashboardConfigurator(BaseConfigurator):
         except:
             return False
     
+    @cached(ttl=300)
     def _validate_visualizations(self) -> bool:
         """Valider que les visualisations existent"""
         try:
@@ -585,6 +590,7 @@ class DashboardConfigurator(BaseConfigurator):
         except:
             return False
     
+    @cached(ttl=300)
     def _validate_dashboard(self) -> bool:
         """Valider que le dashboard existe"""
         try:

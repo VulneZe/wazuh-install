@@ -7,6 +7,8 @@ import subprocess
 from typing import Dict, Optional
 from ..core.base_configurator import BaseConfigurator, ConfigResult
 from ..config.paths import WazuhPaths
+from ..utils.logger import WazuhLogger
+from ..utils.cache import cached
 
 
 class MonitoringConfigurator(BaseConfigurator):
@@ -23,10 +25,12 @@ class MonitoringConfigurator(BaseConfigurator):
         super().__init__(wazuh_path)
         self.paths = WazuhPaths()
         self.monitoring_config = {}
+        self._logger = WazuhLogger(__name__, use_json=False)
     
+    @cached(ttl=300)
     def check(self) -> ConfigResult:
         """Check current monitoring configuration"""
-        print("[*] Verification configuration monitoring...")
+        self._logger.info("Verification configuration monitoring...")
         
         results = {}
         warnings = []
@@ -71,7 +75,7 @@ class MonitoringConfigurator(BaseConfigurator):
     
     def apply(self) -> ConfigResult:
         """Apply monitoring configuration"""
-        print("[*] Application configuration monitoring...")
+        self._logger.info("Application configuration monitoring...")
         
         results = {}
         
@@ -101,13 +105,13 @@ class MonitoringConfigurator(BaseConfigurator):
         )
     
     def validate(self) -> ConfigResult:
-        """Validate monitoring configuration"""
-        print("[*] Validation configuration monitoring...")
+        """Validate applied monitoring configuration"""
+        self._logger.info("Validation configuration monitoring...")
         return self.check()
     
     def rollback(self) -> ConfigResult:
         """Rollback monitoring configuration"""
-        print("[*] Rollback configuration monitoring...")
+        self._logger.info("Rollback configuration monitoring...")
         
         success = True
         for config_file in self.config_files.keys():
@@ -120,6 +124,7 @@ class MonitoringConfigurator(BaseConfigurator):
             details={"rollback": success}
         )
     
+    @cached(ttl=300)
     def _check_service_monitoring(self) -> bool:
         """Check if service monitoring is configured"""
         # Check if monitoring services are configured
@@ -143,6 +148,7 @@ class MonitoringConfigurator(BaseConfigurator):
         except Exception:
             return False
     
+    @cached(ttl=300)
     def _check_log_level(self) -> bool:
         """Check if log level is optimized"""
         # Check Wazuh manager log configuration
@@ -153,6 +159,7 @@ class MonitoringConfigurator(BaseConfigurator):
         
         return False
     
+    @cached(ttl=300)
     def _check_alerts_enabled(self) -> bool:
         """Check if alerts are enabled"""
         # Check Wazuh alerts configuration
@@ -162,6 +169,7 @@ class MonitoringConfigurator(BaseConfigurator):
         
         return False
     
+    @cached(ttl=300)
     def _check_health_checks(self) -> bool:
         """Check if health checks are configured"""
         # Check if health check script exists
@@ -170,12 +178,14 @@ class MonitoringConfigurator(BaseConfigurator):
     
     def _apply_service_monitoring(self) -> bool:
         """Apply service monitoring configuration"""
-        print("[*] Configuration monitoring services...")
+        self._logger.info("Configuration monitoring services...")
         
         # Create simple systemd monitoring
         monitor_script = "/usr/local/bin/wazuh-monitor"
         monitor_content = """#!/bin/bash
 # Wazuh service monitoring script
+# Checks if Wazuh services are running
+
 SERVICES="wazuh-indexer wazuh-manager wazuh-dashboard"
 
 for service in $SERVICES; do
@@ -211,12 +221,12 @@ done
                 check=True, timeout=30
             )
         
-        print("[+] Monitoring services configure (cron 5min)")
+        self._logger.info("Monitoring services configure (cron 5min)")
         return True
     
     def _apply_log_level(self) -> bool:
         """Apply log level configuration"""
-        print("[*] Configuration niveau logs...")
+        self._logger.info("Configuration niveau logs...")
         
         if os.path.exists(self.paths.local_options):
             self.backup_config(self.paths.local_options)
@@ -230,19 +240,19 @@ log.level=info
         self.write_config_file(self.paths.local_options, log_config)
         self.config_files[self.paths.local_options] = True
         
-        print("[+] Niveau logs configure (INFO)")
+        self._logger.info("Niveau logs configure (INFO)")
         return True
     
-    def _apply_alerts_enabled(self) -> ConfigResult:
+    def _apply_alerts_enabled(self) -> bool:
         """Apply alerts configuration"""
-        print("[*] Configuration alertes...")
+        self._logger.info("Configuration alertes...")
         
         if os.path.exists(self.paths.ossec_conf):
             content = self.read_config_file(self.paths.ossec_conf)
             
             # Check if alerts section exists
             if "<alerts>" not in content:
-                print("[-] Section alerts non trouvee dans ossec.conf")
+                self._logger.error("Section alerts non trouvee dans ossec.conf")
                 return ConfigResult(
                     success=False,
                     message="Configuration alertes necessite modification manuelle"
@@ -253,7 +263,7 @@ log.level=info
             self.write_config_file(self.paths.ossec_conf, content)
             self.config_files[self.paths.ossec_conf] = True
         
-        print("[+] Alertes deja configurees")
+        self._logger.info("Alertes deja configurees")
         return ConfigResult(
             success=True,
             message="Alertes deja activees"
@@ -261,9 +271,9 @@ log.level=info
     
     def _apply_health_checks(self) -> bool:
         """Apply health checks configuration"""
-        print("[*] Configuration health checks...")
+        self._logger.info("Configuration health checks...")
         
-        health_check = os.path.join(self.paths.usr_local_bin, "wazuh-health-check")
+        health_check_script = os.path.join(self.paths.usr_local_bin, "wazuh-health-check")
         health_check_content = f"""#!/bin/bash
 # Wazuh Health Check Script
 # Checks if Wazuh services are running
@@ -294,9 +304,9 @@ echo "Health check completed"
 exit 0
 """
         
-        self.write_config_file(health_check, health_check_content)
-        os.chmod(health_check, 0o755)
-        self.config_files[health_check] = True
+        self.write_config_file(health_check_script, health_check_content)
+        os.chmod(health_check_script, 0o755)
+        self.config_files[health_check_script] = True
         
-        print("[+] Health checks configurees")
+        self._logger.info("Health checks configurees")
         return True

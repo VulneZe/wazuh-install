@@ -9,6 +9,7 @@ from typing import Dict, Optional
 from ..core.base_configurator import BaseConfigurator, ConfigResult
 from ..config.paths import WazuhPaths
 from ..utils.cache import cached
+from ..utils.logger import WazuhLogger
 
 
 class PerformanceConfigurator(BaseConfigurator):
@@ -26,11 +27,12 @@ class PerformanceConfigurator(BaseConfigurator):
         self.paths = WazuhPaths()
         self.system_memory = self._get_system_memory()
         self.performance_config = {}
+        self._logger = WazuhLogger(__name__, use_json=False)
     
     @cached(ttl=300)
     def check(self) -> ConfigResult:
         """Check current performance configuration"""
-        print("[*] Verification configuration performance...")
+        self._logger.info("Verification configuration performance...")
         
         results = {}
         warnings = []
@@ -75,7 +77,7 @@ class PerformanceConfigurator(BaseConfigurator):
     
     def apply(self) -> ConfigResult:
         """Apply performance configuration"""
-        print("[*] Application configuration performance...")
+        self._logger.info("Application configuration performance...")
         
         results = {}
         
@@ -105,13 +107,13 @@ class PerformanceConfigurator(BaseConfigurator):
         )
     
     def validate(self) -> ConfigResult:
-        """Validate performance configuration"""
-        print("[*] Validation configuration performance...")
+        """Validate applied performance configuration"""
+        self._logger.info("Validation configuration performance...")
         return self.check()
     
     def rollback(self) -> ConfigResult:
         """Rollback performance configuration"""
-        print("[*] Rollback configuration performance...")
+        self._logger.info("Rollback configuration performance...")
         
         success = True
         for config_file in self.config_files.keys():
@@ -178,7 +180,7 @@ class PerformanceConfigurator(BaseConfigurator):
     
     def _apply_jvm_memory(self) -> bool:
         """Apply JVM memory configuration"""
-        print("[*] Configuration JVM memory...")
+        self._logger.info("Configuration JVM memory...")
         
         # Calculate optimal heap size (50-70% of available memory)
         heap_size = int(self.system_memory * 0.6)
@@ -202,21 +204,21 @@ class PerformanceConfigurator(BaseConfigurator):
             self.write_config_file(self.paths.jvm_config, final_content)
             self.config_files[self.paths.jvm_config] = True
             
-            print(f"[+] JVM memory configure: {heap_min}GB min, {heap_size}GB max")
+            self._logger.info(f"JVM memory configure: {heap_min}GB min, {heap_size}GB max")
             return True
-        
-        print("[-] Fichier JVM config non trouve")
-        return False
+        else:
+            self._logger.error("Fichier JVM config non trouve")
+            return False
     
     def _apply_log_rotation(self) -> bool:
         """Apply log rotation configuration"""
-        print("[*] Configuration rotation logs...")
+        self._logger.info("Configuration rotation logs...")
         
         if os.path.exists(self.paths.logrotate_config):
             # Check if it has proper configuration
             content = self.read_config_file(self.paths.logrotate_config)
             if "rotate" in content and "size" in content:
-                print("[+] Rotation logs deja configuree")
+                self._logger.info("Rotation logs deja configuree")
                 return True
             else:
                 self.backup_config(self.paths.logrotate_config)
@@ -235,12 +237,12 @@ class PerformanceConfigurator(BaseConfigurator):
 """
         self.write_config_file(self.paths.logrotate_config, logrotate_content)
         self.config_files[self.paths.logrotate_config] = True
-        print("[+] Rotation logs configuree")
+        self._logger.info("Rotation logs configuree")
         return True
     
     def _apply_disk_cleanup(self) -> bool:
         """Apply disk cleanup configuration"""
-        print("[*] Configuration nettoyage disque...")
+        self._logger.info("Configuration nettoyage disque...")
         
         cleanup_script = os.path.join(self.paths.cron_daily, "wazuh-cleanup")
         cleanup_content = f"""#!/bin/bash
@@ -255,17 +257,17 @@ find {self.paths.archives_logs}/ -name "*.log.gz" -mtime +90 -delete
         os.chmod(cleanup_script, 0o755)
         self.config_files[cleanup_script] = True
         
-        print("[+] Nettoyage disque configure (cron daily)")
+        self._logger.info("Nettoyage disque configure (cron daily)")
         return True
     
     def _apply_connection_pool(self) -> bool:
         """Apply connection pool configuration"""
-        print("[*] Configuration pool connexions...")
+        self._logger.info("Configuration pool connexions...")
         
         if os.path.exists(self.paths.indexer_config):
             content = self.read_config_file(self.paths.indexer_config)
             if not content:
-                print("[-] Impossible de lire le fichier config indexer")
+                self._logger.error("Impossible de lire le fichier config indexer")
                 return False
                 
             self.backup_config(self.paths.indexer_config)
@@ -287,8 +289,9 @@ thread_pool:
             
             self.write_config_file(self.paths.indexer_config, content)
             self.config_files[self.paths.indexer_config] = True
-            print("[+] Pool connexions configure")
+            
+            self._logger.info("Pool connexions configure")
             return True
         
-        print("[-] Fichier config indexer non trouve")
+        self._logger.error("Fichier config indexer non trouve")
         return False

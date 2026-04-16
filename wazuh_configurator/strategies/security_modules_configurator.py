@@ -5,9 +5,11 @@ Security Modules Configurator - Security modules configuration strategy
 """
 
 import os
+import re
 from typing import Dict, Optional
 from ..core.base_configurator import BaseConfigurator, ConfigResult
-from ..utils.file_handler import FileHandler
+from ..utils.logger import WazuhLogger
+from ..utils.cache import cached
 from ..config.paths import WazuhPaths
 
 
@@ -18,6 +20,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
         super().__init__(wazuh_path)
         self.paths = WazuhPaths()
         self.ossec_conf_path = self.paths.ossec_conf
+        self._logger = WazuhLogger(__name__, use_json=False)
         self.file_handler = FileHandler()
         
         # Chemins des fichiers de configuration des modules
@@ -26,10 +29,11 @@ class SecurityModulesConfigurator(BaseConfigurator):
         self.fim_enabled = False
         self.mitre_enabled = False
     
+    @cached(ttl=300)
     def check(self) -> ConfigResult:
         """Vérifier la configuration des modules de sécurité"""
-        print("[*] Vérification des modules de sécurité Wazuh...")
-        print("=" * 60)
+        self._logger.info("Vérification des modules de sécurité Wazuh...")
+        self._logger.info("=" * 60)
         
         results = []
         
@@ -67,8 +71,8 @@ class SecurityModulesConfigurator(BaseConfigurator):
     
     def apply(self) -> ConfigResult:
         """Appliquer la configuration des modules de sécurité"""
-        print("[*] Application de la configuration des modules de sécurité...")
-        print("=" * 60)
+        self._logger.info("Application de la configuration des modules de sécurité...")
+        self._logger.info("=" * 60)
         
         results = []
         
@@ -106,8 +110,8 @@ class SecurityModulesConfigurator(BaseConfigurator):
     
     def validate(self) -> ConfigResult:
         """Valider la configuration des modules de sécurité"""
-        print("[*] Validation de la configuration des modules de sécurité...")
-        print("=" * 60)
+        self._logger.info("Validation de la configuration des modules de sécurité...")
+        self._logger.info("=" * 60)
         
         results = []
         
@@ -127,7 +131,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
         mitre_result = self._validate_mitre_attack()
         results.append(mitre_result)
         
-        print("=" * 60)
+        self._logger.info("=" * 60)
         
         success_count = sum(1 for r in results if r.success)
         total_count = len(results)
@@ -145,21 +149,21 @@ class SecurityModulesConfigurator(BaseConfigurator):
     
     def rollback(self) -> ConfigResult:
         """Annuler les changements de configuration des modules de sécurité"""
-        print("[*] Annulation de la configuration des modules de sécurité...")
-        print("=" * 60)
+        self._logger.info("Annulation de la configuration des modules de sécurité...")
+        self._logger.info("=" * 60)
         
         results = []
         
         # Restaurer les sauvegardes
         for file_path, backup_path in self.backup_files.items():
             if self.file_handler.restore_file(backup_path, file_path):
-                print(f"[+] Restauration réussie: {file_path}")
+                self._logger.info(f"Restauration réussie: {file_path}")
                 results.append(True)
             else:
-                print(f"[-] Erreur restauration: {file_path}")
+                self._logger.error(f"Erreur restauration: {file_path}")
                 results.append(False)
         
-        print("=" * 60)
+        self._logger.info("=" * 60)
         
         return ConfigResult(
             success=all(results),
@@ -168,12 +172,13 @@ class SecurityModulesConfigurator(BaseConfigurator):
     
     # ==================== VULNERABILITY DETECTOR ====================
     
+    @cached(ttl=300)
     def _check_vulnerability_detector(self) -> ConfigResult:
         """Vérifier la configuration du Vulnerability Detector"""
-        print("[*] Vérification Vulnerability Detector...")
+        self._logger.info("Vérification Vulnerability Detector...")
         
         if not os.path.exists(self.ossec_conf_path):
-            print(f"[-] Fichier ossec.conf non trouvé: {self.ossec_conf_path}")
+            self._logger.error(f"Fichier ossec.conf non trouvé: {self.ossec_conf_path}")
             return ConfigResult(success=False, message="Fichier ossec.conf non trouvé")
         
         try:
@@ -185,20 +190,20 @@ class SecurityModulesConfigurator(BaseConfigurator):
             reports_enabled = '<vulnerability-detector><reports>' in content
             
             if vuln_enabled:
-                print("[+] Vulnerability Detector activé")
+                self._logger.info("Vulnerability Detector activé")
                 self.vuln_detector_enabled = True
             else:
-                print("[-] Vulnerability Detector non activé")
+                self._logger.warning("Vulnerability Detector non activé")
             
             if cve_enabled:
-                print("[+] Intégration CVE/NVD configurée")
+                self._logger.info("Intégration CVE/NVD configurée")
             else:
-                print("[-] Intégration CVE/NVD non configurée")
+                self._logger.warning("Intégration CVE/NVD non configurée")
             
             if reports_enabled:
-                print("[+] Rapports de vulnérabilités configurés")
+                self._logger.info("Rapports de vulnérabilités configurés")
             else:
-                print("[-] Rapports de vulnérabilités non configurés")
+                self._logger.warning("Rapports de vulnérabilités non configurés")
             
             success = vuln_enabled and cve_enabled and reports_enabled
             
@@ -213,12 +218,12 @@ class SecurityModulesConfigurator(BaseConfigurator):
             )
             
         except Exception as e:
-            print(f"[-] Erreur vérification Vulnerability Detector: {e}")
+            self._logger.error(f"Erreur vérification Vulnerability Detector: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     def _apply_vulnerability_detector(self) -> ConfigResult:
         """Appliquer la configuration du Vulnerability Detector"""
-        print("[*] Configuration Vulnerability Detector...")
+        self._logger.info("Configuration Vulnerability Detector...")
         
         if not os.path.exists(self.ossec_conf_path):
             return ConfigResult(success=False, message="Fichier ossec.conf non trouvé")
@@ -231,7 +236,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
             
             # Vérifier si la configuration existe déjà
             if '<vulnerability-detector>' in content:
-                print("[!] Vulnerability Detector déjà configuré, mise à jour...")
+                self._logger.warning("Vulnerability Detector déjà configuré, mise à jour...")
                 return ConfigResult(success=True, message="Déjà configuré")
             
             # Configuration complète du Vulnerability Detector
@@ -267,17 +272,17 @@ class SecurityModulesConfigurator(BaseConfigurator):
                 content += vuln_config
             
             self.file_handler.write_file(self.ossec_conf_path, content)
-            print("[+] Vulnerability Detector configuré")
+            self._logger.info("Vulnerability Detector configuré")
             
             return ConfigResult(success=True, message="Vulnerability Detector configuré avec succès")
             
         except Exception as e:
-            print(f"[-] Erreur configuration Vulnerability Detector: {e}")
+            self._logger.error(f"Erreur configuration Vulnerability Detector: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     def _validate_vulnerability_detector(self) -> ConfigResult:
         """Valider la configuration du Vulnerability Detector"""
-        print("[*] Validation Vulnerability Detector...")
+        self._logger.info("Validation Vulnerability Detector...")
         
         try:
             content = self.file_handler.read_file(self.ossec_conf_path)
@@ -293,24 +298,25 @@ class SecurityModulesConfigurator(BaseConfigurator):
             success = all(checks.values())
             
             if success:
-                print("[+] Vulnerability Detector validé")
+                self._logger.info("Vulnerability Detector validé")
             else:
-                print("[-] Vulnerability Detector: validation échouée")
+                self._logger.error("Vulnerability Detector: validation échouée")
                 for check, passed in checks.items():
                     if not passed:
-                        print(f"   - {check}: échec")
+                        self._logger.error(f"   - {check}: échec")
             
             return ConfigResult(success=success, message=f"Validation: {'OK' if success else 'Échouée'}", details=checks)
             
         except Exception as e:
-            print(f"[-] Erreur validation Vulnerability Detector: {e}")
+            self._logger.error(f"Erreur validation Vulnerability Detector: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     # ==================== CIS BENCHMARKS ====================
     
+    @cached(ttl=300)
     def _check_cis_benchmarks(self) -> ConfigResult:
         """Vérifier la configuration CIS Benchmarks"""
-        print("[*] Vérification CIS Benchmarks...")
+        self._logger.info("Vérification CIS Benchmarks...")
         
         if not os.path.exists(self.ossec_conf_path):
             return ConfigResult(success=False, message="Fichier ossec.conf non trouvé")
@@ -323,10 +329,10 @@ class SecurityModulesConfigurator(BaseConfigurator):
             cis_rules = len(re.findall(r'<rule id="10\d+', content))
             
             if cis_enabled:
-                print(f"[+] CIS Benchmarks activé ({cis_rules} règles)")
+                self._logger.info(f"CIS Benchmarks activé ({cis_rules} règles)")
                 self.cis_enabled = True
             else:
-                print("[-] CIS Benchmarks non activé")
+                self._logger.warning("CIS Benchmarks non activé")
             
             return ConfigResult(
                 success=cis_enabled,
@@ -335,12 +341,12 @@ class SecurityModulesConfigurator(BaseConfigurator):
             )
             
         except Exception as e:
-            print(f"[-] Erreur vérification CIS Benchmarks: {e}")
+            self._logger.error(f"Erreur vérification CIS Benchmarks: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     def _apply_cis_benchmarks(self) -> ConfigResult:
         """Appliquer la configuration CIS Benchmarks"""
-        print("[*] Configuration CIS Benchmarks...")
+        self._logger.info("Configuration CIS Benchmarks...")
         
         if not os.path.exists(self.ossec_conf_path):
             return ConfigResult(success=False, message="Fichier ossec.conf non trouvé")
@@ -353,7 +359,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
             
             # Vérifier si CIS existe déjà
             if '<rule id="100100"' in content:
-                print("[!] CIS Benchmarks déjà configuré, mise à jour...")
+                self._logger.warning("CIS Benchmarks déjà configuré, mise à jour...")
                 return ConfigResult(success=True, message="Déjà configuré")
             
             # Configuration CIS Benchmarks (extrait des règles principales)
@@ -395,17 +401,17 @@ class SecurityModulesConfigurator(BaseConfigurator):
                 content += cis_config
             
             self.file_handler.write_file(self.ossec_conf_path, content)
-            print("[+] CIS Benchmarks configuré")
+            self._logger.info("CIS Benchmarks configuré")
             
             return ConfigResult(success=True, message="CIS Benchmarks configuré avec succès")
             
         except Exception as e:
-            print(f"[-] Erreur configuration CIS Benchmarks: {e}")
+            self._logger.error(f"Erreur configuration CIS Benchmarks: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     def _validate_cis_benchmarks(self) -> ConfigResult:
         """Valider la configuration CIS Benchmarks"""
-        print("[*] Validation CIS Benchmarks...")
+        self._logger.info("Validation CIS Benchmarks...")
         
         try:
             content = self.file_handler.read_file(self.ossec_conf_path)
@@ -420,21 +426,22 @@ class SecurityModulesConfigurator(BaseConfigurator):
             success = all(checks.values())
             
             if success:
-                print("[+] CIS Benchmarks validé")
+                self._logger.info("CIS Benchmarks validé")
             else:
-                print("[-] CIS Benchmarks: validation échouée")
+                self._logger.error("CIS Benchmarks: validation échouée")
             
             return ConfigResult(success=success, message=f"Validation: {'OK' if success else 'Échouée'}", details=checks)
             
         except Exception as e:
-            print(f"[-] Erreur validation CIS Benchmarks: {e}")
+            self._logger.error(f"Erreur validation CIS Benchmarks: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     # ==================== FILE INTEGRITY MONITORING (FIM) ====================
     
+    @cached(ttl=300)
     def _check_fim(self) -> ConfigResult:
         """Vérifier la configuration FIM"""
-        print("[*] Vérification File Integrity Monitoring (FIM)...")
+        self._logger.info("Vérification File Integrity Monitoring (FIM)...")
         
         if not os.path.exists(self.ossec_conf_path):
             return ConfigResult(success=False, message="Fichier ossec.conf non trouvé")
@@ -448,10 +455,10 @@ class SecurityModulesConfigurator(BaseConfigurator):
             alert_rules = len(re.findall(r'<alert_on_start>yes</alert_on_start>', content))
             
             if fim_enabled:
-                print(f"[+] FIM activé ({critical_dirs} répertoires surveillés)")
+                self._logger.info(f"FIM activé ({critical_dirs} répertoires surveillés)")
                 self.fim_enabled = True
             else:
-                print("[-] FIM non activé")
+                self._logger.warning("FIM non activé")
             
             return ConfigResult(
                 success=fim_enabled,
@@ -460,12 +467,12 @@ class SecurityModulesConfigurator(BaseConfigurator):
             )
             
         except Exception as e:
-            print(f"[-] Erreur vérification FIM: {e}")
+            self._logger.error(f"Erreur vérification FIM: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     def _apply_fim(self) -> ConfigResult:
         """Appliquer la configuration FIM"""
-        print("[*] Configuration File Integrity Monitoring (FIM)...")
+        self._logger.info("Configuration File Integrity Monitoring (FIM)...")
         
         if not os.path.exists(self.ossec_conf_path):
             return ConfigResult(success=False, message="Fichier ossec.conf non trouvé")
@@ -478,7 +485,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
             
             # Vérifier si FIM existe déjà
             if '<syscheck>' in content:
-                print("[!] FIM déjà configuré, mise à jour...")
+                self._logger.warning("FIM déjà configuré, mise à jour...")
                 return ConfigResult(success=True, message="Déjà configuré")
             
             # Configuration FIM complète
@@ -522,17 +529,17 @@ class SecurityModulesConfigurator(BaseConfigurator):
                 content += fim_config
             
             self.file_handler.write_file(self.ossec_conf_path, content)
-            print("[+] FIM configuré")
+            self._logger.info("FIM configuré")
             
             return ConfigResult(success=True, message="FIM configuré avec succès")
             
         except Exception as e:
-            print(f"[-] Erreur configuration FIM: {e}")
+            self._logger.error(f"Erreur configuration FIM: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     def _validate_fim(self) -> ConfigResult:
         """Valider la configuration FIM"""
-        print("[*] Validation File Integrity Monitoring (FIM)...")
+        self._logger.info("Validation File Integrity Monitoring (FIM)...")
         
         try:
             content = self.file_handler.read_file(self.ossec_conf_path)
@@ -548,24 +555,25 @@ class SecurityModulesConfigurator(BaseConfigurator):
             success = all(checks.values())
             
             if success:
-                print("[+] FIM validé")
+                self._logger.info("FIM validé")
             else:
-                print("[-] FIM: validation échouée")
+                self._logger.error("FIM: validation échouée")
                 for check, passed in checks.items():
                     if not passed:
-                        print(f"   - {check}: échec")
+                        self._logger.error(f"   - {check}: échec")
             
             return ConfigResult(success=success, message=f"Validation: {'OK' if success else 'Échouée'}", details=checks)
             
         except Exception as e:
-            print(f"[-] Erreur validation FIM: {e}")
+            self._logger.error(f"Erreur validation FIM: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     # ==================== MITRE ATT&CK ====================
     
+    @cached(ttl=300)
     def _check_mitre_attack(self) -> ConfigResult:
         """Vérifier la configuration MITRE ATT&CK"""
-        print("[*] Vérification MITRE ATT&CK...")
+        self._logger.info("Vérification MITRE ATT&CK...")
         
         if not os.path.exists(self.ossec_conf_path):
             return ConfigResult(success=False, message="Fichier ossec.conf non trouvé")
@@ -578,10 +586,10 @@ class SecurityModulesConfigurator(BaseConfigurator):
             mitre_rules = len(re.findall(r'<group>mitre</group>', content))
             
             if mitre_enabled:
-                print(f"[+] MITRE ATT&CK activé ({mitre_rules} règles)")
+                self._logger.info(f"MITRE ATT&CK activé ({mitre_rules} règles)")
                 self.mitre_enabled = True
             else:
-                print("[-] MITRE ATT&CK non activé")
+                self._logger.warning("MITRE ATT&CK non activé")
             
             return ConfigResult(
                 success=mitre_enabled,
@@ -590,12 +598,12 @@ class SecurityModulesConfigurator(BaseConfigurator):
             )
             
         except Exception as e:
-            print(f"[-] Erreur vérification MITRE ATT&CK: {e}")
+            self._logger.error(f"Erreur vérification MITRE ATT&CK: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     def _apply_mitre_attack(self) -> ConfigResult:
         """Appliquer la configuration MITRE ATT&CK"""
-        print("[*] Configuration MITRE ATT&CK...")
+        self._logger.info("Configuration MITRE ATT&CK...")
         
         if not os.path.exists(self.ossec_conf_path):
             return ConfigResult(success=False, message="Fichier ossec.conf non trouvé")
@@ -608,7 +616,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
             
             # Vérifier si MITRE existe déjà
             if '<group>mitre</group>' in content:
-                print("[!] MITRE ATT&CK déjà configuré, mise à jour...")
+                self._logger.warning("MITRE ATT&CK déjà configuré, mise à jour...")
                 return ConfigResult(success=True, message="Déjà configuré")
             
             # Configuration MITRE ATT&CK
@@ -670,17 +678,17 @@ class SecurityModulesConfigurator(BaseConfigurator):
                 content += mitre_config
             
             self.file_handler.write_file(self.ossec_conf_path, content)
-            print("[+] MITRE ATT&CK configuré")
+            self._logger.info("MITRE ATT&CK configuré")
             
             return ConfigResult(success=True, message="MITRE ATT&CK configuré avec succès")
             
         except Exception as e:
-            print(f"[-] Erreur configuration MITRE ATT&CK: {e}")
+            self._logger.error(f"Erreur configuration MITRE ATT&CK: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     def _validate_mitre_attack(self) -> ConfigResult:
         """Valider la configuration MITRE ATT&CK"""
-        print("[*] Validation MITRE ATT&CK...")
+        self._logger.info("Validation MITRE ATT&CK...")
         
         try:
             content = self.file_handler.read_file(self.ossec_conf_path)
@@ -696,15 +704,15 @@ class SecurityModulesConfigurator(BaseConfigurator):
             success = all(checks.values())
             
             if success:
-                print("[+] MITRE ATT&CK validé")
+                self._logger.info("MITRE ATT&CK validé")
             else:
-                print("[-] MITRE ATT&CK: validation échouée")
+                self._logger.error("MITRE ATT&CK: validation échouée")
                 for check, passed in checks.items():
                     if not passed:
-                        print(f"   - {check}: échec")
+                        self._logger.error(f"   - {check}: échec")
             
             return ConfigResult(success=success, message=f"Validation: {'OK' if success else 'Échouée'}", details=checks)
             
         except Exception as e:
-            print(f"[-] Erreur validation MITRE ATT&CK: {e}")
+            self._logger.error(f"Erreur validation MITRE ATT&CK: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")

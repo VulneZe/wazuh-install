@@ -9,6 +9,7 @@ from .wazuh_detector import WazuhDetector, WazuhInstallation
 from .base_configurator import BaseConfigurator, ConfigResult
 from ..utils.ssh_client import SSHClient, SSHCredentials
 from ..utils.exceptions import SSHConnectionError, SSHAuthenticationError
+from ..utils.logger import WazuhLogger
 
 
 class ConfigManager:
@@ -16,6 +17,7 @@ class ConfigManager:
     
     _instance = None
     _lock = threading.Lock()
+    _logger = WazuhLogger(__name__, use_json=False)
     
     def __new__(cls):
         if cls._instance is None:
@@ -43,7 +45,7 @@ class ConfigManager:
     
     def initialize(self) -> ConfigResult:
         """Initialize the configuration manager"""
-        print("[*] Initialisation du gestionnaire de configuration...")
+        self._logger.info("Initialisation du gestionnaire de configuration...")
         
         # Detect Wazuh installation
         self.installation = self.detector.detect_installation()
@@ -55,7 +57,7 @@ class ConfigManager:
                 details={"installed": False}
             )
         
-        print("[+] Gestionnaire de configuration initialisé")
+        self._logger.info("Gestionnaire de configuration initialisé")
         return ConfigResult(
             success=True,
             message="Gestionnaire de configuration initialisé avec succès",
@@ -95,7 +97,7 @@ class ConfigManager:
         # Create SSH client
         self.ssh_client = SSHClient(self.ssh_credentials)
         
-        print(f"[*] Configuration distante définie pour {host}:{ssh_port}")
+        self._logger.info(f"Configuration distante définie pour {host}:{ssh_port}")
     
     def connect_ssh(self) -> bool:
         """Establish SSH connection if remote mode is enabled"""
@@ -104,15 +106,15 @@ class ConfigManager:
         
         try:
             if self.ssh_client.connect():
-                print("[+] Connexion SSH établie avec succès")
+                self._logger.info("Connexion SSH établie avec succès")
                 return True
             else:
                 raise SSHConnectionError("Échec de la connexion SSH")
         except SSHAuthenticationError as e:
-            print(f"[-] Erreur d'authentification SSH: {e}")
+            self._logger.error(f"Erreur d'authentification SSH: {e}")
             return False
         except SSHConnectionError as e:
-            print(f"[-] Erreur de connexion SSH: {e}")
+            self._logger.error(f"Erreur de connexion SSH: {e}")
             return False
     
     def disconnect_ssh(self):
@@ -123,7 +125,7 @@ class ConfigManager:
     def register_configurator(self, name: str, configurator: BaseConfigurator) -> bool:
         """Register a configuration strategy"""
         self.configurators[name] = configurator
-        print(f"[+] Configurator '{name}' enregistré")
+        self._logger.info(f"Configurator '{name}' enregistré")
         return True
     
     def get_configurator(self, name: str) -> Optional[BaseConfigurator]:
@@ -132,23 +134,25 @@ class ConfigManager:
     
     def check_all_configs(self) -> Dict[str, ConfigResult]:
         """Check all registered configurations"""
-        print("[*] Verification de toutes les configurations...")
+        self._logger.info("Verification de toutes les configurations...")
         
         results = {}
         for name, configurator in self.configurators.items():
-            print(f"[*] Verification configuration: {name}")
-            results[name] = configurator.check()
+            self._logger.info(f"Verification configuration: {name}")
+            result = configurator.check()
+            results[name] = result
         
         return results
     
     def apply_all_configs(self) -> Dict[str, ConfigResult]:
         """Apply all registered configurations"""
-        print("[*] Application de toutes les configurations...")
+        self._logger.info("Application de toutes les configurations...")
         
         results = {}
         for name, configurator in self.configurators.items():
-            print(f"[*] Application configuration: {name}")
-            results[name] = configurator.apply()
+            self._logger.info(f"Application configuration: {name}")
+            result = configurator.apply()
+            results[name] = result
         
         return results
     
@@ -161,27 +165,27 @@ class ConfigManager:
                 message=f"Configurator '{name}' non trouvé"
             )
         
-        print(f"[*] Application configuration: {name}")
+        self._logger.info(f"Application configuration: {name}")
         return configurator.apply()
     
     def validate_all_configs(self) -> Dict[str, ConfigResult]:
         """Validate all applied configurations"""
-        print("[*] Validation de toutes les configurations...")
+        self._logger.info("Validation de toutes les configurations...")
         
         results = {}
         for name, configurator in self.configurators.items():
-            print(f"[*] Validation configuration: {name}")
+            self._logger.info(f"Validation configuration: {name}")
             results[name] = configurator.validate()
         
         return results
     
     def rollback_all_configs(self) -> Dict[str, ConfigResult]:
         """Rollback all configurations"""
-        print("[*] Rollback de toutes les configurations...")
+        self._logger.info("Rollback de toutes les configurations...")
         
         results = {}
         for name, configurator in self.configurators.items():
-            print(f"[*] Rollback configuration: {name}")
+            self._logger.info(f"Rollback configuration: {name}")
             results[name] = configurator.rollback()
         
         return results

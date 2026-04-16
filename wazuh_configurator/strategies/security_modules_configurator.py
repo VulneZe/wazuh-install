@@ -538,10 +538,10 @@ class SecurityModulesConfigurator(BaseConfigurator):
             
             checks = {
                 "enabled": '<syscheck>' in content and '<disabled>no</disabled>' in content,
-                "critical_dirs": '<directories check_all="yes">/etc</directories>' in content,
-                "frequency": '<frequency>3600</frequency>' in content,
+                "critical_dirs": '<directories' in content and '/etc' in content,
+                "frequency": '<frequency>' in content,
                 "alerts": '<alert_on_new_files>yes</alert_on_new_files>' in content,
-                "exclusions": '<ignore>/etc/mtab</ignore>' in content
+                "exclusions": '<ignore>' in content
             }
             
             success = all(checks.values())

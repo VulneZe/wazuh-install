@@ -210,10 +210,16 @@ class PerformanceConfigurator(BaseConfigurator):
         
         logrotate_config = "/etc/logrotate.d/wazuh"
         if os.path.exists(logrotate_config):
-            self.backup_config(logrotate_config)
-        else:
-            # Create new logrotate config
-            logrotate_content = """
+            # Check if it has proper configuration
+            content = self.read_config_file(logrotate_config)
+            if "rotate" in content and "size" in content:
+                print("[+] Rotation logs deja configuree")
+                return True
+            else:
+                self.backup_config(logrotate_config)
+        
+        # Create new logrotate config
+        logrotate_content = """
 /var/ossec/logs/*.log {
     daily
     rotate 30
@@ -224,13 +230,10 @@ class PerformanceConfigurator(BaseConfigurator):
     size 100M
 }
 """
-            self.write_config_file(logrotate_config, logrotate_content)
-            self.config_files[logrotate_config] = True
-            print("[+] Rotation logs configuree")
-            return True
-        
-        print("[-] Configuration rotation logs existante")
-        return False
+        self.write_config_file(logrotate_config, logrotate_content)
+        self.config_files[logrotate_config] = True
+        print("[+] Rotation logs configuree")
+        return True
     
     def _apply_disk_cleanup(self) -> bool:
         """Apply disk cleanup configuration"""

@@ -193,10 +193,23 @@ def main():
         print("[*] Mode correction pour Wazuh existant...")
         print("[*] Verification des configurations actuelles...")
         
-        check_results = check_configs(config_manager)
+        if args.config == 'all':
+            check_results = check_configs(config_manager)
+        else:
+            result = config_manager.get_configurator(args.config).check()
+            status = "[+]" if result.success else "[-]"
+            print(f"{status} {args.config}: {result.message}")
+            if result.warnings:
+                for warning in result.warnings:
+                    print(f"   [!] {warning}")
         
         print("\n[*] Application des corrections...")
-        apply_results = apply_configs(config_manager)
+        if args.config == 'all':
+            apply_results = apply_configs(config_manager)
+        else:
+            result = config_manager.apply_config(args.config)
+            status = "[+]" if result.success else "[-]"
+            print(f"{status} {args.config}: {result.message}")
         
         print("\n[*] Validation des corrections...")
         if args.config == 'all':

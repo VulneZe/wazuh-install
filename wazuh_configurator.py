@@ -163,7 +163,7 @@ def interactive_menu():
     
     manager_port = input("Port Manager (défaut: 1514): ").strip() or "1514"
     indexer_port = input("Port Indexer (défaut: 9200): ").strip() or "9200"
-    dashboard_port = input("Port Dashboard (défaut: 5601): ").strip() or "5601"
+    dashboard_port = input("Port Dashboard (défaut: 443): ").strip() or "443"
     
     # Choisir la commande
     print("\nCommandes disponibles:")
@@ -232,7 +232,7 @@ def main():
             sys.argv.extend(["--manager-port", manager_port])
         if indexer_port != "9200":
             sys.argv.extend(["--indexer-port", indexer_port])
-        if dashboard_port != "5601":
+        if dashboard_port != "443":
             sys.argv.extend(["--dashboard-port", dashboard_port])
     
     parser = argparse.ArgumentParser(
@@ -251,7 +251,7 @@ def main():
     parser.add_argument('--dashboard-host', help='Adresse IP/hostname du Wazuh Dashboard (défaut: localhost)')
     parser.add_argument('--manager-port', default=1514, type=int, help='Port Manager (défaut: 1514)')
     parser.add_argument('--indexer-port', default=9200, type=int, help='Port Indexer (défaut: 9200)')
-    parser.add_argument('--dashboard-port', default=5601, type=int, help='Port Dashboard (défaut: 5601)')
+    parser.add_argument('--dashboard-port', default=443, type=int, help='Port Dashboard (défaut: 443)')
     parser.add_argument('--custom-ports', help='Ports personnalisés (format: indexer:9200,manager:1514,api:55000)')
     parser.add_argument('--wazuh-path', default='/var/ossec', help='Chemin d installation Wazuh (défaut: /var/ossec)')
     
@@ -269,7 +269,7 @@ def main():
         ('--dashboard-host', 'Adresse IP/hostname du Wazuh Dashboard (défaut: localhost)'),
         ('--manager-port', 'Port Manager (défaut: 1514)'),
         ('--indexer-port', 'Port Indexer (défaut: 9200)'),
-        ('--dashboard-port', 'Port Dashboard (défaut: 5601)'),
+        ('--dashboard-port', 'Port Dashboard (défaut: 443)'),
         ('--custom-ports', 'Ports personnalisés (format: indexer:9200,manager:1514,api:55000)'),
         ('--wazuh-path', 'Chemin d installation Wazuh (défaut: /var/ossec)')
     ]
@@ -284,7 +284,7 @@ def main():
             elif arg == '--indexer-port':
                 parser.add_argument(arg, default=9200, type=int, help=help_text)
             elif arg == '--dashboard-port':
-                parser.add_argument(arg, default=5601, type=int, help=help_text)
+                parser.add_argument(arg, default=443, type=int, help=help_text)
             elif arg == '--wazuh-path':
                 parser.add_argument(arg, default='/var/ossec', help=help_text)
             else:

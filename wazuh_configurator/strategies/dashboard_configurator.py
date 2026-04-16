@@ -23,7 +23,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 class DashboardConfigurator(BaseConfigurator):
     """Configuration des dashboards Wazuh via API OpenSearch Dashboards"""
     
-    def __init__(self, wazuh_path: str = "/var/ossec", dashboard_host: str = "localhost", dashboard_port: int = 5601):
+    def __init__(self, wazuh_path: str = "/var/ossec", dashboard_host: str = "localhost", dashboard_port: int = 443):
         super().__init__(wazuh_path)
         self.paths = WazuhPaths()
         self.dashboard_host = dashboard_host

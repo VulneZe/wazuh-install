@@ -225,7 +225,7 @@ def run_configurator(args):
         
         manager_port = input("Port Manager (défaut: 1514): ").strip() or "1514"
         indexer_port = input("Port Indexer (défaut: 9200): ").strip() or "9200"
-        dashboard_port = input("Port Dashboard (défaut: 5601): ").strip() or "5601"
+        dashboard_port = input("Port Dashboard (défaut: 443): ").strip() or "443"
         
         # Construire la commande avec les options
         cmd_args = args.split()
@@ -239,7 +239,7 @@ def run_configurator(args):
             cmd_args.extend(["--manager-port", manager_port])
         if indexer_port != "9200":
             cmd_args.extend(["--indexer-port", indexer_port])
-        if dashboard_port != "5601":
+        if dashboard_port != "443":
             cmd_args.extend(["--dashboard-port", dashboard_port])
     else:
         cmd_args = args.split()

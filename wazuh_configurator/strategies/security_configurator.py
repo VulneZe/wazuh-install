@@ -184,7 +184,8 @@ class SecurityConfigurator(BaseConfigurator):
                 return ports_found >= 3
         except (subprocess.TimeoutExpired, FileNotFoundError):
             pass
-        except Exception:
+        except Exception as e:
+            self._logger.error(f"Erreur vérification ports: {e}")
             pass
         
         return False
@@ -317,8 +318,11 @@ dashboard_user: {passwords['dashboard']}
             self._logger.info(f"Mots de passe sauvegardés dans: {self.paths.passwords_file}")
             return True
             
-        except Exception as e:
+        except FileOperationError as e:
             self._logger.error(f"Erreur écriture mots de passe: {e}")
+            return False
+        except Exception as e:
+            self._logger.error(f"Erreur inattendue écriture mots de passe: {e}")
             return False
     
     def _configure_wazuh_passwords(self, passwords: dict) -> bool:
@@ -346,8 +350,11 @@ dashboard_user: {passwords['dashboard']}
                 self.config_files[self.paths.internal_users] = True
             
             return True
-        except Exception as e:
+        except FileOperationError as e:
             self._logger.error(f"Erreur configuration mots de passe: {e}")
+            return False
+        except Exception as e:
+            self._logger.error(f"Erreur inattendue configuration mots de passe: {e}")
             return False
     
     def _apply_api_auth(self) -> bool:
@@ -393,8 +400,11 @@ basic:
                 self._logger.error("Fichier de configuration API non trouvé")
                 return False
                 
-        except Exception as e:
+        except FileOperationError as e:
             self._logger.error(f"Erreur configuration API authentication: {e}")
+            return False
+        except Exception as e:
+            self._logger.error(f"Erreur inattendue configuration API authentication: {e}")
             return False
     
     def _apply_firewall_rules(self) -> bool:
@@ -423,8 +433,11 @@ basic:
                         capture_output=True, check=True, timeout=180
                     )
                     self._logger.info("UFW installé")
-                except Exception as e:
+                except subprocess.CalledProcessError as e:
                     self._logger.error(f"Erreur installation UFW: {e}")
+                    return True  # Pas une erreur critique
+                except Exception as e:
+                    self._logger.error(f"Erreur inattendue installation UFW: {e}")
                     return True  # Pas une erreur critique
             
             # Configuration de base UFW
@@ -490,6 +503,6 @@ basic:
             self._logger.warning("Configuration pare-feu ignorée (pas critique)")
             return True  # Pas une erreur critique
         except Exception as e:
-            self._logger.error(f"Erreur configuration pare-feu: {e}")
+            self._logger.error(f"Erreur inattendue configuration pare-feu: {e}")
             self._logger.warning("Configuration pare-feu ignorée (pas critique)")
             return True  # Pas une erreur critique

@@ -145,7 +145,11 @@ class MonitoringConfigurator(BaseConfigurator):
             return "wazuh" in result.stdout
         except (subprocess.TimeoutExpired, FileNotFoundError):
             return False
-        except Exception:
+        except subprocess.CalledProcessError as e:
+            self._logger.error(f"Erreur vérification service monitoring: {e}")
+            return False
+        except Exception as e:
+            self._logger.error(f"Erreur inattendue vérification service monitoring: {e}")
             return False
     
     @cached(ttl=300)

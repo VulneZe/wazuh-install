@@ -12,6 +12,8 @@ from ..core.base_configurator import BaseConfigurator, ConfigResult
 from ..config.paths import WazuhPaths
 from ..utils.logger import WazuhLogger
 from ..utils.cache import cached
+from ..utils.exceptions import ConfigurationError, ServiceNotAvailableError
+import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -56,7 +58,7 @@ class DashboardConfigurator(BaseConfigurator):
         # Vérifier la connexion au dashboard
         try:
             connection_ok = self._check_dashboard_connection()
-        except Exception as e:
+        except ServiceNotAvailableError as e:
             error_msg = str(e)
             if "Connection refused" in error_msg or "Max retries exceeded" in error_msg:
                 self._logger.warning("Dashboard non accessible (service probablement non démarré)")
@@ -71,15 +73,21 @@ class DashboardConfigurator(BaseConfigurator):
         # Vérifier les visualisations existantes
         try:
             visualizations_ok = self._check_visualizations()
+        except ServiceNotAvailableError as e:
+            self._logger.error(f"Erreur service vérification visualisations: {e}")
+            visualizations_ok = False
         except Exception as e:
-            self._logger.error(f"Erreur vérification visualisations: {e}")
+            self._logger.error(f"Erreur inattendue vérification visualisations: {e}")
             visualizations_ok = False
         
         # Vérifier les dashboards existants
         try:
             dashboards_ok = self._check_dashboards()
+        except ServiceNotAvailableError as e:
+            self._logger.error(f"Erreur service vérification dashboards: {e}")
+            dashboards_ok = False
         except Exception as e:
-            self._logger.error(f"Erreur vérification dashboards: {e}")
+            self._logger.error(f"Erreur inattendue vérification dashboards: {e}")
             dashboards_ok = False
         
         self._logger.info("=" * 60)
@@ -112,7 +120,7 @@ class DashboardConfigurator(BaseConfigurator):
                     details={"dashboard_running": False},
                     warnings=["Dashboard service non démarré - Configuration ignorée"]
                 )
-        except Exception as e:
+        except ServiceNotAvailableError as e:
             error_msg = str(e)
             if "Connection refused" in error_msg or "Max retries exceeded" in error_msg:
                 self._logger.warning("Dashboard non accessible (service probablement non démarré)")
@@ -128,22 +136,31 @@ class DashboardConfigurator(BaseConfigurator):
         # Créer l'index pattern
         try:
             results.append(self._create_index_pattern())
+        except ServiceNotAvailableError as e:
+            self._logger.error(f"Erreur service création index pattern: {e}")
+            results.append(False)
         except Exception as e:
-            self._logger.error(f"Erreur création index pattern: {e}")
+            self._logger.error(f"Erreur inattendue création index pattern: {e}")
             results.append(False)
         
         # Créer les visualisations
         try:
             results.append(self._create_visualizations())
+        except ServiceNotAvailableError as e:
+            self._logger.error(f"Erreur service création visualisations: {e}")
+            results.append(False)
         except Exception as e:
-            self._logger.error(f"Erreur création visualisations: {e}")
+            self._logger.error(f"Erreur inattendue création visualisations: {e}")
             results.append(False)
         
         # Créer le dashboard
         try:
             results.append(self._create_dashboard())
+        except ServiceNotAvailableError as e:
+            self._logger.error(f"Erreur service création dashboard: {e}")
+            results.append(False)
         except Exception as e:
-            self._logger.error(f"Erreur création dashboard: {e}")
+            self._logger.error(f"Erreur inattendue création dashboard: {e}")
             results.append(False)
         
         self._logger.info("=" * 60)
@@ -241,6 +258,8 @@ class DashboardConfigurator(BaseConfigurator):
             else:
                 self._logger.error(f"[-] Connexion au dashboard: Échec (status {response.status_code})")
                 return False
+        except requests.exceptions.ConnectionError as e:
+            raise ServiceNotAvailableError(f"Dashboard non accessible: {e}")
         except Exception as e:
             self._logger.error(f"[-] Erreur connexion dashboard: {e}")
             return False
@@ -265,6 +284,8 @@ class DashboardConfigurator(BaseConfigurator):
             else:
                 self._logger.error("[-] Erreur récupération visualisations")
                 return False
+        except requests.exceptions.ConnectionError as e:
+            raise ServiceNotAvailableError(f"Dashboard non accessible: {e}")
         except Exception as e:
             self._logger.error(f"[-] Erreur vérification visualisations: {e}")
             return False
@@ -289,6 +310,8 @@ class DashboardConfigurator(BaseConfigurator):
             else:
                 self._logger.error("[-] Erreur récupération dashboards")
                 return False
+        except requests.exceptions.ConnectionError as e:
+            raise ServiceNotAvailableError(f"Dashboard non accessible: {e}")
         except Exception as e:
             self._logger.error(f"[-] Erreur vérification dashboards: {e}")
             return False
@@ -326,6 +349,8 @@ class DashboardConfigurator(BaseConfigurator):
             else:
                 self._logger.error(f"[-] Erreur création index pattern: {response.status_code}")
                 return False
+        except requests.exceptions.ConnectionError as e:
+            raise ServiceNotAvailableError(f"Dashboard non accessible: {e}")
         except Exception as e:
             self._logger.error(f"[-] Erreur création index pattern: {e}")
             return False
@@ -475,6 +500,8 @@ class DashboardConfigurator(BaseConfigurator):
             self._logger.info("[+] Toutes les visualisations créées")
             return True
             
+        except requests.exceptions.ConnectionError as e:
+            raise ServiceNotAvailableError(f"Dashboard non accessible: {e}")
         except Exception as e:
             self._logger.error(f"[-] Erreur création visualisations: {e}")
             return False
@@ -552,6 +579,8 @@ class DashboardConfigurator(BaseConfigurator):
                 self._logger.error(f"[-] Erreur création dashboard: {response.status_code}")
                 return False
                 
+        except requests.exceptions.ConnectionError as e:
+            raise ServiceNotAvailableError(f"Dashboard non accessible: {e}")
         except Exception as e:
             self._logger.error(f"[-] Erreur création dashboard: {e}")
             return False

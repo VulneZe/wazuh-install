@@ -10,6 +10,7 @@ from typing import Dict, Optional
 from ..core.base_configurator import BaseConfigurator, ConfigResult
 from ..utils.logger import WazuhLogger
 from ..utils.cache import cached
+from ..utils.exceptions import ConfigurationError, FileOperationError
 from ..config.paths import WazuhPaths
 
 
@@ -217,8 +218,11 @@ class SecurityModulesConfigurator(BaseConfigurator):
                 }
             )
             
+        except FileOperationError as e:
+            self._logger.error(f"Erreur fichier vérification Vulnerability Detector: {e}")
+            return ConfigResult(success=False, message=f"Erreur: {e}")
         except Exception as e:
-            self._logger.error(f"Erreur vérification Vulnerability Detector: {e}")
+            self._logger.error(f"Erreur inattendue vérification Vulnerability Detector: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     def _apply_vulnerability_detector(self) -> ConfigResult:
@@ -276,8 +280,11 @@ class SecurityModulesConfigurator(BaseConfigurator):
             
             return ConfigResult(success=True, message="Vulnerability Detector configuré avec succès")
             
+        except FileOperationError as e:
+            self._logger.error(f"Erreur fichier configuration Vulnerability Detector: {e}")
+            return ConfigResult(success=False, message=f"Erreur: {e}")
         except Exception as e:
-            self._logger.error(f"Erreur configuration Vulnerability Detector: {e}")
+            self._logger.error(f"Erreur inattendue configuration Vulnerability Detector: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     def _validate_vulnerability_detector(self) -> ConfigResult:
@@ -307,8 +314,11 @@ class SecurityModulesConfigurator(BaseConfigurator):
             
             return ConfigResult(success=success, message=f"Validation: {'OK' if success else 'Échouée'}", details=checks)
             
+        except FileOperationError as e:
+            self._logger.error(f"Erreur fichier validation Vulnerability Detector: {e}")
+            return ConfigResult(success=False, message=f"Erreur: {e}")
         except Exception as e:
-            self._logger.error(f"Erreur validation Vulnerability Detector: {e}")
+            self._logger.error(f"Erreur inattendue validation Vulnerability Detector: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     # ==================== CIS BENCHMARKS ====================
@@ -340,8 +350,11 @@ class SecurityModulesConfigurator(BaseConfigurator):
                 details={"enabled": cis_enabled, "rules_count": cis_rules}
             )
             
+        except FileOperationError as e:
+            self._logger.error(f"Erreur fichier vérification CIS Benchmarks: {e}")
+            return ConfigResult(success=False, message=f"Erreur: {e}")
         except Exception as e:
-            self._logger.error(f"Erreur vérification CIS Benchmarks: {e}")
+            self._logger.error(f"Erreur inattendue vérification CIS Benchmarks: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     def _apply_cis_benchmarks(self) -> ConfigResult:
@@ -405,8 +418,11 @@ class SecurityModulesConfigurator(BaseConfigurator):
             
             return ConfigResult(success=True, message="CIS Benchmarks configuré avec succès")
             
+        except FileOperationError as e:
+            self._logger.error(f"Erreur fichier configuration CIS Benchmarks: {e}")
+            return ConfigResult(success=False, message=f"Erreur: {e}")
         except Exception as e:
-            self._logger.error(f"Erreur configuration CIS Benchmarks: {e}")
+            self._logger.error(f"Erreur inattendue configuration CIS Benchmarks: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     def _validate_cis_benchmarks(self) -> ConfigResult:
@@ -432,8 +448,11 @@ class SecurityModulesConfigurator(BaseConfigurator):
             
             return ConfigResult(success=success, message=f"Validation: {'OK' if success else 'Échouée'}", details=checks)
             
+        except FileOperationError as e:
+            self._logger.error(f"Erreur fichier validation CIS Benchmarks: {e}")
+            return ConfigResult(success=False, message=f"Erreur: {e}")
         except Exception as e:
-            self._logger.error(f"Erreur validation CIS Benchmarks: {e}")
+            self._logger.error(f"Erreur inattendue validation CIS Benchmarks: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     # ==================== FILE INTEGRITY MONITORING (FIM) ====================
@@ -466,8 +485,11 @@ class SecurityModulesConfigurator(BaseConfigurator):
                 details={"enabled": fim_enabled, "directories": critical_dirs, "alerts": alert_rules}
             )
             
+        except FileOperationError as e:
+            self._logger.error(f"Erreur fichier vérification FIM: {e}")
+            return ConfigResult(success=False, message=f"Erreur: {e}")
         except Exception as e:
-            self._logger.error(f"Erreur vérification FIM: {e}")
+            self._logger.error(f"Erreur inattendue vérification FIM: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     def _apply_fim(self) -> ConfigResult:
@@ -533,8 +555,11 @@ class SecurityModulesConfigurator(BaseConfigurator):
             
             return ConfigResult(success=True, message="FIM configuré avec succès")
             
+        except FileOperationError as e:
+            self._logger.error(f"Erreur fichier configuration FIM: {e}")
+            return ConfigResult(success=False, message=f"Erreur: {e}")
         except Exception as e:
-            self._logger.error(f"Erreur configuration FIM: {e}")
+            self._logger.error(f"Erreur inattendue configuration FIM: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     def _validate_fim(self) -> ConfigResult:
@@ -564,8 +589,11 @@ class SecurityModulesConfigurator(BaseConfigurator):
             
             return ConfigResult(success=success, message=f"Validation: {'OK' if success else 'Échouée'}", details=checks)
             
+        except FileOperationError as e:
+            self._logger.error(f"Erreur fichier validation FIM: {e}")
+            return ConfigResult(success=False, message=f"Erreur: {e}")
         except Exception as e:
-            self._logger.error(f"Erreur validation FIM: {e}")
+            self._logger.error(f"Erreur inattendue validation FIM: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     # ==================== MITRE ATT&CK ====================
@@ -597,8 +625,11 @@ class SecurityModulesConfigurator(BaseConfigurator):
                 details={"enabled": mitre_enabled, "rules_count": mitre_rules}
             )
             
+        except FileOperationError as e:
+            self._logger.error(f"Erreur fichier vérification MITRE ATT&CK: {e}")
+            return ConfigResult(success=False, message=f"Erreur: {e}")
         except Exception as e:
-            self._logger.error(f"Erreur vérification MITRE ATT&CK: {e}")
+            self._logger.error(f"Erreur inattendue vérification MITRE ATT&CK: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     def _apply_mitre_attack(self) -> ConfigResult:
@@ -682,8 +713,11 @@ class SecurityModulesConfigurator(BaseConfigurator):
             
             return ConfigResult(success=True, message="MITRE ATT&CK configuré avec succès")
             
+        except FileOperationError as e:
+            self._logger.error(f"Erreur fichier configuration MITRE ATT&CK: {e}")
+            return ConfigResult(success=False, message=f"Erreur: {e}")
         except Exception as e:
-            self._logger.error(f"Erreur configuration MITRE ATT&CK: {e}")
+            self._logger.error(f"Erreur inattendue configuration MITRE ATT&CK: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")
     
     def _validate_mitre_attack(self) -> ConfigResult:
@@ -713,6 +747,9 @@ class SecurityModulesConfigurator(BaseConfigurator):
             
             return ConfigResult(success=success, message=f"Validation: {'OK' if success else 'Échouée'}", details=checks)
             
+        except FileOperationError as e:
+            self._logger.error(f"Erreur fichier validation MITRE ATT&CK: {e}")
+            return ConfigResult(success=False, message=f"Erreur: {e}")
         except Exception as e:
-            self._logger.error(f"Erreur validation MITRE ATT&CK: {e}")
+            self._logger.error(f"Erreur inattendue validation MITRE ATT&CK: {e}")
             return ConfigResult(success=False, message=f"Erreur: {e}")

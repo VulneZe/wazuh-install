@@ -1,333 +1,135 @@
-root@wazuh:/home/wazuh/Downloads/wazuh-install-main# cat /var/log/wazuh-install.log
-16/04/2026 15:24:26 INFO: Starting Wazuh installation assistant. Wazuh version: 4.14.4
-16/04/2026 15:24:26 INFO: Verbose logging redirected to /var/log/wazuh-install.log
-16/04/2026 15:24:26 INFO: The recommended systems are: Red Hat Enterprise Linux 7, 8, 9; CentOS 7, 8; Amazon Linux 2; Amazon Linux 2023; Ubuntu 16.04, 18.04, 20.04, 22.04; Rocky Linux 9.4.
-16/04/2026 15:24:26 WARNING: The current system does not match with the list of recommended systems. The installation may not work properly.
-Hit:1 http://security.debian.org/debian-security trixie-security InRelease
-Hit:2 http://deb.debian.org/debian trixie InRelease
-Hit:3 http://deb.debian.org/debian trixie-updates InRelease
-Reading package lists...
-16/04/2026 15:24:34 INFO: Verifying that your system meets the recommended minimum hardware requirements.
-16/04/2026 15:24:34 INFO: Wazuh web interface port will be 443.
-Hit:1 http://security.debian.org/debian-security trixie-security InRelease
-Hit:2 http://deb.debian.org/debian trixie InRelease
-Hit:3 http://deb.debian.org/debian trixie-updates InRelease
-Reading package lists...
-gpg: keyring '/usr/share/keyrings/wazuh.gpg' created
-gpg: key 96B3EE5F29111145: public key "Wazuh.com (Wazuh Signing Key) <support@wazuh.com>" imported
-gpg: Total number processed: 1
-gpg:               imported: 1
-deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main
-Hit:1 http://security.debian.org/debian-security trixie-security InRelease
-Hit:2 http://deb.debian.org/debian trixie InRelease
-Hit:3 http://deb.debian.org/debian trixie-updates InRelease
-Get:4 https://packages.wazuh.com/4.x/apt stable InRelease [17.3 kB]
-Get:5 https://packages.wazuh.com/4.x/apt stable/main amd64 Packages [51.4 kB]
-Fetched 68.6 kB in 0s (174 kB/s)
-Reading package lists...
-16/04/2026 15:24:43 INFO: Wazuh repository added.
-16/04/2026 15:24:43 INFO: --- Configuration files ---
-16/04/2026 15:24:43 INFO: Generating configuration files.
-16/04/2026 15:24:44 INFO: Generating the root certificate.
-16/04/2026 15:24:44 INFO: Generating Admin certificates.
-16/04/2026 15:24:44 INFO: Generating Wazuh indexer certificates.
-16/04/2026 15:24:44 INFO: Generating Filebeat certificates.
-16/04/2026 15:24:44 INFO: Generating Wazuh dashboard certificates.
-16/04/2026 15:24:45 INFO: Created wazuh-install-files.tar. It contains the Wazuh cluster key, certificates, and passwords necessary for installation.
-16/04/2026 15:24:45 INFO: --- Wazuh indexer ---
-16/04/2026 15:24:45 INFO: Starting Wazuh indexer installation.
-Reading package lists... Building dependency tree... Reading state information... The following NEW packages will be installed: wazuh-indexer 0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded. Need to get 873 MB of archives. After this operation, 1,102 MB of additional disk space will be used. Get:1 https://packages.wazuh.com/4.x/apt stable/main amd64 wazuh-indexer amd64 4.14.4-1 [873 MB] Fetched 247 MB in 7min 48s (527 kB/s) Selecting previously u Processing triggers for systemd (257.9-1~deb13u1) ...following statements to configure wazuh-indexer service to start automatically using systemd
-16/04/2026 15:33:24 INFO: Wazuh indexer installation finished.
-16/04/2026 15:33:24 INFO: Wazuh indexer post-install configuration finished.
-16/04/2026 15:33:24 INFO: Starting service wazuh-indexer.
-Synchronizing state of wazuh-indexer.service with SysV service script with /usr/lib/systemd/systemd-sysv-install.
-Executing: /usr/lib/systemd/systemd-sysv-install enable wazuh-indexer
-Created symlink '/etc/systemd/system/multi-user.target.wants/wazuh-indexer.service' → '/usr/lib/systemd/system/wazuh-indexer.service'.
-16/04/2026 15:33:46 INFO: wazuh-indexer service started.
-16/04/2026 15:33:46 INFO: Initializing Wazuh indexer cluster security settings.
-Security Admin v7
-Will connect to 127.0.0.1:9200 ... done
-Connected as "CN=admin,OU=Wazuh,O=Wazuh,L=California,C=US"
-OpenSearch Version: 2.19.4
-Contacting opensearch cluster 'opensearch' and wait for YELLOW clusterstate ...
-Clustername: wazuh-cluster
-Clusterstate: GREEN
-Number of nodes: 1
-Number of data nodes: 1
-.opendistro_security index does not exists, attempt to create it ... done (0-all replicas)
-Populate config from /etc/wazuh-indexer/opensearch-security/
-Will update '/config' with /etc/wazuh-indexer/opensearch-security/config.yml
-   SUCC: Configuration for 'config' created or updated
-Will update '/roles' with /etc/wazuh-indexer/opensearch-security/roles.yml
-   SUCC: Configuration for 'roles' created or updated
-Will update '/rolesmapping' with /etc/wazuh-indexer/opensearch-security/roles_mapping.yml
-   SUCC: Configuration for 'rolesmapping' created or updated
-Will update '/internalusers' with /etc/wazuh-indexer/opensearch-security/internal_users.yml
-   SUCC: Configuration for 'internalusers' created or updated
-Will update '/actiongroups' with /etc/wazuh-indexer/opensearch-security/action_groups.yml
-   SUCC: Configuration for 'actiongroups' created or updated
-Will update '/tenants' with /etc/wazuh-indexer/opensearch-security/tenants.yml
-   SUCC: Configuration for 'tenants' created or updated
-Will update '/nodesdn' with /etc/wazuh-indexer/opensearch-security/nodes_dn.yml
-   SUCC: Configuration for 'nodesdn' created or updated
-Will update '/whitelist' with /etc/wazuh-indexer/opensearch-security/whitelist.yml
-   SUCC: Configuration for 'whitelist' created or updated
-Will update '/audit' with /etc/wazuh-indexer/opensearch-security/audit.yml
-   SUCC: Configuration for 'audit' created or updated
-Will update '/allowlist' with /etc/wazuh-indexer/opensearch-security/allowlist.yml
-   SUCC: Configuration for 'allowlist' created or updated
-SUCC: Expected 10 config types for node {"updated_config_types":["allowlist","tenants","rolesmapping","nodesdn","audit","roles","whitelist","actiongroups","config","internalusers"],"updated_config_size":10,"message":null} is 10 (["allowlist","tenants","rolesmapping","nodesdn","audit","roles","whitelist","actiongroups","config","internalusers"]) due to: null
-Done with success
-16/04/2026 15:33:52 INFO: Wazuh indexer cluster security configuration initialized.
-16/04/2026 15:33:52 INFO: Wazuh indexer cluster initialized.
-16/04/2026 15:33:52 INFO: --- Wazuh server ---
-16/04/2026 15:33:52 INFO: Starting the Wazuh manager installation.
-Reading package lists... Building dependency tree... Reading state information... Suggested packages: expect The following NEW packages will be installed: wazuh-manager 0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded. Need to get 490 MB of archives. After this operation, 1,081 MB of additional disk space will be used. Get:1 https://packages.wazuh.com/4.x/apt stable/main amd64 wazuh-manager amd64 4.14.4-1 [490 MB] Fetched 490 MB in 20min 15s (403  Setting up wazuh-manager (4.14.4-1) ....14.4-1_amd64.deb ...installed.)
-16/04/2026 15:58:24 INFO: Wazuh manager installation finished.
-16/04/2026 15:58:24 INFO: Wazuh manager vulnerability detection configuration finished.
-16/04/2026 15:58:24 INFO: Starting service wazuh-manager.
-Created symlink '/etc/systemd/system/multi-user.target.wants/wazuh-manager.service' → '/usr/lib/systemd/system/wazuh-manager.service'.
-16/04/2026 15:58:45 INFO: wazuh-manager service started.
-16/04/2026 15:58:45 INFO: Starting Filebeat installation.
-Reading package lists... Building dependency tree... Reading state information... The following NEW packages will be installed: filebeat 0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded. Need to get 22.1 MB of archives. After this operation, 73.6 MB of additional disk space will be used. Get:1 https://packages.wazuh.com/4.x/apt stable/main amd64 filebeat amd64 7.10.2-2 [22.1 MB] Fetched 22.1 MB in 1min 7s (332 kB/s) Selecting previously unselected Setting up filebeat (7.10.2-2) ....10.2-2_amd64.deb ...ntly installed.)
-16/04/2026 16:03:27 INFO: Filebeat installation finished.
-wazuh/
-wazuh/alerts/
-wazuh/alerts/manifest.yml
-wazuh/alerts/config/
-wazuh/alerts/config/alerts.yml
-wazuh/alerts/ingest/
-wazuh/alerts/ingest/pipeline.json
-wazuh/archives/
-wazuh/archives/manifest.yml
-wazuh/archives/config/
-wazuh/archives/config/archives.yml
-wazuh/archives/ingest/
-wazuh/archives/ingest/pipeline.json
-wazuh/_meta/
-wazuh/_meta/config.yml
-wazuh/_meta/fields.yml
-wazuh/_meta/docs.asciidoc
-wazuh/module.yml
-Created filebeat keystore
-Successfully updated the keystore
-Successfully updated the keystore
-16/04/2026 16:03:31 INFO: Filebeat post-install configuration finished.
-16/04/2026 16:03:31 INFO: Starting service filebeat.
-Synchronizing state of filebeat.service with SysV service script with /usr/lib/systemd/systemd-sysv-install.
-Executing: /usr/lib/systemd/systemd-sysv-install enable filebeat
-Created symlink '/etc/systemd/system/multi-user.target.wants/filebeat.service' → '/usr/lib/systemd/system/filebeat.service'.
-16/04/2026 16:03:34 INFO: filebeat service started.
-16/04/2026 16:03:34 INFO: --- Wazuh dashboard ---
-16/04/2026 16:03:34 INFO: Starting Wazuh dashboard installation.
-Reading package lists... Building dependency tree... Reading state information... The following NEW packages will be installed: wazuh-dashboard 0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded. Need to get 195 MB of archives. After this operation, 1,043 MB of additional disk space will be used. Get:1 https://packages.wazuh.com/4.x/apt stable/main amd64 wazuh-dashboard amd64 4.14.4-1 [195 MB] Ign:1 https://packages.wazuh.com/4.x/apt stable/main amd Setting up wazuh-dashboard (4.14.4-1) ....14.4-1_amd64.deb ...stalled.)pt stable/main amd64 wazuh-dashboard amd64 4.14.4-1 [195 MB] Fetched 189 MB in 11min 7s (284 kB/s) Selecting previously unselected package wazuh-dashboard.
-16/04/2026 16:18:35 INFO: Wazuh dashboard installation finished.
-16/04/2026 16:18:36 INFO: Wazuh dashboard post-install configuration finished.
-16/04/2026 16:18:36 INFO: Starting service wazuh-dashboard.
-Created symlink '/etc/systemd/system/multi-user.target.wants/wazuh-dashboard.service' → '/etc/systemd/system/wazuh-dashboard.service'.
-16/04/2026 16:18:38 INFO: wazuh-dashboard service started.
-16/04/2026 16:18:39 INFO: Updating the internal users.
-Security Admin v7
-Will connect to 127.0.0.1:9200 ... done
-Connected as "CN=admin,OU=Wazuh,O=Wazuh,L=California,C=US"
-OpenSearch Version: 2.19.4
-Contacting opensearch cluster 'opensearch' and wait for YELLOW clusterstate ...
-Clustername: wazuh-cluster
-Clusterstate: GREEN
-Number of nodes: 1
-Number of data nodes: 1
-.opendistro_security index already exists, so we do not need to create one.
-Will retrieve '/config' into /etc/wazuh-indexer/backup/config.yml
-   SUCC: Configuration for 'config' stored in /etc/wazuh-indexer/backup/config.yml
-Will retrieve '/roles' into /etc/wazuh-indexer/backup/roles.yml
-   SUCC: Configuration for 'roles' stored in /etc/wazuh-indexer/backup/roles.yml
-Will retrieve '/rolesmapping' into /etc/wazuh-indexer/backup/roles_mapping.yml
-   SUCC: Configuration for 'rolesmapping' stored in /etc/wazuh-indexer/backup/roles_mapping.yml
-Will retrieve '/internalusers' into /etc/wazuh-indexer/backup/internal_users.yml
-   SUCC: Configuration for 'internalusers' stored in /etc/wazuh-indexer/backup/internal_users.yml
-Will retrieve '/actiongroups' into /etc/wazuh-indexer/backup/action_groups.yml
-   SUCC: Configuration for 'actiongroups' stored in /etc/wazuh-indexer/backup/action_groups.yml
-Will retrieve '/tenants' into /etc/wazuh-indexer/backup/tenants.yml
-   SUCC: Configuration for 'tenants' stored in /etc/wazuh-indexer/backup/tenants.yml
-Will retrieve '/nodesdn' into /etc/wazuh-indexer/backup/nodes_dn.yml
-   SUCC: Configuration for 'nodesdn' stored in /etc/wazuh-indexer/backup/nodes_dn.yml
-Will retrieve '/whitelist' into /etc/wazuh-indexer/backup/whitelist.yml
-   SUCC: Configuration for 'whitelist' stored in /etc/wazuh-indexer/backup/whitelist.yml
-Will retrieve '/allowlist' into /etc/wazuh-indexer/backup/allowlist.yml
-   SUCC: Configuration for 'allowlist' stored in /etc/wazuh-indexer/backup/allowlist.yml
-Will retrieve '/audit' into /etc/wazuh-indexer/backup/audit.yml
-   SUCC: Configuration for 'audit' stored in /etc/wazuh-indexer/backup/audit.yml
-16/04/2026 16:19:14 INFO: A backup of the internal users has been saved in the /etc/wazuh-indexer/internalusers-backup folder.
-Security Admin v7
-Will connect to 127.0.0.1:9200 ... done
-Connected as "CN=admin,OU=Wazuh,O=Wazuh,L=California,C=US"
-OpenSearch Version: 2.19.4
-Contacting opensearch cluster 'opensearch' and wait for YELLOW clusterstate ...
-Clustername: wazuh-cluster
-Clusterstate: GREEN
-Number of nodes: 1
-Number of data nodes: 1
-.opendistro_security index already exists, so we do not need to create one.
-Will retrieve '/config' into /etc/wazuh-indexer/backup/config.yml
-   SUCC: Configuration for 'config' stored in /etc/wazuh-indexer/backup/config.yml
-Will retrieve '/roles' into /etc/wazuh-indexer/backup/roles.yml
-   SUCC: Configuration for 'roles' stored in /etc/wazuh-indexer/backup/roles.yml
-Will retrieve '/rolesmapping' into /etc/wazuh-indexer/backup/roles_mapping.yml
-   SUCC: Configuration for 'rolesmapping' stored in /etc/wazuh-indexer/backup/roles_mapping.yml
-Will retrieve '/internalusers' into /etc/wazuh-indexer/backup/internal_users.yml
-   SUCC: Configuration for 'internalusers' stored in /etc/wazuh-indexer/backup/internal_users.yml
-Will retrieve '/actiongroups' into /etc/wazuh-indexer/backup/action_groups.yml
-   SUCC: Configuration for 'actiongroups' stored in /etc/wazuh-indexer/backup/action_groups.yml
-Will retrieve '/tenants' into /etc/wazuh-indexer/backup/tenants.yml
-   SUCC: Configuration for 'tenants' stored in /etc/wazuh-indexer/backup/tenants.yml
-Will retrieve '/nodesdn' into /etc/wazuh-indexer/backup/nodes_dn.yml
-   SUCC: Configuration for 'nodesdn' stored in /etc/wazuh-indexer/backup/nodes_dn.yml
-Will retrieve '/whitelist' into /etc/wazuh-indexer/backup/whitelist.yml
-   SUCC: Configuration for 'whitelist' stored in /etc/wazuh-indexer/backup/whitelist.yml
-Will retrieve '/allowlist' into /etc/wazuh-indexer/backup/allowlist.yml
-   SUCC: Configuration for 'allowlist' stored in /etc/wazuh-indexer/backup/allowlist.yml
-Will retrieve '/audit' into /etc/wazuh-indexer/backup/audit.yml
-   SUCC: Configuration for 'audit' stored in /etc/wazuh-indexer/backup/audit.yml
-Successfully updated the keystore
-Successfully updated the keystore
-16/04/2026 16:19:45 INFO: The filebeat.yml file has been updated to use the Filebeat Keystore username and password.
-Job for wazuh-manager.service failed because a timeout was exceeded.
-See "systemctl status wazuh-manager.service" and "journalctl -xeu wazuh-manager.service" for details.
-16/04/2026 16:21:01 ERROR: wazuh-manager could not be started.
-Apr 16 15:58:26 wazuh systemd[1]: Starting wazuh-manager.service - Wazuh manager...
-Apr 16 15:58:33 wazuh env[62519]: 2026/04/16 15:58:33 wazuh-modulesd:router: INFO: Loaded router module.
-Apr 16 15:58:33 wazuh env[62519]: 2026/04/16 15:58:33 wazuh-modulesd:content_manager: INFO: Loaded content_manager module.
-Apr 16 15:58:33 wazuh env[62519]: 2026/04/16 15:58:33 wazuh-modulesd:inventory-harvester: INFO: Loaded Inventory harvester module.
-Apr 16 15:58:34 wazuh env[62448]: Starting Wazuh v4.14.4...
-Apr 16 15:58:39 wazuh env[62448]: Started wazuh-apid...
-Apr 16 15:58:39 wazuh env[62448]: Started wazuh-csyslogd...
-Apr 16 15:58:39 wazuh env[62448]: Started wazuh-dbd...
-Apr 16 15:58:39 wazuh env[62592]: 2026/04/16 15:58:39 wazuh-integratord: INFO: Remote integrations not configured. Clean exit.
-Apr 16 15:58:39 wazuh env[62448]: Started wazuh-integratord...
-Apr 16 15:58:39 wazuh env[62448]: Started wazuh-agentlessd...
-Apr 16 15:58:39 wazuh env[62448]: Started wazuh-authd...
-Apr 16 15:58:39 wazuh env[62448]: Started wazuh-db...
-Apr 16 15:58:39 wazuh env[62448]: Started wazuh-execd...
-Apr 16 15:58:39 wazuh env[62448]: Started wazuh-analysisd...
-Apr 16 15:58:41 wazuh env[62448]: Started wazuh-syscheckd...
-Apr 16 15:58:42 wazuh env[62448]: Started wazuh-remoted...
-Apr 16 15:58:42 wazuh env[62448]: Started wazuh-logcollector...
-Apr 16 15:58:42 wazuh env[62448]: Started wazuh-monitord...
-Apr 16 15:58:42 wazuh env[62794]: 2026/04/16 15:58:42 wazuh-modulesd:router: INFO: Loaded router module.
-Apr 16 15:58:42 wazuh env[62794]: 2026/04/16 15:58:42 wazuh-modulesd:content_manager: INFO: Loaded content_manager module.
-Apr 16 15:58:42 wazuh env[62794]: 2026/04/16 15:58:42 wazuh-modulesd:inventory-harvester: INFO: Loaded Inventory harvester module.
-Apr 16 15:58:43 wazuh env[62448]: Started wazuh-modulesd...
-Apr 16 15:58:45 wazuh env[62448]: Completed.
-Apr 16 15:58:45 wazuh systemd[1]: Started wazuh-manager.service - Wazuh manager.
-Apr 16 16:19:48 wazuh systemd[1]: Stopping wazuh-manager.service - Wazuh manager...
-Apr 16 16:19:48 wazuh env[67988]: wazuh-clusterd not running...
-Apr 16 16:19:49 wazuh env[67988]: Killing wazuh-modulesd...
-Apr 16 16:19:49 wazuh env[67988]: Killing wazuh-monitord...
-Apr 16 16:19:49 wazuh env[67988]: Killing wazuh-logcollector...
-Apr 16 16:19:49 wazuh env[67988]: Killing wazuh-remoted...
-Apr 16 16:19:49 wazuh env[67988]: Killing wazuh-syscheckd...
-Apr 16 16:19:49 wazuh env[67988]: Killing wazuh-analysisd...
-Apr 16 16:19:49 wazuh env[67988]: wazuh-maild not running...
-Apr 16 16:19:49 wazuh env[67988]: Killing wazuh-execd...
-Apr 16 16:19:49 wazuh env[67988]: Killing wazuh-db...
-Apr 16 16:19:49 wazuh env[67988]: Killing wazuh-authd...
-Apr 16 16:19:49 wazuh env[67988]: wazuh-agentlessd not running...
-Apr 16 16:19:49 wazuh env[67988]: wazuh-integratord not running...
-Apr 16 16:19:49 wazuh env[67988]: wazuh-dbd not running...
-Apr 16 16:19:49 wazuh env[67988]: wazuh-csyslogd not running...
-Apr 16 16:19:49 wazuh env[67988]: Killing wazuh-apid...
-Apr 16 16:20:15 wazuh env[67988]: Wazuh v4.14.4 Stopped
-Apr 16 16:20:15 wazuh systemd[1]: wazuh-manager.service: Deactivated successfully.
-Apr 16 16:20:16 wazuh systemd[1]: Stopped wazuh-manager.service - Wazuh manager.
-Apr 16 16:20:16 wazuh systemd[1]: wazuh-manager.service: Consumed 3min 58.740s CPU time, 1.4G memory peak, 24K memory swap peak.
-Apr 16 16:20:16 wazuh systemd[1]: Starting wazuh-manager.service - Wazuh manager...
-Apr 16 16:20:30 wazuh env[68397]: 2026/04/16 16:20:30 wazuh-modulesd:router: INFO: Loaded router module.
-Apr 16 16:20:30 wazuh env[68397]: 2026/04/16 16:20:30 wazuh-modulesd:content_manager: INFO: Loaded content_manager module.
-Apr 16 16:20:30 wazuh env[68397]: 2026/04/16 16:20:30 wazuh-modulesd:inventory-harvester: INFO: Loaded Inventory harvester module.
-Apr 16 16:20:32 wazuh env[68292]: Starting Wazuh v4.14.4...
-Apr 16 16:21:01 wazuh systemd[1]: wazuh-manager.service: start operation timed out. Terminating.
-Apr 16 16:21:01 wazuh systemd[1]: wazuh-manager.service: Failed with result 'timeout'.
-Apr 16 16:21:01 wazuh systemd[1]: wazuh-manager.service: Unit process 68452 (wazuh-apid) remains running after unit stopped.
-Apr 16 16:21:01 wazuh systemd[1]: wazuh-manager.service: Unit process 68462 (python3) remains running after unit stopped.
-Apr 16 16:21:01 wazuh systemd[1]: wazuh-manager.service: Unit process 68486 (python3) remains running after unit stopped.
-Apr 16 16:21:01 wazuh systemd[1]: wazuh-manager.service: Unit process 68487 (python3) remains running after unit stopped.
-Apr 16 16:21:01 wazuh systemd[1]: wazuh-manager.service: Unit process 68495 (python3) remains running after unit stopped.
-Apr 16 16:21:01 wazuh systemd[1]: wazuh-manager.service: Unit process 68498 (python3) remains running after unit stopped.
-Apr 16 16:21:01 wazuh systemd[1]: wazuh-manager.service: Unit process 68508 (python3) remains running after unit stopped.
-Apr 16 16:21:01 wazuh systemd[1]: wazuh-manager.service: Unit process 68514 (python3) remains running after unit stopped.
-Apr 16 16:21:01 wazuh systemd[1]: Failed to start wazuh-manager.service - Wazuh manager.
-Apr 16 16:21:01 wazuh systemd[1]: wazuh-manager.service: Consumed 51.813s CPU time, 196.1M memory peak.
-16/04/2026 16:21:04 INFO: --- Removing existing Wazuh installation ---
-16/04/2026 16:21:04 INFO: Removing Wazuh manager.
-Reading package lists...
-Building dependency tree...
-Reading state information...
-The following packages will be REMOVED:
-  wazuh-manager*
-0 upgraded, 0 newly installed, 1 to remove and 0 not upgraded.
-After this operation, 1,081 MB disk space will be freed.
-(Reading database ... 261502 files and directories currently installed.)
-Removing wazuh-manager (4.14.4-1) ...
-(Reading database ... 237405 files and directories currently installed.)
-Purging configuration files for wazuh-manager (4.14.4-1) ...
-dpkg: error processing package wazuh-manager (--purge):
- installed wazuh-manager package post-removal script subprocess returned error exit status 82
-Errors were encountered while processing:
- wazuh-manager
-E: Sub-process /usr/bin/dpkg returned an error code (1)
-16/04/2026 16:21:47 INFO: Wazuh manager removed.
-16/04/2026 16:21:47 INFO: Removing Wazuh indexer.
-Reading package lists...
-Building dependency tree...
-Reading state information...
-The following packages will be REMOVED:
-  wazuh-indexer*
-0 upgraded, 0 newly installed, 1 to remove and 0 not upgraded.
-After this operation, 1,102 MB disk space will be freed.
-(Reading database ... 237404 files and directories currently installed.)
-Removing wazuh-indexer (4.14.4-1) ...
-Running Wazuh Indexer Pre-Removal Script
-Stop existing wazuh-indexer.service
-Processing triggers for procps (2:4.0.4-9) ...
-Processing triggers for systemd (257.9-1~deb13u1) ...
-(Reading database ... 236242 files and directories currently installed.)
-Purging configuration files for wazuh-indexer (4.14.4-1) ...
-dpkg: warning: while removing wazuh-indexer, directory '/var/log/wazuh-indexer' not empty so not removed
-dpkg: warning: while removing wazuh-indexer, directory '/var/lib/wazuh-indexer' not empty so not removed
-dpkg: warning: while removing wazuh-indexer, directory '/etc/wazuh-indexer' not empty so not removed
-16/04/2026 16:21:54 INFO: Wazuh indexer removed.
-16/04/2026 16:21:55 INFO: Removing Filebeat.
-Reading package lists...
-Building dependency tree...
-Reading state information...
-The following packages will be REMOVED:
-  filebeat*
-0 upgraded, 0 newly installed, 1 to remove and 0 not upgraded.
-After this operation, 73.6 MB disk space will be freed.
-(Reading database ... 236204 files and directories currently installed.)
-Removing filebeat (7.10.2-2) ...
-(Reading database ... 235912 files and directories currently installed.)
-Purging configuration files for filebeat (7.10.2-2) ...
-dpkg: warning: while removing filebeat, directory '/usr/share/filebeat/module' not empty so not removed
-dpkg: warning: while removing filebeat, directory '/lib/systemd/system' not empty so not removed
-dpkg: warning: while removing filebeat, directory '/etc/filebeat' not empty so not removed
-16/04/2026 16:21:57 INFO: Filebeat removed.
-16/04/2026 16:21:58 INFO: Removing Wazuh dashboard.
-Reading package lists...
-Building dependency tree...
-Reading state information...
-The following packages will be REMOVED:
-  wazuh-dashboard*
-0 upgraded, 0 newly installed, 1 to remove and 0 not upgraded.
-After this operation, 1,043 MB disk space will be freed.
-(Reading database ... 235883 files and directories currently installed.)
-Removing wazuh-dashboard (4.14.4-1) ...
-Stopping wazuh-dashboard service... OK
-Deleting PID directory... OK
-Deleting installation directory... OK
-(Reading database ... 147243 files and directories currently installed.)
-Purging configuration files for wazuh-dashboard (4.14.4-1) ...
- OK
-16/04/2026 16:22:06 INFO: Wazuh dashboard removed.
-16/04/2026 16:22:07 INFO: Installation cleaned. Check the /var/log/wazuh-install.log file to learn more about the issue.
-root@wazuh:/home/wazuh/Downloads/wazuh-install-main#
+ERROR VERIFICATION CONFIGURATOR ; 
+
+[*] Exécution: wazuh_configurator.py check
+============================================================
+Traceback (most recent call last):
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator.py", line 10, in <module>
+    from wazuh_configurator.strategies import (
+    ...<5 lines>...
+    )
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/__init__.py", line 6, in <module>
+    from .core.config_manager import ConfigManager
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/core/__init__.py", line 5, in <module>
+    from .config_manager import ConfigManager
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/core/config_manager.py", line 10, in <module>
+    from ..utils.ssh_client import SSHClient, SSHCredentials
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/utils/ssh_client.py", line 6, in <module>
+    import paramiko
+ModuleNotFoundError: No module named 'paramiko'
+
+[+] Code de retour: 1
+
+Appuyez sur Entrée pour continuer...
+
+=========================================================
+Traceback (most recent call last):
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator.py", line 10, in <module>
+    from wazuh_configurator.strategies import (
+    ...<5 lines>...
+    )
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/__init__.py", line 6, in <module>
+    from .core.config_manager import ConfigManager
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/core/__init__.py", line 5, in <module>
+    from .config_manager import ConfigManager
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/core/config_manager.py", line 10, in <module>
+    from ..utils.ssh_client import SSHClient, SSHCredentials
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/utils/ssh_client.py", line 6, in <module>
+    import paramiko
+ModuleNotFoundError: No module named 'paramiko'
+
+[+] Code de retour: 1
+
+Appuyez sur Entrée pour continuer...
+
+
+ ██████╗ ██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+2026-04-16 17:42:59 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
+2026-04-16 17:42:59 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
+2026-04-16 17:42:59 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
+2026-04-16 17:42:59 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
+2026-04-16 17:42:59 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
+2026-04-16 17:42:59 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
+2026-04-16 17:42:59 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
+Traceback (most recent call last):
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator.py", line 264, in <module>
+    main()
+    ~~~~^^
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator.py", line 182, in main
+    config_manager.register_configurator('performance', PerformanceConfigurator(wazuh_path=args.wazuh_path))
+                                                        ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/strategies/performance_configurator.py", line 28, in __init__
+    self.system_memory = self._get_system_memory()
+                         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/strategies/performance_configurator.py", line 135, in _get_system_memory
+    match = re.search(r"MemTotal:\s+(\d+)", meminfo)
+            ^^
+NameError: name 're' is not defined. Did you forget to import 're'?
+
+[+] Code de retour: 1
+
+Appuyez sur Entrée pour continuer...
+
+
+
+
+ ██████╗ ██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+2026-04-16 17:43:23 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
+2026-04-16 17:43:23 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
+2026-04-16 17:43:23 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
+2026-04-16 17:43:23 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
+2026-04-16 17:43:23 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
+2026-04-16 17:43:23 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
+2026-04-16 17:43:23 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
+Traceback (most recent call last):
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator.py", line 264, in <module>
+    main()
+    ~~~~^^
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator.py", line 182, in main
+    config_manager.register_configurator('performance', PerformanceConfigurator(wazuh_path=args.wazuh_path))
+                                                        ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/strategies/performance_configurator.py", line 28, in __init__
+    self.system_memory = self._get_system_memory()
+                         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/strategies/performance_configurator.py", line 135, in _get_system_memory
+    match = re.search(r"MemTotal:\s+(\d+)", meminfo)
+            ^^
+NameError: name 're' is not defined. Did you forget to import 're'?
+
+[+] Code de retour: 1
+
+Appuyez sur Entrée pour continuer...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -61,6 +61,9 @@ def check_configs(config_manager):
     logger.info("Verification des configurations...")
     
     results = {}
+    all_warnings = []
+    all_errors = []
+    
     for name, configurator in config_manager.configurators.items():
         logger.info(f"Verification {name}...")
         result = configurator.check()
@@ -72,18 +75,35 @@ def check_configs(config_manager):
         if result.warnings:
             for warning in result.warnings:
                 logger.warning(f"[!] {warning}")
+                all_warnings.append(f"{name}: {warning}")
+        
+        if not result.success:
+            all_errors.append(f"{name}: {result.message}")
     
-    return results
+    return results, all_warnings, all_errors
 
 
 def apply_configs(config_manager, config_names=None):
     """Apply configurations"""
+    all_warnings = []
+    all_errors = []
+    
     if config_names:
         logger.info(f"Application configurations: {', '.join(config_names)}")
         for name in config_names:
             result = config_manager.apply_config(name)
             status = "[+]" if result.success else "[-]"
             logger.info(f"{status} {name}: {result.message}")
+            
+            if result.warnings:
+                for warning in result.warnings:
+                    logger.warning(f"[!] {warning}")
+                    all_warnings.append(f"{name}: {warning}")
+            
+            if not result.success:
+                all_errors.append(f"{name}: {result.message}")
+        
+        return all_warnings, all_errors
     else:
         logger.info("Application des configurations...")
         results = {}
@@ -94,7 +114,39 @@ def apply_configs(config_manager, config_names=None):
             
             status = "[+]" if result.success else "[-]"
             logger.info(f"{status} {name}: {result.message}")
-        return results
+            
+            if result.warnings:
+                for warning in result.warnings:
+                    logger.warning(f"[!] {warning}")
+                    all_warnings.append(f"{name}: {warning}")
+            
+            if not result.success:
+                all_errors.append(f"{name}: {result.message}")
+        
+        return results, all_warnings, all_errors
+
+
+def print_summary(all_warnings, all_errors):
+    """Afficher le récapitulatif des warnings et erreurs"""
+    if not all_warnings and not all_errors:
+        logger.info("[+] Aucun warning ou erreur détecté")
+        return
+    
+    print("\n" + "=" * 60)
+    print("RÉCAPITULATIF")
+    print("=" * 60)
+    
+    if all_warnings:
+        print(f"\n[!] WARNINGS ({len(all_warnings)}):")
+        for i, warning in enumerate(all_warnings, 1):
+            print(f"   {i}. {warning}")
+    
+    if all_errors:
+        print(f"\n[-] ERREURS ({len(all_errors)}):")
+        for i, error in enumerate(all_errors, 1):
+            print(f"   {i}. {error}")
+    
+    print("=" * 60 + "\n")
 
 
 def main():
@@ -190,23 +242,39 @@ def main():
     
     elif args.command == 'check':
         if args.config == 'all':
-            check_configs(config_manager)
+            results, warnings, errors = check_configs(config_manager)
+            print_summary(warnings, errors)
         else:
             result = config_manager.get_configurator(args.config).check()
             status = "[+]" if result.success else "[-]"
             logger.info(f"{status} {args.config}: {result.message}")
             
+            all_warnings = []
             if result.warnings:
                 for warning in result.warnings:
                     logger.warning(f"   [!] {warning}")
+                    all_warnings.append(f"{args.config}: {warning}")
+            
+            all_errors = [] if result.success else [f"{args.config}: {result.message}"]
+            print_summary(all_warnings, all_errors)
     
     elif args.command == 'apply':
         if args.config == 'all':
-            apply_configs(config_manager)
+            results, warnings, errors = apply_configs(config_manager)
+            print_summary(warnings, errors)
         else:
             result = config_manager.apply_config(args.config)
             status = "[+]" if result.success else "[-]"
             logger.info(f"{status} {args.config}: {result.message}")
+            
+            all_warnings = []
+            if result.warnings:
+                for warning in result.warnings:
+                    logger.warning(f"[!] {warning}")
+                    all_warnings.append(f"{args.config}: {warning}")
+            
+            all_errors = [] if result.success else [f"{args.config}: {result.message}"]
+            print_summary(all_warnings, all_errors)
     
     elif args.command == 'validate':
         if args.config == 'all':
@@ -228,8 +296,13 @@ def main():
         logger.info("[*] Mode correction pour Wazuh existant...")
         logger.info("[*] Verification des configurations actuelles...")
         
+        all_warnings = []
+        all_errors = []
+        
         if args.config == 'all':
-            check_results = check_configs(config_manager)
+            results, warnings, errors = check_configs(config_manager)
+            all_warnings.extend(warnings)
+            all_errors.extend(errors)
         else:
             result = config_manager.get_configurator(args.config).check()
             status = "[+]" if result.success else "[-]"
@@ -237,14 +310,25 @@ def main():
             if result.warnings:
                 for warning in result.warnings:
                     logger.warning(f"   [!] {warning}")
+                    all_warnings.append(f"{args.config}: {warning}")
+            if not result.success:
+                all_errors.append(f"{args.config}: {result.message}")
         
         logger.info("\n[*] Application des corrections...")
         if args.config == 'all':
-            apply_results = apply_configs(config_manager)
+            results, warnings, errors = apply_configs(config_manager)
+            all_warnings.extend(warnings)
+            all_errors.extend(errors)
         else:
             result = config_manager.apply_config(args.config)
             status = "[+]" if result.success else "[-]"
             logger.info(f"{status} {args.config}: {result.message}")
+            if result.warnings:
+                for warning in result.warnings:
+                    logger.warning(f"[!] {warning}")
+                    all_warnings.append(f"{args.config}: {warning}")
+            if not result.success:
+                all_errors.append(f"{args.config}: {result.message}")
         
         logger.info("\n[*] Validation des corrections...")
         if args.config == 'all':
@@ -253,6 +337,14 @@ def main():
             result = config_manager.get_configurator(args.config).validate()
             status = "[+]" if result.success else "[-]"
             logger.info(f"{status} {args.config}: {result.message}")
+            if result.warnings:
+                for warning in result.warnings:
+                    logger.warning(f"[!] {warning}")
+                    all_warnings.append(f"{args.config}: {warning}")
+            if not result.success:
+                all_errors.append(f"{args.config}: {result.message}")
+        
+        print_summary(all_warnings, all_errors)
     
     # Disconnect SSH if connected
     if args.remote_host:

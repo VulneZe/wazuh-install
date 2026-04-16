@@ -214,9 +214,9 @@ def run_configurator(args):
     print(f"[*] Exécution: wazuh_configurator.py {args}")
     print("=" * 60)
     
-    # Si c'est une commande dashboard, demander les IP/ports
-    if "dashboard" in args and not any("--" in arg for arg in args.split()):
-        print("\nConfiguration des services Wazuh pour Dashboard:")
+    # Demander les IP/ports si aucune option n'est fournie
+    if not any("--" in arg for arg in args.split()):
+        print("\nConfiguration des services Wazuh:")
         print("(Appuyez sur Entrée pour utiliser les valeurs par défaut)")
         
         manager_host = input("Adresse IP/hostname du Manager (défaut: localhost): ").strip() or "localhost"

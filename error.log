@@ -10,65 +10,45 @@
     By VulneZe - github.com/VulneZe/wazuh-install
     ====================================================
 
-2026-04-16 19:17:03 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
-2026-04-16 19:17:03 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
-2026-04-16 19:17:03 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
-2026-04-16 19:17:03 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
-2026-04-16 19:17:03 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
-2026-04-16 19:17:03 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
-2026-04-16 19:17:03 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
-2026-04-16 19:17:03 - wazuh_configurator.core.config_manager - INFO - Configurator 'performance' enregistré
-2026-04-16 19:17:03 - wazuh_configurator.core.base_configurator - INFO - IP détectée: 127.0.1.1
-2026-04-16 19:17:03 - wazuh_configurator.core.config_manager - INFO - Configurator 'dashboard' enregistré
-2026-04-16 19:17:03 - __main__ - INFO - [*] Mode correction pour Wazuh existant...
-2026-04-16 19:17:03 - __main__ - INFO - [*] Verification des configurations actuelles...
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - Vérification de la configuration des dashboards...
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Note: La vérification de l'API HTTP est désactivée
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] La création de dashboards nécessite une connexion API manuelle
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-16 19:17:03 - __main__ - INFO - [+] dashboard: Dashboards: Service actif
-2026-04-16 19:17:03 - __main__ - WARNING -    [!] API HTTP non accessible - création de dashboards manuelle requise
-2026-04-16 19:17:03 - __main__ - INFO -
+2026-04-16 22:40:00 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
+2026-04-16 22:40:00 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
+2026-04-16 22:40:00 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
+2026-04-16 22:40:00 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
+2026-04-16 22:40:00 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
+2026-04-16 22:40:00 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
+2026-04-16 22:40:00 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
+2026-04-16 22:40:00 - wazuh_configurator.core.config_manager - INFO - Configurator 'performance' enregistré
+2026-04-16 22:40:00 - wazuh_configurator.strategies.dashboard_configurator - INFO - Dashboard URL: https://localhost:5601
+2026-04-16 22:40:00 - wazuh_configurator.core.config_manager - INFO - Configurator 'dashboard' enregistré
+2026-04-16 22:40:00 - __main__ - INFO - [*] Mode correction pour Wazuh existant...
+2026-04-16 22:40:00 - __main__ - INFO - [*] Verification des configurations actuelles...
+2026-04-16 22:40:00 - wazuh_configurator.strategies.dashboard_configurator - INFO - Vérification de la configuration des dashboards...
+2026-04-16 22:40:00 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-16 22:40:00 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif
+2026-04-16 22:40:00 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif
+2026-04-16 22:40:00 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Note: La vérification de l'API HTTP est désactivée
+2026-04-16 22:40:00 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] La création de dashboards nécessite une connexion API manuelle
+2026-04-16 22:40:00 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-16 22:40:00 - __main__ - INFO - [+] dashboard: Dashboards: Service actif
+2026-04-16 22:40:00 - __main__ - WARNING -    [!] API HTTP non accessible - création de dashboards manuelle requise
+2026-04-16 22:40:00 - __main__ - INFO -
 [*] Application des corrections...
-2026-04-16 19:17:03 - wazuh_configurator.core.config_manager - INFO - Application configuration: dashboard
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - Application de la configuration des dashboards...
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif (IP: 127.0.1.1)
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Création automatique des dashboards...
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création de l'index pattern...
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création index pattern: Dashboard non accessible: HTTPSConnectionPool(host='127.0.1.1', port=5601): Max retries exceeded with url: /api/saved_objects/index-pattern/wazuh-alerts-* (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f04e97841a0>: Failed to establish a new connection: [Errno 111] Connection refused'))
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création des visualisations...
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création visualization/soc-ssh-pie: HTTPSConnectionPool(host='127.0.1.1', port=5601): Max retries exceeded with url: /api/saved_objects/visualization/soc-ssh-pie (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f04e970f890>: Failed to establish a new connection: [Errno 111] Connection refused'))
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création du dashboard SOC...
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création dashboard/soc-ad-ssh: HTTPSConnectionPool(host='127.0.1.1', port=5601): Max retries exceeded with url: /api/saved_objects/dashboard/soc-ad-ssh (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7f04e9598190>: Failed to establish a new connection: [Errno 111] Connection refused'))
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-16 19:17:03 - __main__ - INFO - [-] dashboard: Dashboards: 0/3 configurations appliquées
-2026-04-16 19:17:03 - __main__ - INFO -
-[*] Validation des corrections...
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - Validation de la configuration des dashboards...
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Note: La validation de l'API HTTP est désactivée
-2026-04-16 19:17:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-16 19:17:03 - __main__ - INFO - [+] dashboard: Dashboards: Service actif - Validation OK
-2026-04-16 19:17:03 - __main__ - WARNING - [!] Validation API non effectuée - configuration manuelle requise
+2026-04-16 22:40:00 - wazuh_configurator.core.config_manager - INFO - Application configuration: dashboard
+2026-04-16 22:40:00 - wazuh_configurator.strategies.dashboard_configurator - INFO - Application de la configuration des dashboards...
+2026-04-16 22:40:00 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+Traceback (most recent call last):
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 447, in <module>
+    main()
+    ~~~~^^
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 414, in main
+    result = config_manager.apply_config(args.config)
+  File "/home/wazuh/wazuh-install/wazuh_configurator/core/config_manager.py", line 169, in apply_config
+    return configurator.apply()
+           ~~~~~~~~~~~~~~~~~~^^
+  File "/home/wazuh/wazuh-install/wazuh_configurator/strategies/dashboard_configurator.py", line 114, in apply
+    self._logger.info(f"[+] Dashboard service actif (IP: {self.dashboard_ip})")
+                                                          ^^^^^^^^^^^^^^^^^
+AttributeError: 'DashboardConfigurator' object has no attribute 'dashboard_ip'. Did you mean: 'dashboard_url'?
 
-============================================================
-RÉCAPITULATIF
-============================================================
+[+] Code de retour: 1
 
-[!] WARNINGS (2):
-   1. dashboard: API HTTP non accessible - création de dashboards manuelle requise
-   2. dashboard: Validation API non effectuée - configuration manuelle requise
-
-[-] ERREURS (1):
-   1. dashboard: Dashboards: 0/3 configurations appliquées
-============================================================
-
-
-[+] Code de retour: 0
-
-Appuyez sur Entrée pour continuer...

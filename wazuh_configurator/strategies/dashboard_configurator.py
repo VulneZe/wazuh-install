@@ -51,7 +51,12 @@ class DashboardConfigurator(BaseConfigurator):
                         for line in content.split('\n'):
                             if line.startswith("admin:"):
                                 self.dashboard_password = line.split(":")[1].strip()
+                                self._logger.info(f"[+] Mot de passe admin chargé depuis {self.paths.passwords_file}")
                                 break
+                    else:
+                        self._logger.warning(f"[-] Mot de passe admin non trouvé dans {self.paths.passwords_file}")
+            else:
+                self._logger.warning(f"[-] Fichier de mots de passe non trouvé: {self.paths.passwords_file}")
         except (OSError, IOError) as e:
             self._logger.warning(f"Impossible de lire le fichier de mots de passe: {e}")
             self.dashboard_password = None
@@ -313,6 +318,13 @@ class DashboardConfigurator(BaseConfigurator):
             
             body = {"attributes": attributes}
             
+            # Debug: vérifier l'authentification
+            if not self.dashboard_password:
+                self._logger.error("[-] Mot de passe admin non disponible - impossible de s'authentifier")
+                return False
+            
+            self._logger.info(f"[*] Tentative de connexion à {url} avec user: {self.dashboard_username}")
+            
             response = requests.post(
                 url,
                 headers=headers,
@@ -327,6 +339,11 @@ class DashboardConfigurator(BaseConfigurator):
                 return True
             else:
                 self._logger.error(f"[-] Erreur création index pattern: {response.status_code}")
+                if response.status_code == 401:
+                    self._logger.error("[-] Erreur d'authentification 401 - vérifiez le mot de passe admin")
+                    self._logger.error(f"[-] URL: {url}")
+                    self._logger.error(f"[-] User: {self.dashboard_username}")
+                    self._logger.error(f"[-] Password loaded: {'Yes' if self.dashboard_password else 'No'}")
                 return False
         except requests.exceptions.ConnectionError as e:
             raise ServiceNotAvailableError(f"Dashboard non accessible: {e}")

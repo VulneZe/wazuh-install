@@ -53,3 +53,72 @@ Traceback (most recent call last):
         ^^^^^^^^^^^^^^
 ValueError: too many values to unpack (expected 2)
 root@wazuh:/home/wazuh/wazuh-install#
+
+wazuh menue : 
+
+ ██████╗ ██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+Traceback (most recent call last):
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 486, in <module>
+    main()
+    ~~~~^^
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 295, in main
+    add_common_args(detect_parser)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 279, in add_common_args
+    for arg, help_text in common_args:
+        ^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 2)
+
+[+] Code de retour: 1
+
+
+
+FIX : dashboarsd:  
+ ██████╗ ██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+Traceback (most recent call last):
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 486, in <module>
+    main()
+    ~~~~^^
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 295, in main
+    add_common_args(detect_parser)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 279, in add_common_args
+    for arg, help_text in common_args:
+        ^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 2)
+
+[+] Code de retour: 1
+
+Appuyez sur Entrée pour continuer...
+
+
+
+
+
+
+
+
+
+
+
+

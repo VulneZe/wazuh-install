@@ -257,31 +257,70 @@ def main():
     
     subparsers = parser.add_subparsers(dest='command', help='Commandes disponibles')
     
+    # Arguments globaux pour tous les sous-parsers
+    common_args = [
+        ('--remote-host', '-r', 'Adresse IP/hostname de la machine Wazuh distante'),
+        ('--ssh-user', '-u', 'Utilisateur SSH pour connexion distante'),
+        ('--ssh-key', '-k', 'Chemin de la clé SSH pour connexion distante'),
+        ('--ssh-password', '-p', 'Mot de passe SSH pour connexion distante'),
+        ('--ssh-port', 'Port SSH (défaut: 22)'),
+        ('--manager-host', 'Adresse IP/hostname du Wazuh Manager (défaut: localhost)'),
+        ('--indexer-host', 'Adresse IP/hostname du Wazuh Indexer (défaut: localhost)'),
+        ('--dashboard-host', 'Adresse IP/hostname du Wazuh Dashboard (défaut: localhost)'),
+        ('--manager-port', 'Port Manager (défaut: 1514)'),
+        ('--indexer-port', 'Port Indexer (défaut: 9200)'),
+        ('--dashboard-port', 'Port Dashboard (défaut: 5601)'),
+        ('--custom-ports', 'Ports personnalisés (format: indexer:9200,manager:1514,api:55000)'),
+        ('--wazuh-path', 'Chemin d installation Wazuh (défaut: /var/ossec)')
+    ]
+    
+    def add_common_args(parser):
+        """Ajouter les arguments communs à un parser"""
+        for arg, help_text in common_args:
+            if arg == '--ssh-port':
+                parser.add_argument(arg, default=22, type=int, help=help_text)
+            elif arg == '--manager-port':
+                parser.add_argument(arg, default=1514, type=int, help=help_text)
+            elif arg == '--indexer-port':
+                parser.add_argument(arg, default=9200, type=int, help=help_text)
+            elif arg == '--dashboard-port':
+                parser.add_argument(arg, default=5601, type=int, help=help_text)
+            elif arg == '--wazuh-path':
+                parser.add_argument(arg, default='/var/ossec', help=help_text)
+            else:
+                parser.add_argument(arg, help=help_text)
+    
     # Commande detect
-    subparsers.add_parser('detect', help='Detecter installation Wazuh')
+    detect_parser = subparsers.add_parser('detect', help='Detecter installation Wazuh')
+    add_common_args(detect_parser)
     
     # Commande check
     check_parser = subparsers.add_parser('check', help='Verifier configurations')
+    add_common_args(check_parser)
     check_parser.add_argument('--config', '-c', choices=['security', 'performance', 'dashboard', 'all'], 
                             default='all', help='Configuration a verifier')
     
     # Commande apply
     apply_parser = subparsers.add_parser('apply', help='Appliquer configurations')
+    add_common_args(apply_parser)
     apply_parser.add_argument('--config', '-c', choices=['security', 'performance', 'dashboard', 'all'], 
                             default='all', help='Configuration a appliquer')
     
     # Commande validate
     validate_parser = subparsers.add_parser('validate', help='Valider configurations')
+    add_common_args(validate_parser)
     validate_parser.add_argument('--config', '-c', choices=['security', 'performance', 'dashboard', 'all'], 
                                default='all', help='Configuration a valider')
     
     # Commande rollback
     rollback_parser = subparsers.add_parser('rollback', help='Rollback configurations')
+    add_common_args(rollback_parser)
     rollback_parser.add_argument('--config', '-c', choices=['security', 'performance', 'dashboard', 'all'], 
                               default='all', help='Configuration a rollback')
     
     # Commande fix
     fix_parser = subparsers.add_parser('fix', help='Corriger configurations sur Wazuh existant')
+    add_common_args(fix_parser)
     fix_parser.add_argument('--config', '-c', choices=['security', 'performance', 'dashboard', 'all'], 
                           default='all', help='Configuration a corriger')
     

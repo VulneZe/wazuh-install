@@ -539,26 +539,13 @@ class DashboardConfigurator(BaseConfigurator):
                 for viz in dashboard_template['visualizations']:
                     total_count += 1
                     viz_id = viz['id']
-                    viz_type = viz['type']
                     
-                    # Créer l'attribut de visualisation
-                    viz_attributes = {
-                        "title": viz['title'],
-                        "description": viz.get('description', ''),
-                        "visState": viz.get('attributes', {}).get('visState', {}),
-                        "uiState": viz.get('attributes', {}).get('uiState', {}),
-                        "kibanaSavedObjectMeta": {
-                            "searchSourceJSON": json.dumps({
-                                "index": viz['query']['index'],
-                                "query": viz['query'].get('query', '*'),
-                                "filter": [],
-                                "aggs": viz['query'].get('aggs', [])
-                            })
-                        }
-                    }
+                    # Utiliser les attributes complets depuis le template
+                    viz_attributes = viz['attributes']
                     
                     if self._create_saved_object('visualization', viz_id, viz_attributes):
                         success_count += 1
+                        self._logger.info(f"[+] Visualisation créée: {viz['title']}")
                     else:
                         self._logger.warning(f"[-] Échec création visualisation: {viz_id}")
             
@@ -587,32 +574,35 @@ class DashboardConfigurator(BaseConfigurator):
                 
                 # Créer les références vers les visualisations
                 references = []
-                for viz in dashboard_template['visualizations']:
+                panels = dashboard_template.get('layout', {}).get('panels', [])
+                for i, panel in enumerate(panels):
+                    viz_id = panel['id']
                     references.append({
-                        "id": viz['id'],
-                        "name": f"visualization:{viz['id']}",
+                        "id": viz_id,
+                        "name": f"panel_{i}",
                         "type": "visualization"
                     })
                 
-                # Créer les attributs du dashboard
+                # Créer les attributs du dashboard avec le format correct
                 dashboard_attributes = {
                     "title": dashboard_title,
                     "description": dashboard_description,
-                    "visState": {
-                        "type": "dashboard",
-                        "params": {
-                            "useMargins": True,
-                            "syncColors": False,
-                            "hidePanelTitles": False,
-                            "panels": dashboard_template.get('layout', {}).get('rows', [])
-                        }
-                    },
-                    "uiState": {
-                        "vis": {
-                            "params": {
-                                "panels": dashboard_template.get('layout', {}).get('rows', [])
-                            }
-                        }
+                    "panelsJSON": json.dumps(panels),
+                    "optionsJSON": json.dumps({
+                        "useMargins": True,
+                        "syncColors": False,
+                        "hidePanelTitles": False
+                    }),
+                    "version": 1,
+                    "timeRestore": True,
+                    "timeTo": "now",
+                    "timeFrom": "now-24h",
+                    "refreshInterval": {"pause": False, "value": 30000},
+                    "kibanaSavedObjectMeta": {
+                        "searchSourceJSON": json.dumps({
+                            "query": {"query": "", "language": "lucene"},
+                            "filter": []
+                        })
                     }
                 }
                 

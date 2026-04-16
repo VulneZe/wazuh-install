@@ -13,18 +13,54 @@ SOC_OVERVIEW_DASHBOARD = {
             "type": "line",
             "title": "Alertes par heure (24h)",
             "description": "Tendance des alertes sur les dernières 24 heures",
-            "query": {
-                "index": "wazuh-alerts-*",
-                "time_field": "@timestamp",
-                "interval": "1h"
-            },
             "attributes": {
+                "title": "Alertes par heure (24h)",
                 "visState": {
+                    "title": "Alertes par heure (24h)",
                     "type": "line",
                     "params": {
-                        "grid": {"categoryAxes": [{"id": "CategoryAxis-1", "type": "category", "position": "bottom"}]},
-                        "seriesParams": [{"show": "true", "type": "line", "mode": "normal"}]
+                        "grid": {"categoryLines": False},
+                        "categoryAxes": [{
+                            "id": "CategoryAxis-1",
+                            "type": "category",
+                            "position": "bottom",
+                            "show": True,
+                            "style": {},
+                            "scale": {"type": "linear"},
+                            "labels": {"show": True, "filter": True, "truncate": 100},
+                            "title": {"text": "Heure"}
+                        }],
+                        "valueAxes": [{
+                            "id": "ValueAxis-1",
+                            "name": "LeftAxis-1",
+                            "type": "value",
+                            "position": "left",
+                            "show": True,
+                            "style": {},
+                            "scale": {"type": "linear", "mode": "normal"},
+                            "labels": {"show": True, "rotate": 0, "filter": False, "truncate": 100},
+                            "title": {"text": "Nombre"}
+                        }],
+                        "seriesParams": [{
+                            "show": True,
+                            "type": "line",
+                            "mode": "normal",
+                            "data": {"label": "Count", "id": "1"},
+                            "valueAxis": "ValueAxis-1",
+                            "drawLinesBetweenPoints": True,
+                            "lineWidth": 2,
+                            "showCircles": True
+                        }],
+                        "addTooltip": True,
+                        "addLegend": True,
+                        "legendPosition": "right",
+                        "times": [],
+                        "addTimeMarker": False
                     }
+                },
+                "uiState": {},
+                "kibanaSavedObjectMeta": {
+                    "searchSourceJSON": "{\"index\":\"wazuh-alerts-*\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[],\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"params\":{},\"schema\":\"metric\"},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"params\":{\"field\":\"@timestamp\",\"timeRange\":{\"from\":\"now-24h\",\"to\":\"now\"},\"useNormalizedOpenSearchInterval\":true,\"scaleMetricValues\":false,\"interval\":\"auto\",\"drop_partials\":false,\"min_doc_count\":1,\"extended_bounds\":{}},\"schema\":\"segment\"}]}"
                 }
             }
         },
@@ -33,21 +69,22 @@ SOC_OVERVIEW_DASHBOARD = {
             "type": "pie",
             "title": "Alertes par niveau de sévérité",
             "description": "Distribution des alertes par niveau (0-15)",
-            "query": {
-                "index": "wazuh-alerts-*",
-                "aggs": {
-                    "terms": {"field": "rule.level", "size": 16}
-                }
-            },
             "attributes": {
+                "title": "Alertes par niveau de sévérité",
                 "visState": {
+                    "title": "Alertes par niveau de sévérité",
                     "type": "pie",
                     "params": {
                         "addTooltip": True,
                         "addLegend": True,
+                        "legendPosition": "right",
                         "isDonut": False,
-                        "legendPosition": "right"
+                        "labels": {"show": True, "values": True, "last_level": True, "truncate": 100}
                     }
+                },
+                "uiState": {},
+                "kibanaSavedObjectMeta": {
+                    "searchSourceJSON": "{\"index\":\"wazuh-alerts-*\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[],\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"params\":{},\"schema\":\"metric\"},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"params\":{\"field\":\"rule.level\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":16,\"otherBucket\":false,\"missingBucket\":false},\"schema\":\"segment\"}]}"
                 }
             }
         },
@@ -56,19 +93,50 @@ SOC_OVERVIEW_DASHBOARD = {
             "type": "bar",
             "title": "Top 10 Agents par nombre d'alertes",
             "description": "Agents générant le plus d'alertes",
-            "query": {
-                "index": "wazuh-alerts-*",
-                "aggs": {
-                    "terms": {"field": "agent.name", "size": 10}
-                }
-            },
             "attributes": {
+                "title": "Top 10 Agents par nombre d'alertes",
                 "visState": {
+                    "title": "Top 10 Agents par nombre d'alertes",
                     "type": "histogram",
                     "params": {
-                        "grid": {"categoryAxes": [{"id": "CategoryAxis-1", "type": "category", "position": "left"}]},
-                        "seriesParams": [{"mode": "normal", "type": "bar"}]
+                        "grid": {"categoryLines": False},
+                        "categoryAxes": [{
+                            "id": "CategoryAxis-1",
+                            "type": "category",
+                            "position": "bottom",
+                            "show": True,
+                            "style": {},
+                            "scale": {"type": "linear"},
+                            "labels": {"show": True, "filter": True, "truncate": 100},
+                            "title": {}
+                        }],
+                        "valueAxes": [{
+                            "id": "ValueAxis-1",
+                            "name": "LeftAxis-1",
+                            "type": "value",
+                            "position": "left",
+                            "show": True,
+                            "style": {},
+                            "scale": {"type": "linear", "mode": "normal"},
+                            "labels": {"show": True, "rotate": 0, "filter": False, "truncate": 100},
+                            "title": {"text": "Nombre"}
+                        }],
+                        "seriesParams": [{
+                            "show": True,
+                            "type": "histogram",
+                            "mode": "normal",
+                            "data": {"label": "Count", "id": "1"},
+                            "valueAxis": "ValueAxis-1"
+                        }],
+                        "addTooltip": True,
+                        "addLegend": True,
+                        "legendPosition": "right",
+                        "times": []
                     }
+                },
+                "uiState": {},
+                "kibanaSavedObjectMeta": {
+                    "searchSourceJSON": "{\"index\":\"wazuh-alerts-*\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[],\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"params\":{},\"schema\":\"metric\"},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"params\":{\"field\":\"agent.name\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":10,\"otherBucket\":false,\"missingBucket\":false},\"schema\":\"segment\"}]}"
                 }
             }
         },
@@ -77,57 +145,35 @@ SOC_OVERVIEW_DASHBOARD = {
             "type": "table",
             "title": "Top 10 Règles les plus déclenchées",
             "description": "Règles de détection les plus actives",
-            "query": {
-                "index": "wazuh-alerts-*",
-                "aggs": {
-                    "terms": {"field": "rule.description", "size": 10}
-                }
-            },
             "attributes": {
+                "title": "Top 10 Règles les plus déclenchées",
                 "visState": {
+                    "title": "Top 10 Règles les plus déclenchées",
                     "type": "table",
                     "params": {
-                        "sort": {"columnIndex": 1, "direction": "desc"}
-                    }
-                }
-            }
-        },
-        {
-            "id": "soc-alerts-geo",
-            "type": "metric",
-            "title": "Alertes par pays (Source IP)",
-            "description": "Distribution géographique des IP source",
-            "query": {
-                "index": "wazuh-alerts-*",
-                "aggs": {
-                    "terms": {"field": "data.srcipgeo.country_code2", "size": 20}
-                }
-            },
-            "attributes": {
-                "visState": {
-                    "type": "metric",
-                    "params": {
-                        "metric": "count"
-                    }
-                }
-            }
-        },
-        {
-            "id": "soc-recent-alerts",
-            "type": "table",
-            "title": "Alertes récentes (Dernières 50)",
-            "description": "Liste des alertes les plus récentes",
-            "query": {
-                "index": "wazuh-alerts-*",
-                "sort": [{"@timestamp": {"order": "desc"}}],
-                "size": 50
-            },
-            "attributes": {
-                "visState": {
-                    "type": "table",
-                    "params": {
-                        "sort": {"columnIndex": 0, "direction": "desc"}
-                    }
+                        "perPage": 10,
+                        "showPartialRows": False,
+                        "showMetricsAtAllLevels": False,
+                        "sort": {"columnIndex": null, "direction": null},
+                        "showTotal": True,
+                        "totalFunc": "sum",
+                        "percentageCol": ""
+                    },
+                    "aggs": [
+                        {"id": "1", "enabled": True, "type": "count", "params": {}, "schema": "metric"},
+                        {"id": "2", "enabled": True, "type": "terms", "params": {
+                            "field": "rule.description",
+                            "orderBy": "1",
+                            "order": "desc",
+                            "size": 10,
+                            "otherBucket": False,
+                            "missingBucket": False
+                        }, "schema": "bucket"}
+                    ]
+                },
+                "uiState": {},
+                "kibanaSavedObjectMeta": {
+                    "searchSourceJSON": "{\"index\":\"wazuh-alerts-*\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[],\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"params\":{},\"schema\":\"metric\"},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"params\":{\"field\":\"rule.description\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":10,\"otherBucket\":false,\"missingBucket\":false},\"schema\":\"bucket\"}]}"
                 }
             }
         },
@@ -136,76 +182,60 @@ SOC_OVERVIEW_DASHBOARD = {
             "type": "pie",
             "title": "Alertes par groupe de règles",
             "description": "Distribution des alertes par catégorie de règles",
-            "query": {
-                "index": "wazuh-alerts-*",
-                "aggs": {
-                    "terms": {"field": "rule.groups", "size": 15}
-                }
-            },
             "attributes": {
+                "title": "Alertes par groupe de règles",
                 "visState": {
+                    "title": "Alertes par groupe de règles",
                     "type": "pie",
                     "params": {
                         "addTooltip": True,
                         "addLegend": True,
+                        "legendPosition": "bottom",
                         "isDonut": True,
-                        "legendPosition": "bottom"
+                        "labels": {"show": True, "values": True, "last_level": True, "truncate": 100}
                     }
+                },
+                "uiState": {},
+                "kibanaSavedObjectMeta": {
+                    "searchSourceJSON": "{\"index\":\"wazuh-alerts-*\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[],\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"params\":{},\"schema\":\"metric\"},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"params\":{\"field\":\"rule.groups\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":15,\"otherBucket\":false,\"missingBucket\":false},\"schema\":\"segment\"}]}"
                 }
             }
         },
         {
-            "id": "soc-mitre-tactics",
-            "type": "bar",
-            "title": "Alertes par tactique MITRE ATT&CK",
-            "description": "Distribution des alertes par tactique MITRE",
-            "query": {
-                "index": "wazuh-alerts-*",
-                "aggs": {
-                    "terms": {"field": "rule.mitre.tactic", "size": 15}
-                }
-            },
+            "id": "soc-recent-alerts",
+            "type": "table",
+            "title": "Alertes récentes (Dernières 50)",
+            "description": "Liste des alertes les plus récentes",
             "attributes": {
+                "title": "Alertes récentes (Dernières 50)",
                 "visState": {
-                    "type": "histogram",
+                    "title": "Alertes récentes (Dernières 50)",
+                    "type": "table",
                     "params": {
-                        "grid": {"categoryAxes": [{"id": "CategoryAxis-1", "type": "category", "position": "bottom"}]},
-                        "seriesParams": [{"mode": "normal", "type": "bar"}]
-                    }
+                        "perPage": 50,
+                        "showPartialRows": False,
+                        "showMetricsAtAllLevels": False,
+                        "sort": {"columnIndex": null, "direction": "desc"},
+                        "showTotal": False,
+                        "totalFunc": "sum"
+                    },
+                    "aggs": []
+                },
+                "uiState": {},
+                "kibanaSavedObjectMeta": {
+                    "searchSourceJSON": "{\"index\":\"wazuh-alerts-*\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[],\"sort\":[{\"@timestamp\":{\"order\":\"desc\"}}],\"size\":50}"
                 }
             }
         }
     ],
     "layout": {
-        "rows": [
-            {
-                "title": "Alertes Overview",
-                "panels": [
-                    {"id": "soc-alerts-timeline", "col": 1, "row": 1, "size_x": 6, "size_y": 3},
-                    {"id": "soc-alerts-level", "col": 7, "row": 1, "size_x": 6, "size_y": 3}
-                ]
-            },
-            {
-                "title": "Top Alert Sources",
-                "panels": [
-                    {"id": "soc-top-agents", "col": 1, "row": 4, "size_x": 6, "size_y": 3},
-                    {"id": "soc-top-rules", "col": 7, "row": 4, "size_x": 6, "size_y": 3}
-                ]
-            },
-            {
-                "title": "Alert Analysis",
-                "panels": [
-                    {"id": "soc-rule-groups", "col": 1, "row": 7, "size_x": 4, "size_y": 3},
-                    {"id": "soc-mitre-tactics", "col": 5, "row": 7, "size_x": 4, "size_y": 3},
-                    {"id": "soc-alerts-geo", "col": 9, "row": 7, "size_x": 4, "size_y": 3}
-                ]
-            },
-            {
-                "title": "Recent Alerts",
-                "panels": [
-                    {"id": "soc-recent-alerts", "col": 1, "row": 10, "size_x": 12, "size_y": 4}
-                ]
-            }
+        "panels": [
+            {"gridData": {"x": 0, "y": 0, "w": 24, "h": 15, "i": "1"}, "version": "2.19.4", "panelIndex": "1", "embeddableConfig": {}, "panelRefName": "panel_0"},
+            {"gridData": {"x": 24, "y": 0, "w": 24, "h": 15, "i": "2"}, "version": "2.19.4", "panelIndex": "2", "embeddableConfig": {}, "panelRefName": "panel_1"},
+            {"gridData": {"x": 0, "y": 15, "w": 24, "h": 15, "i": "3"}, "version": "2.19.4", "panelIndex": "3", "embeddableConfig": {}, "panelRefName": "panel_2"},
+            {"gridData": {"x": 24, "y": 15, "w": 24, "h": 15, "i": "4"}, "version": "2.19.4", "panelIndex": "4", "embeddableConfig": {}, "panelRefName": "panel_3"},
+            {"gridData": {"x": 0, "y": 30, "w": 16, "h": 15, "i": "5"}, "version": "2.19.4", "panelIndex": "5", "embeddableConfig": {}, "panelRefName": "panel_4"},
+            {"gridData": {"x": 16, "y": 30, "w": 32, "h": 15, "i": "6"}, "version": "2.19.4", "panelIndex": "6", "embeddableConfig": {}, "panelRefName": "panel_5"}
         ]
     }
 }

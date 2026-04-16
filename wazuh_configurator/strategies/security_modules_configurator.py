@@ -151,7 +151,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
         
         # Restaurer les sauvegardes
         for file_path, backup_path in self.backup_files.items():
-            if self.file_handler.restore(file_path, backup_path):
+            if self.file_handler.restore_file(backup_path, file_path):
                 print(f"[+] Restauration réussie: {file_path}")
                 results.append(True)
             else:
@@ -265,7 +265,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
             else:
                 content += vuln_config
             
-            self.file_handler.write(self.ossec_conf_path, content)
+            self.file_handler.write_file(self.ossec_conf_path, content)
             print("[+] Vulnerability Detector configuré")
             
             return ConfigResult(success=True, message="Vulnerability Detector configuré avec succès")
@@ -393,7 +393,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
             else:
                 content += cis_config
             
-            self.file_handler.write(self.ossec_conf_path, content)
+            self.file_handler.write_file(self.ossec_conf_path, content)
             print("[+] CIS Benchmarks configuré")
             
             return ConfigResult(success=True, message="CIS Benchmarks configuré avec succès")
@@ -520,7 +520,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
             else:
                 content += fim_config
             
-            self.file_handler.write(self.ossec_conf_path, content)
+            self.file_handler.write_file(self.ossec_conf_path, content)
             print("[+] FIM configuré")
             
             return ConfigResult(success=True, message="FIM configuré avec succès")
@@ -668,7 +668,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
             else:
                 content += mitre_config
             
-            self.file_handler.write(self.ossec_conf_path, content)
+            self.file_handler.write_file(self.ossec_conf_path, content)
             print("[+] MITRE ATT&CK configuré")
             
             return ConfigResult(success=True, message="MITRE ATT&CK configuré avec succès")

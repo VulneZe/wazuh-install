@@ -111,7 +111,7 @@ class DashboardConfigurator(BaseConfigurator):
             )
         
         # Créer les dashboards automatiquement avec les templates JSON
-        self._logger.info(f"[+] Dashboard service actif (IP: {self.dashboard_ip})")
+        self._logger.info(f"[+] Dashboard service actif (IP: {self.dashboard_host})")
         self._logger.info("[+] Création automatique des dashboards...")
         
         results = []

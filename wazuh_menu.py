@@ -214,9 +214,39 @@ def run_configurator(args):
     print(f"[*] Exécution: wazuh_configurator.py {args}")
     print("=" * 60)
     
+    # Si c'est une commande dashboard, demander les IP/ports
+    if "dashboard" in args and not any("--" in arg for arg in args.split()):
+        print("\nConfiguration des services Wazuh pour Dashboard:")
+        print("(Appuyez sur Entrée pour utiliser les valeurs par défaut)")
+        
+        manager_host = input("Adresse IP/hostname du Manager (défaut: localhost): ").strip() or "localhost"
+        indexer_host = input("Adresse IP/hostname de l'Indexer (défaut: localhost): ").strip() or "localhost"
+        dashboard_host = input("Adresse IP/hostname du Dashboard (défaut: localhost): ").strip() or "localhost"
+        
+        manager_port = input("Port Manager (défaut: 1514): ").strip() or "1514"
+        indexer_port = input("Port Indexer (défaut: 9200): ").strip() or "9200"
+        dashboard_port = input("Port Dashboard (défaut: 5601): ").strip() or "5601"
+        
+        # Construire la commande avec les options
+        cmd_args = args.split()
+        if manager_host != "localhost":
+            cmd_args.extend(["--manager-host", manager_host])
+        if indexer_host != "localhost":
+            cmd_args.extend(["--indexer-host", indexer_host])
+        if dashboard_host != "localhost":
+            cmd_args.extend(["--dashboard-host", dashboard_host])
+        if manager_port != "1514":
+            cmd_args.extend(["--manager-port", manager_port])
+        if indexer_port != "9200":
+            cmd_args.extend(["--indexer-port", indexer_port])
+        if dashboard_port != "5601":
+            cmd_args.extend(["--dashboard-port", dashboard_port])
+    else:
+        cmd_args = args.split()
+    
     try:
         result = subprocess.run(
-            [sys.executable, 'wazuh_configurator.py'] + args.split(),
+            [sys.executable, 'wazuh_configurator.py'] + cmd_args,
             capture_output=False,
             text=True
         )

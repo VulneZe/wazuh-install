@@ -10,6 +10,8 @@ import secrets
 from typing import Dict, Optional
 from ..core.base_configurator import BaseConfigurator, ConfigResult
 from ..config.paths import WazuhPaths
+from ..utils.cache import cached
+from ..utils.exceptions import ConfigurationError, FileOperationError
 
 
 class SecurityConfigurator(BaseConfigurator):
@@ -27,6 +29,7 @@ class SecurityConfigurator(BaseConfigurator):
         self.paths = WazuhPaths()
         self.security_config = {}
     
+    @cached(ttl=300)  # Cache for 5 minutes
     def check(self) -> ConfigResult:
         """Check current security configuration"""
         print("[*] Verification configuration securite...")
@@ -123,6 +126,7 @@ class SecurityConfigurator(BaseConfigurator):
             details={"rollback": success}
         )
     
+    @cached(ttl=300)
     def _check_ssl_config(self) -> bool:
         """Check if SSL is configured"""
         # Check Wazuh indexer SSL configuration
@@ -132,6 +136,7 @@ class SecurityConfigurator(BaseConfigurator):
         
         return False
     
+    @cached(ttl=300)
     def _check_password_strength(self) -> bool:
         """Check if passwords are strong"""
         # Check Wazuh passwords file
@@ -148,6 +153,7 @@ class SecurityConfigurator(BaseConfigurator):
                             return True
         return False
     
+    @cached(ttl=300)
     def _check_api_auth(self) -> bool:
         """Check if API authentication is configured"""
         if os.path.exists(self.paths.api_config):
@@ -156,6 +162,7 @@ class SecurityConfigurator(BaseConfigurator):
         
         return False
     
+    @cached(ttl=300)
     def _check_firewall_rules(self) -> bool:
         """Check if firewall rules are configured"""
         try:
@@ -250,12 +257,12 @@ plugins.security.ssl.http.pemtrustedcas_filepath: {self.paths.indexer_certs}/waz
             print("[!] Pour production, utiliser Let's Encrypt ou certificat signé par CA")
             return True
             
+        except OSError as e:
+            raise FileOperationError(f"Impossible de créer le répertoire: {e}")
         except subprocess.CalledProcessError as e:
-            print(f"[-] Erreur génération certificat: {e}")
-            return False
+            raise ConfigurationError(f"Erreur génération certificat: {e}")
         except Exception as e:
-            print(f"[-] Erreur configuration SSL/TLS: {e}")
-            return False
+            raise ConfigurationError(f"Erreur inattendue SSL: {e}")
     
     def _apply_strong_passwords(self) -> bool:
         """Apply strong passwords"""

@@ -4,9 +4,11 @@ Coordinates all configuration strategies
 """
 
 import threading
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Dict, Any
 from .wazuh_detector import WazuhDetector, WazuhInstallation
 from .base_configurator import BaseConfigurator, ConfigResult
+from ..utils.ssh_client import SSHClient, SSHCredentials
+from ..utils.exceptions import SSHConnectionError, SSHAuthenticationError
 
 
 class ConfigManager:
@@ -30,6 +32,13 @@ class ConfigManager:
         self.detector = WazuhDetector()
         self.installation: Optional[WazuhInstallation] = None
         self.configurators: Dict[str, BaseConfigurator] = {}
+        
+        # Remote configuration
+        self.is_remote = False
+        self.ssh_client: Optional[SSHClient] = None
+        self.ssh_credentials: Optional[SSHCredentials] = None
+        self.custom_ports: Optional[Dict[str, int]] = None
+        
         self._initialized = True
     
     def initialize(self) -> ConfigResult:
@@ -49,13 +58,67 @@ class ConfigManager:
         print("[+] Gestionnaire de configuration initialisé")
         return ConfigResult(
             success=True,
-            message="Gestionnaire initialisé avec succès",
-            details={
-                "installed": True,
-                "version": self.installation.version,
-                "components": self.installation.components
-            }
+            message="Gestionnaire de configuration initialisé avec succès",
+            details={"installed": True}
         )
+    
+    def set_remote_config(
+        self,
+        host: str,
+        ssh_user: str,
+        ssh_key: Optional[str] = None,
+        ssh_password: Optional[str] = None,
+        ssh_port: int = 22,
+        custom_ports: Optional[str] = None,
+        wazuh_path: str = "/var/ossec"
+    ):
+        """Set remote configuration for SSH connections"""
+        self.is_remote = True
+        
+        # Parse custom ports if provided
+        if custom_ports:
+            self.custom_ports = {}
+            for port_spec in custom_ports.split(','):
+                if ':' in port_spec:
+                    key, value = port_spec.split(':')
+                    self.custom_ports[key.strip()] = int(value.strip())
+        
+        # Create SSH credentials
+        self.ssh_credentials = SSHCredentials(
+            host=host,
+            username=ssh_user,
+            port=ssh_port,
+            password=ssh_password,
+            key_file=ssh_key
+        )
+        
+        # Create SSH client
+        self.ssh_client = SSHClient(self.ssh_credentials)
+        
+        print(f"[*] Configuration distante définie pour {host}:{ssh_port}")
+    
+    def connect_ssh(self) -> bool:
+        """Establish SSH connection if remote mode is enabled"""
+        if not self.is_remote or not self.ssh_client:
+            return True
+        
+        try:
+            if self.ssh_client.connect():
+                print("[+] Connexion SSH établie avec succès")
+                return True
+            else:
+                raise SSHConnectionError("Échec de la connexion SSH")
+        except SSHAuthenticationError as e:
+            print(f"[-] Erreur d'authentification SSH: {e}")
+            return False
+        except SSHConnectionError as e:
+            print(f"[-] Erreur de connexion SSH: {e}")
+            return False
+    
+    def disconnect_ssh(self):
+        """Disconnect SSH connection if established"""
+        if self.ssh_client:
+            self.ssh_client.disconnect()
     
     def register_configurator(self, name: str, configurator: BaseConfigurator) -> bool:
         """Register a configuration strategy"""

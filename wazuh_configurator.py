@@ -4,14 +4,9 @@ Wazuh Configurator - Main CLI interface
 Advanced configuration management for Wazuh with design patterns
 """
 
-import sys
 import os
+import sys
 import argparse
-
-# Add the project root to Python path
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
-from wazuh_configurator import ConfigManager, WazuhDetector
 from wazuh_configurator.strategies import (
     SecurityConfigurator,
     PerformanceConfigurator,
@@ -19,7 +14,12 @@ from wazuh_configurator.strategies import (
     SecurityModulesConfigurator,
     DashboardConfigurator
 )
+from wazuh_configurator.core import ConfigManager
+from wazuh_configurator.core.wazuh_detector import WazuhDetector
+from wazuh_configurator.utils.logger import WazuhLogger
 
+# Initialize logger
+logger = WazuhLogger(__name__, use_json=False)
 
 def banner():
     os.system('clear' if os.name == 'posix' else 'cls')
@@ -39,36 +39,39 @@ def banner():
 
 def detect_wazuh():
     """Detect existing Wazuh installation"""
-    print("[*] Detection de l'installation Wazuh...")
+    logger.info("Detection de l'installation Wazuh...")
     
     detector = WazuhDetector()
     installation = detector.detect_installation()
     
     if installation.installed:
-        print(f"[+] Wazuh version: {installation.version}")
-        print(f"[+] Composants: {list(installation.components.keys())}")
-        print(f"[+] Services status:")
+        logger.info(f"Wazuh version: {installation.version}")
+        logger.info(f"Composants: {list(installation.components.keys())}")
+        logger.info("Services status:")
         for service, status in installation.services_status.items():
-            print(f"   - {service}: {status}")
+            logger.info(f"   - {service}: {status}")
         return installation
     else:
-        print("[-] Wazuh non installe sur ce systeme")
+        logger.error("Wazuh non installe sur ce systeme")
         return None
 
 
 def check_configs(config_manager):
     """Check all configurations"""
-    print("[*] Verification de toutes les configurations...")
+    logger.info("Verification des configurations...")
     
-    results = config_manager.check_all_configs()
-    
-    for name, result in results.items():
+    results = {}
+    for name, configurator in config_manager.configurators.items():
+        logger.info(f"Verification {name}...")
+        result = configurator.check()
+        results[name] = result
+        
         status = "[+]" if result.success else "[-]"
-        print(f"{status} {name}: {result.message}")
+        logger.info(f"{status} {name}: {result.message}")
         
         if result.warnings:
             for warning in result.warnings:
-                print(f"   [!] {warning}")
+                logger.warning(f"[!] {warning}")
     
     return results
 
@@ -76,18 +79,22 @@ def check_configs(config_manager):
 def apply_configs(config_manager, config_names=None):
     """Apply configurations"""
     if config_names:
-        print(f"[*] Application configurations: {', '.join(config_names)}")
+        logger.info(f"Application configurations: {', '.join(config_names)}")
         for name in config_names:
             result = config_manager.apply_config(name)
             status = "[+]" if result.success else "[-]"
-            print(f"{status} {name}: {result.message}")
+            logger.info(f"{status} {name}: {result.message}")
     else:
-        print("[*] Application de toutes les configurations...")
-        results = config_manager.apply_all_configs()
-        
-        for name, result in results.items():
+        logger.info("Application des configurations...")
+        results = {}
+        for name, configurator in config_manager.configurators.items():
+            logger.info(f"Application {name}...")
+            result = configurator.apply()
+            results[name] = result
+            
             status = "[+]" if result.success else "[-]"
-            print(f"{status} {name}: {result.message}")
+            logger.info(f"{status} {name}: {result.message}")
+        return results
 
 
 def main():
@@ -143,20 +150,39 @@ def main():
         parser.print_help()
         return
     
-    # Initialize config manager
+    # Initialize config manager with remote configuration if provided
     config_manager = ConfigManager()
+    
+    # Set remote configuration if provided
+    if args.remote_host:
+        config_manager.set_remote_config(
+            host=args.remote_host,
+            ssh_user=args.ssh_user,
+            ssh_key=args.ssh_key,
+            ssh_password=args.ssh_password,
+            ssh_port=args.ssh_port,
+            custom_ports=args.custom_ports,
+            wazuh_path=args.wazuh_path
+        )
+    
     init_result = config_manager.initialize()
     
     if not init_result.success:
-        print(f"[-] Erreur initialisation: {init_result.message}")
+        logger.error(f"Erreur initialisation: {init_result.message}")
         return
     
-    # Register configurators
-    config_manager.register_configurator('security', SecurityConfigurator())
-    config_manager.register_configurator('performance', PerformanceConfigurator())
-    config_manager.register_configurator('monitoring', MonitoringConfigurator())
-    config_manager.register_configurator('security-modules', SecurityModulesConfigurator())
-    config_manager.register_configurator('dashboard', DashboardConfigurator())
+    # Connect via SSH if remote mode is enabled
+    if args.remote_host:
+        if not config_manager.connect_ssh():
+            logger.error("Échec de la connexion SSH")
+            return
+    
+    # Register configurators with remote configuration
+    config_manager.register_configurator('security', SecurityConfigurator(wazuh_path=args.wazuh_path))
+    config_manager.register_configurator('performance', PerformanceConfigurator(wazuh_path=args.wazuh_path))
+    config_manager.register_configurator('monitoring', MonitoringConfigurator(wazuh_path=args.wazuh_path))
+    config_manager.register_configurator('security-modules', SecurityModulesConfigurator(wazuh_path=args.wazuh_path))
+    config_manager.register_configurator('dashboard', DashboardConfigurator(wazuh_path=args.wazuh_path))
     
     # Execute command
     if args.command == 'detect':
@@ -168,11 +194,11 @@ def main():
         else:
             result = config_manager.get_configurator(args.config).check()
             status = "[+]" if result.success else "[-]"
-            print(f"{status} {args.config}: {result.message}")
+            logger.info(f"{status} {args.config}: {result.message}")
             
             if result.warnings:
                 for warning in result.warnings:
-                    print(f"   [!] {warning}")
+                    logger.warning(f"   [!] {warning}")
     
     elif args.command == 'apply':
         if args.config == 'all':
@@ -180,7 +206,7 @@ def main():
         else:
             result = config_manager.apply_config(args.config)
             status = "[+]" if result.success else "[-]"
-            print(f"{status} {args.config}: {result.message}")
+            logger.info(f"{status} {args.config}: {result.message}")
     
     elif args.command == 'validate':
         if args.config == 'all':
@@ -188,45 +214,50 @@ def main():
         else:
             result = config_manager.get_configurator(args.config).validate()
             status = "[+]" if result.success else "[-]"
-            print(f"{status} {args.config}: {result.message}")
+            logger.info(f"{status} {args.config}: {result.message}")
     
     elif args.command == 'rollback':
         if args.config == 'all':
             config_manager.rollback_all_configs()
         else:
-            result = config_manager.get_configurator(args.config).rollback()
+            result = config_manager.rollback_config(args.config)
             status = "[+]" if result.success else "[-]"
-            print(f"{status} {args.config}: {result.message}")
+            logger.info(f"{status} {args.config}: {result.message}")
     
     elif args.command == 'fix':
-        print("[*] Mode correction pour Wazuh existant...")
-        print("[*] Verification des configurations actuelles...")
+        logger.info("[*] Mode correction pour Wazuh existant...")
+        logger.info("[*] Verification des configurations actuelles...")
         
         if args.config == 'all':
             check_results = check_configs(config_manager)
         else:
             result = config_manager.get_configurator(args.config).check()
             status = "[+]" if result.success else "[-]"
-            print(f"{status} {args.config}: {result.message}")
+            logger.info(f"{status} {args.config}: {result.message}")
             if result.warnings:
                 for warning in result.warnings:
-                    print(f"   [!] {warning}")
+                    logger.warning(f"   [!] {warning}")
         
-        print("\n[*] Application des corrections...")
+        logger.info("\n[*] Application des corrections...")
         if args.config == 'all':
             apply_results = apply_configs(config_manager)
         else:
             result = config_manager.apply_config(args.config)
             status = "[+]" if result.success else "[-]"
-            print(f"{status} {args.config}: {result.message}")
+            logger.info(f"{status} {args.config}: {result.message}")
         
-        print("\n[*] Validation des corrections...")
+        logger.info("\n[*] Validation des corrections...")
         if args.config == 'all':
             config_manager.validate_all_configs()
         else:
             result = config_manager.get_configurator(args.config).validate()
             status = "[+]" if result.success else "[-]"
-            print(f"{status} {args.config}: {result.message}")
+            logger.info(f"{status} {args.config}: {result.message}")
+    
+    # Disconnect SSH if connected
+    if args.remote_host:
+        config_manager.disconnect_ssh()
+        logger.info("[+] Connexion SSH fermée")
 
 
 if __name__ == "__main__":

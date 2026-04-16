@@ -8,6 +8,7 @@ import subprocess
 from typing import Dict, Optional
 from ..core.base_configurator import BaseConfigurator, ConfigResult
 from ..config.paths import WazuhPaths
+from ..utils.cache import cached
 
 
 class PerformanceConfigurator(BaseConfigurator):
@@ -26,6 +27,7 @@ class PerformanceConfigurator(BaseConfigurator):
         self.system_memory = self._get_system_memory()
         self.performance_config = {}
     
+    @cached(ttl=300)
     def check(self) -> ConfigResult:
         """Check current performance configuration"""
         print("[*] Verification configuration performance...")
@@ -136,6 +138,7 @@ class PerformanceConfigurator(BaseConfigurator):
             pass
         return 4  # Default to 4GB
     
+    @cached(ttl=300)
     def _check_jvm_memory(self) -> bool:
         """Check if JVM memory is properly configured"""
         # Check Wazuh indexer JVM config
@@ -146,6 +149,7 @@ class PerformanceConfigurator(BaseConfigurator):
         
         return False
     
+    @cached(ttl=300)
     def _check_log_rotation(self) -> bool:
         """Check if log rotation is configured"""
         # Check Wazuh manager log rotation
@@ -155,12 +159,14 @@ class PerformanceConfigurator(BaseConfigurator):
         
         return False
     
+    @cached(ttl=300)
     def _check_disk_cleanup(self) -> bool:
         """Check if disk cleanup is configured"""
         # Check if cleanup cron job exists
         cleanup_script = os.path.join(self.paths.cron_daily, "wazuh-cleanup")
         return os.path.exists(cleanup_script)
     
+    @cached(ttl=300)
     def _check_connection_pool(self) -> bool:
         """Check if connection pool is optimized"""
         # Check indexer configuration

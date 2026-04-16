@@ -8,6 +8,7 @@ import os
 import json
 import subprocess
 import requests
+import socket
 from typing import Dict, Optional
 from ..core.base_configurator import BaseConfigurator, ConfigResult
 from ..config.paths import WazuhPaths
@@ -25,7 +26,8 @@ class DashboardConfigurator(BaseConfigurator):
     def __init__(self, wazuh_path: str = "/var/ossec"):
         super().__init__(wazuh_path)
         self.paths = WazuhPaths()
-        self.dashboard_url = "https://127.0.0.1:5601"
+        self.dashboard_ip = self._detect_server_ip()
+        self.dashboard_url = f"https://{self.dashboard_ip}:5601"
         self.dashboard_username = "admin"
         self.dashboard_password = None
         self.verify_ssl = False
@@ -34,6 +36,18 @@ class DashboardConfigurator(BaseConfigurator):
         
         # Charger les identifiants depuis le fichier de mots de passe Wazuh
         self._load_credentials()
+    
+    def _detect_server_ip(self) -> str:
+        """Détecter l'IP du serveur automatiquement"""
+        try:
+            # Essayer de se connecter à l'IP locale
+            hostname = socket.gethostname()
+            ip = socket.gethostbyname(hostname)
+            self._logger.info(f"IP détectée: {ip}")
+            return ip
+        except Exception as e:
+            self._logger.warning(f"Impossible de détecter l'IP, utilisation de 127.0.0.1: {e}")
+            return "127.0.0.1"
     
     def _load_credentials(self):
         """Charger les identifiants depuis le fichier de mots de passe Wazuh"""
@@ -105,24 +119,47 @@ class DashboardConfigurator(BaseConfigurator):
                 warnings=["Dashboard service non démarré - Configuration ignorée"]
             )
         
-        # Si le service est actif, on ne crée pas les dashboards automatiquement
-        # car l'API peut ne pas être accessible
-        self._logger.info("[+] Dashboard service actif")
-        self._logger.info("[+] Note: La création automatique de dashboards est désactivée")
-        self._logger.info("[+] Les dashboards doivent être créés manuellement via l'interface web")
-        self._logger.info("[+] URL: https://<IP>:5601")
+        # Créer les dashboards automatiquement avec les templates JSON
+        self._logger.info(f"[+] Dashboard service actif (IP: {self.dashboard_ip})")
+        self._logger.info("[+] Création automatique des dashboards...")
+        
+        results = []
+        
+        # Créer l'index pattern
+        try:
+            results.append(self._create_index_pattern())
+        except Exception as e:
+            self._logger.error(f"Erreur création index pattern: {e}")
+            results.append(False)
+        
+        # Créer les visualisations
+        try:
+            results.append(self._create_visualizations())
+        except Exception as e:
+            self._logger.error(f"Erreur création visualisations: {e}")
+            results.append(False)
+        
+        # Créer le dashboard
+        try:
+            results.append(self._create_dashboard())
+        except Exception as e:
+            self._logger.error(f"Erreur création dashboard: {e}")
+            results.append(False)
         
         self._logger.info("=" * 60)
         
+        success_count = sum(1 for r in results if r)
+        total_count = len(results)
+        
         return ConfigResult(
-            success=True,
-            message="Dashboards: Service actif - Configuration manuelle requise",
+            success=success_count == total_count,
+            message=f"Dashboards: {success_count}/{total_count} configurations appliquées",
             details={
                 "dashboard_running": True,
-                "auto_config": False,
-                "note": "Création de dashboards manuelle requise"
-            },
-            warnings=["Création de dashboards manuelle requise - API non accessible"]
+                "index_pattern": results[0],
+                "visualizations": results[1],
+                "dashboard": results[2]
+            }
         )
     
     def validate(self) -> ConfigResult:
@@ -306,214 +343,19 @@ class DashboardConfigurator(BaseConfigurator):
             self._logger.error(f"[-] Erreur création index pattern: {e}")
             return False
     
-    def _create_visualizations(self) -> bool:
-        """Créer les visualisations pour le dashboard SOC"""
+    def _create_saved_object(self, obj_type: str, obj_id: str, attributes: dict, references: list = None) -> bool:
+        """Créer un saved object (visualization ou dashboard)"""
         try:
-            self._logger.info("[*] Création des visualisations...")
-            
             headers = {
                 "osd-xsrf": "true",
                 "Content-Type": "application/json"
             }
             
-            # Visualisation 1: SSH Events par résultat (Pie Chart)
-            vis_ssh_pie = {
-                "title": "SSH - Événements par résultat",
-                "type": "pie",
-                "aggs": [
-                    {
-                        "id": "1",
-                        "enabled": True,
-                        "type": "count",
-                        "schema": "metric",
-                        "params": {}
-                    },
-                    {
-                        "id": "2",
-                        "enabled": True,
-                        "type": "terms",
-                        "schema": "segment",
-                        "params": {
-                            "field": "data.ssh.result",
-                            "size": 10,
-                            "order": "desc",
-                            "orderBy": "_count"
-                        }
-                    }
-                ]
-            }
+            body = {"attributes": attributes}
+            if references:
+                body["references"] = references
             
-            # Créer la visualisation SSH
-            url = f"{self.dashboard_url}/api/saved_objects/visualization/ssh-events-result"
-            response = requests.post(
-                url,
-                headers=headers,
-                auth=(self.dashboard_username, self.dashboard_password),
-                verify=False,
-                json={"attributes": vis_ssh_pie},
-                timeout=30
-            )
-            
-            if response.status_code in [200, 409]:
-                self._logger.info("[+] Visualisation SSH créée")
-            else:
-                self._logger.error(f"[-] Erreur création visualisation SSH: {response.status_code}")
-                return False
-            
-            # Visualisation 2: AD Events par type (Pie Chart)
-            vis_ad_pie = {
-                "title": "AD - Événements par type",
-                "type": "pie",
-                "aggs": [
-                    {
-                        "id": "1",
-                        "enabled": True,
-                        "type": "count",
-                        "schema": "metric",
-                        "params": {}
-                    },
-                    {
-                        "id": "2",
-                        "enabled": True,
-                        "type": "terms",
-                        "schema": "segment",
-                        "params": {
-                            "field": "data.win.eventdata.id",
-                            "size": 10,
-                            "order": "desc",
-                            "orderBy": "_count"
-                        }
-                    }
-                ]
-            }
-            
-            # Créer la visualisation AD
-            url = f"{self.dashboard_url}/api/saved_objects/visualization/ad-events-type"
-            response = requests.post(
-                url,
-                headers=headers,
-                auth=(self.dashboard_username, self.dashboard_password),
-                verify=False,
-                json={"attributes": vis_ad_pie},
-                timeout=30
-            )
-            
-            if response.status_code in [200, 409]:
-                self._logger.info("[+] Visualisation AD créée")
-            else:
-                self._logger.error(f"[-] Erreur création visualisation AD: {response.status_code}")
-                return False
-            
-            # Visualisation 3: Alertes par niveau (Bar Chart)
-            vis_level_bar = {
-                "title": "Alertes par niveau",
-                "type": "histogram",
-                "aggs": [
-                    {
-                        "id": "1",
-                        "enabled": True,
-                        "type": "count",
-                        "schema": "metric",
-                        "params": {}
-                    },
-                    {
-                        "id": "2",
-                        "enabled": True,
-                        "type": "terms",
-                        "schema": "segment",
-                        "params": {
-                            "field": "rule.level",
-                            "size": 15,
-                            "order": "desc",
-                            "orderBy": "_count"
-                        }
-                    }
-                ]
-            }
-            
-            # Créer la visualisation niveau
-            url = f"{self.dashboard_url}/api/saved_objects/visualization/alerts-level"
-            response = requests.post(
-                url,
-                headers=headers,
-                auth=(self.dashboard_username, self.dashboard_password),
-                verify=False,
-                json={"attributes": vis_level_bar},
-                timeout=30
-            )
-            
-            if response.status_code in [200, 409]:
-                self._logger.info("[+] Visualisation alertes niveau créée")
-            else:
-                self._logger.error(f"[-] Erreur création visualisation niveau: {response.status_code}")
-                return False
-            
-            self._logger.info("[+] Toutes les visualisations créées")
-            return True
-            
-        except requests.exceptions.ConnectionError as e:
-            raise ServiceNotAvailableError(f"Dashboard non accessible: {e}")
-        except Exception as e:
-            self._logger.error(f"[-] Erreur création visualisations: {e}")
-            return False
-    
-    def _create_dashboard(self) -> bool:
-        """Créer le dashboard SOC"""
-        try:
-            self._logger.info("[*] Création du dashboard SOC...")
-            
-            headers = {
-                "osd-xsrf": "true",
-                "Content-Type": "application/json"
-            }
-            
-            dashboard_config = {
-                "title": "SOC - AD & SSH Dashboard",
-                "type": "dashboard",
-                "panelsJSON": json.dumps([
-                    {
-                        "id": "ssh-events-result",
-                        "type": "pie",
-                        "gridData": {"x": 0, "y": 0, "w": 24, "h": 15},
-                        "panelIndex": 1,
-                        "title": "SSH - Événements par résultat"
-                    },
-                    {
-                        "id": "ad-events-type",
-                        "type": "pie",
-                        "gridData": {"x": 24, "y": 0, "w": 24, "h": 15},
-                        "panelIndex": 2,
-                        "title": "AD - Événements par type"
-                    },
-                    {
-                        "id": "alerts-level",
-                        "type": "histogram",
-                        "gridData": {"x": 0, "y": 15, "w": 48, "h": 15},
-                        "panelIndex": 3,
-                        "title": "Alertes par niveau"
-                    }
-                ]),
-                "optionsJSON": json.dumps({
-                    "useMargins": True,
-                    "syncColors": False,
-                    "hidePanelTitles": False
-                }),
-                "version": 1
-            }
-            
-            # Références aux visualisations
-            references = [
-                {"id": "ssh-events-result", "name": "ssh-events-result", "type": "visualization"},
-                {"id": "ad-events-type", "name": "ad-events-type", "type": "visualization"},
-                {"id": "alerts-level", "name": "alerts-level", "type": "visualization"}
-            ]
-            
-            url = f"{self.dashboard_url}/api/saved_objects/dashboard/soc-ad-ssh"
-            body = {
-                "attributes": dashboard_config,
-                "references": references
-            }
-            
+            url = f"{self.dashboard_url}/api/saved_objects/{obj_type}/{obj_id}"
             response = requests.post(
                 url,
                 headers=headers,
@@ -523,15 +365,235 @@ class DashboardConfigurator(BaseConfigurator):
                 timeout=30
             )
             
-            if response.status_code in [200, 409]:
-                self._logger.info("[+] Dashboard SOC créé")
-                return True
-            else:
-                self._logger.error(f"[-] Erreur création dashboard: {response.status_code}")
+            if response.status_code == 409:
+                # Déjà existe, mettre à jour
+                response = requests.put(
+                    url,
+                    headers=headers,
+                    auth=(self.dashboard_username, self.dashboard_password),
+                    verify=False,
+                    json=body,
+                    timeout=30
+                )
+            
+            self._logger.info(f"  {obj_type}/{obj_id}: {response.status_code}")
+            return response.status_code in [200, 201, 409]
+            
+        except Exception as e:
+            self._logger.error(f"Erreur création {obj_type}/{obj_id}: {e}")
+            return False
+    
+    def _create_visualizations(self) -> bool:
+        """Créer les visualisations pour le dashboard SOC"""
+        try:
+            self._logger.info("[*] Création des visualisations...")
+            
+            # Visualization 1: SSH Events by Result (Pie Chart)
+            vis_ssh_pie_state = {
+                "title": "SSH — Événements par résultat",
+                "type": "pie",
+                "aggs": [
+                    {"id": "1", "enabled": True, "type": "count", "params": {}, "schema": "metric"},
+                    {"id": "2", "enabled": True, "type": "terms", "params": {
+                        "field": "rule.description",
+                        "orderBy": "1",
+                        "order": "desc",
+                        "size": 10,
+                        "otherBucket": False,
+                        "missingBucket": False
+                    }, "schema": "segment"}
+                ],
+                "params": {
+                    "type": "pie",
+                    "addTooltip": True,
+                    "addLegend": True,
+                    "legendPosition": "right",
+                    "isDonut": True,
+                    "labels": {"show": True, "values": True, "last_level": True, "truncate": 100}
+                }
+            }
+            
+            if not self._create_saved_object("visualization", "soc-ssh-pie", {
+                "title": "SOC — SSH événements par résultat",
+                "visState": json.dumps(vis_ssh_pie_state),
+                "uiStateJSON": "{}",
+                "description": "Distribution des événements SSH (succès/échecs) par type",
+                "kibanaSavedObjectMeta": {
+                    "searchSourceJSON": json.dumps({
+                        "index": self.index_pattern,
+                        "query": {"query": "rule.groups:sshd", "language": "lucene"},
+                        "filter": []
+                    })
+                }
+            }, references=[{"id": self.index_pattern, "name": "kibanaSavedObjectMeta.searchSourceJSON.index", "type": "index-pattern"}]):
                 return False
-                
-        except requests.exceptions.ConnectionError as e:
-            raise ServiceNotAvailableError(f"Dashboard non accessible: {e}")
+            
+            # Visualization 2: SSH Timeline (Histogram)
+            vis_ssh_timeline_state = {
+                "title": "SSH — Timeline des événements",
+                "type": "histogram",
+                "aggs": [
+                    {"id": "1", "enabled": True, "type": "count", "params": {}, "schema": "metric"},
+                    {"id": "2", "enabled": True, "type": "date_histogram", "params": {
+                        "field": "timestamp",
+                        "timeRange": {"from": "now-24h", "to": "now"},
+                        "useNormalizedOpenSearchInterval": True,
+                        "scaleMetricValues": False,
+                        "interval": "auto",
+                        "drop_partials": False,
+                        "min_doc_count": 1,
+                        "extended_bounds": {}
+                    }, "schema": "segment"},
+                    {"id": "3", "enabled": True, "type": "terms", "params": {
+                        "field": "rule.description",
+                        "orderBy": "1",
+                        "order": "desc",
+                        "size": 5,
+                        "otherBucket": False,
+                        "missingBucket": False
+                    }, "schema": "group"}
+                ],
+                "params": {
+                    "type": "histogram",
+                    "grid": {"categoryLines": False},
+                    "categoryAxes": [{"id": "CategoryAxis-1", "type": "category", "position": "bottom",
+                                      "show": True, "style": {}, "scale": {"type": "linear"},
+                                      "labels": {"show": True, "filter": True, "truncate": 100},
+                                      "title": {}}],
+                    "valueAxes": [{"id": "ValueAxis-1", "name": "LeftAxis-1", "type": "value",
+                                   "position": "left", "show": True, "style": {},
+                                   "scale": {"type": "linear", "mode": "normal"},
+                                   "labels": {"show": True, "rotate": 0, "filter": False, "truncate": 100},
+                                   "title": {"text": "Nombre"}}],
+                    "seriesParams": [{"show": True, "type": "histogram", "mode": "stacked",
+                                      "data": {"label": "Count", "id": "1"},
+                                      "valueAxis": "ValueAxis-1", "drawLinesBetweenPoints": True,
+                                      "lineWidth": 2, "showCircles": True}],
+                    "addTooltip": True, "addLegend": True, "legendPosition": "right",
+                    "times": [], "addTimeMarker": False,
+                    "labels": {"show": False}, "thresholdLine": {"show": False, "value": 10, "width": 1, "style": "full", "color": "#E7664C"}
+                }
+            }
+            
+            if not self._create_saved_object("visualization", "soc-ssh-timeline", {
+                "title": "SOC — SSH timeline",
+                "visState": json.dumps(vis_ssh_timeline_state),
+                "uiStateJSON": "{}",
+                "description": "Distribution temporelle des événements SSH",
+                "kibanaSavedObjectMeta": {
+                    "searchSourceJSON": json.dumps({
+                        "index": self.index_pattern,
+                        "query": {"query": "rule.groups:sshd", "language": "lucene"},
+                        "filter": []
+                    })
+                }
+            }, references=[{"id": self.index_pattern, "name": "kibanaSavedObjectMeta.searchSourceJSON.index", "type": "index-pattern"}]):
+                return False
+            
+            # Visualization 3: Top IP Sources SSH (Data Table)
+            vis_ssh_top_ip_state = {
+                "title": "SSH — Top IP sources",
+                "type": "table",
+                "aggs": [
+                    {"id": "1", "enabled": True, "type": "count", "params": {}, "schema": "metric"},
+                    {"id": "2", "enabled": True, "type": "terms", "params": {
+                        "field": "data.srcip",
+                        "orderBy": "1",
+                        "order": "desc",
+                        "size": 10,
+                        "otherBucket": False,
+                        "missingBucket": False
+                    }, "schema": "bucket"},
+                    {"id": "3", "enabled": True, "type": "terms", "params": {
+                        "field": "rule.description",
+                        "orderBy": "1",
+                        "order": "desc",
+                        "size": 5,
+                        "otherBucket": False,
+                        "missingBucket": False
+                    }, "schema": "bucket"}
+                ],
+                "params": {
+                    "perPage": 10, "showPartialRows": False, "showMetricsAtAllLevels": False,
+                    "sort": {"columnIndex": None, "direction": None},
+                    "showTotal": True, "totalFunc": "sum", "percentageCol": ""
+                }
+            }
+            
+            if not self._create_saved_object("visualization", "soc-ssh-top-ip", {
+                "title": "SOC — SSH top IP sources",
+                "visState": json.dumps(vis_ssh_top_ip_state),
+                "uiStateJSON": json.dumps({"vis": {"params": {"sort": {"columnIndex": None, "direction": None}}}}),
+                "description": "Top adresses IP sources des événements SSH",
+                "kibanaSavedObjectMeta": {
+                    "searchSourceJSON": json.dumps({
+                        "index": self.index_pattern,
+                        "query": {"query": "rule.groups:sshd", "language": "lucene"},
+                        "filter": []
+                    })
+                }
+            }, references=[{"id": self.index_pattern, "name": "kibanaSavedObjectMeta.searchSourceJSON.index", "type": "index-pattern"}]):
+                return False
+            
+            self._logger.info("[+] Visualisations créées")
+            return True
+            
+        except Exception as e:
+            self._logger.error(f"[-] Erreur création visualisations: {e}")
+            return False
+    
+    def _create_dashboard(self) -> bool:
+        """Créer le dashboard SOC"""
+        try:
+            self._logger.info("[*] Création du dashboard SOC...")
+            
+            panels = [
+                {"gridData": {"x": 0,  "y": 0,  "w": 16, "h": 12, "i": "1"}, "version": "2.19.4",
+                 "panelIndex": "1", "embeddableConfig": {}, "panelRefName": "panel_0"},
+                {"gridData": {"x": 16, "y": 0,  "w": 16, "h": 12, "i": "2"}, "version": "2.19.4",
+                 "panelIndex": "2", "embeddableConfig": {}, "panelRefName": "panel_1"},
+                {"gridData": {"x": 32, "y": 0,  "w": 16, "h": 12, "i": "3"}, "version": "2.19.4",
+                 "panelIndex": "3", "embeddableConfig": {}, "panelRefName": "panel_2"},
+                {"gridData": {"x": 0,  "y": 12, "w": 24, "h": 15, "i": "4"}, "version": "2.19.4",
+                 "panelIndex": "4", "embeddableConfig": {}, "panelRefName": "panel_3"},
+                {"gridData": {"x": 24, "y": 12, "w": 24, "h": 15, "i": "5"}, "version": "2.19.4",
+                 "panelIndex": "5", "embeddableConfig": {}, "panelRefName": "panel_4"},
+                {"gridData": {"x": 0,  "y": 27, "w": 48, "h": 15, "i": "6"}, "version": "2.19.4",
+                 "panelIndex": "6", "embeddableConfig": {}, "panelRefName": "panel_5"},
+            ]
+            
+            references = [
+                {"name": "panel_0", "type": "visualization", "id": "soc-ssh-pie"},
+                {"name": "panel_1", "type": "visualization", "id": "soc-ssh-timeline"},
+                {"name": "panel_2", "type": "visualization", "id": "soc-ssh-top-ip"},
+                {"name": "panel_3", "type": "visualization", "id": "soc-ssh-pie"},
+                {"name": "panel_4", "type": "visualization", "id": "soc-ssh-timeline"},
+                {"name": "panel_5", "type": "visualization", "id": "soc-ssh-top-ip"},
+            ]
+            
+            if not self._create_saved_object("dashboard", "soc-ad-ssh", {
+                "title": "SOC — AD & SSH",
+                "hits": 0,
+                "description": "Tableau de bord SOC centralisant la conformité CIS de l'AD et la détection SSH",
+                "panelsJSON": json.dumps(panels),
+                "optionsJSON": json.dumps({"useMargins": True, "hidePanelTitles": False}),
+                "version": 1,
+                "timeRestore": True,
+                "timeTo": "now",
+                "timeFrom": "now-24h",
+                "refreshInterval": {"pause": False, "value": 30000},
+                "kibanaSavedObjectMeta": {
+                    "searchSourceJSON": json.dumps({
+                        "query": {"query": "", "language": "lucene"},
+                        "filter": []
+                    })
+                }
+            }, references=references):
+                return False
+            
+            self._logger.info(f"[+] Dashboard créé: {self.dashboard_url}/app/dashboards#/view/soc-ad-ssh")
+            return True
+            
         except Exception as e:
             self._logger.error(f"[-] Erreur création dashboard: {e}")
             return False

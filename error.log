@@ -1,45 +1,128 @@
-ERROR VERIFICATION CONFIGURATOR ; 
+ok les nouvelle rédutlat et erreur 
 
-[*] Exécution: wazuh_configurator.py check
-============================================================
-Traceback (most recent call last):
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator.py", line 10, in <module>
-    from wazuh_configurator.strategies import (
-    ...<5 lines>...
-    )
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/__init__.py", line 6, in <module>
-    from .core.config_manager import ConfigManager
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/core/__init__.py", line 5, in <module>
-    from .config_manager import ConfigManager
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/core/config_manager.py", line 10, in <module>
-    from ..utils.ssh_client import SSHClient, SSHCredentials
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/utils/ssh_client.py", line 6, in <module>
-    import paramiko
-ModuleNotFoundError: No module named 'paramiko'
 
-[+] Code de retour: 1
+VERIFIER LES CONFG H4AI / 
+
+ ██████╗ ██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+2026-04-16 17:57:53 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
+2026-04-16 17:57:53 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
+2026-04-16 17:57:53 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
+2026-04-16 17:57:53 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
+2026-04-16 17:57:53 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
+2026-04-16 17:57:53 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
+2026-04-16 17:57:53 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
+2026-04-16 17:57:53 - wazuh_configurator.core.config_manager - INFO - Configurator 'performance' enregistré
+2026-04-16 17:57:53 - wazuh_configurator.core.config_manager - INFO - Configurator 'monitoring' enregistré
+2026-04-16 17:57:53 - wazuh_configurator.core.config_manager - INFO - Configurator 'security-modules' enregistré
+2026-04-16 17:57:53 - wazuh_configurator.core.config_manager - INFO - Configurator 'dashboard' enregistré
+2026-04-16 17:57:53 - __main__ - INFO - Verification des configurations...
+2026-04-16 17:57:53 - __main__ - INFO - Verification security...
+2026-04-16 17:57:53 - wazuh_configurator.strategies.security_configurator - INFO - Verification configuration securite...
+2026-04-16 17:57:53 - __main__ - INFO - [-] security: Securite: 3/4 verifications OK
+2026-04-16 17:57:53 - __main__ - WARNING - [!] Regles pare-feu incompletes
+2026-04-16 17:57:53 - __main__ - INFO - Verification performance...
+2026-04-16 17:57:53 - wazuh_configurator.strategies.performance_configurator - INFO - Verification configuration performance...
+2026-04-16 17:57:53 - __main__ - INFO - [+] performance: Performance: 4/4 verifications OK
+2026-04-16 17:57:53 - __main__ - INFO - Verification monitoring...
+2026-04-16 17:57:53 - wazuh_configurator.strategies.monitoring_configurator - INFO - Verification configuration monitoring...
+2026-04-16 17:57:53 - __main__ - INFO - [+] monitoring: Monitoring: 4/4 verifications OK
+2026-04-16 17:57:53 - __main__ - INFO - Verification security-modules...
+2026-04-16 17:57:53 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification des modules de sécurité Wazuh...
+2026-04-16 17:57:53 - wazuh_configurator.strategies.security_modules_configurator - INFO - ============================================================
+2026-04-16 17:57:53 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification Vulnerability Detector...
+2026-04-16 17:57:53 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vulnerability Detector activé
+2026-04-16 17:57:53 - wazuh_configurator.strategies.security_modules_configurator - WARNING - Intégration CVE/NVD non configurée
+2026-04-16 17:57:53 - wazuh_configurator.strategies.security_modules_configurator - WARNING - Rapports de vulnérabilités non configurés
+2026-04-16 17:57:53 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification CIS Benchmarks...
+2026-04-16 17:57:53 - wazuh_configurator.strategies.security_modules_configurator - INFO - CIS Benchmarks activé (22 règles)
+2026-04-16 17:57:53 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification File Integrity Monitoring (FIM)...
+2026-04-16 17:57:53 - wazuh_configurator.strategies.security_modules_configurator - INFO - FIM activé (0 répertoires surveillés)
+2026-04-16 17:57:53 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification MITRE ATT&CK...
+2026-04-16 17:57:53 - wazuh_configurator.strategies.security_modules_configurator - INFO - MITRE ATT&CK activé (12 règles)
+2026-04-16 17:57:53 - wazuh_configurator.strategies.security_modules_configurator - INFO - ============================================================
+2026-04-16 17:57:53 - __main__ - INFO - [-] security-modules: Modules de sécurité: 3/4 vérifications OK
+2026-04-16 17:57:53 - __main__ - INFO - Verification dashboard...
+2026-04-16 17:57:53 - wazuh_configurator.strategies.dashboard_configurator - INFO - Vérification de la configuration des dashboards...
+2026-04-16 17:57:53 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-16 17:57:53 - wazuh_configurator.strategies.dashboard_configurator - WARNING - Dashboard non accessible (service probablement non démarré)
+2026-04-16 17:57:53 - __main__ - INFO - [-] dashboard: Dashboards: Service non disponible
+2026-04-16 17:57:53 - __main__ - WARNING - [!] Dashboard service non démarré - Configuration ignorée
+
+[+] Code de retour: 0
 
 Appuyez sur Entrée pour continuer...
 
-=========================================================
-Traceback (most recent call last):
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator.py", line 10, in <module>
-    from wazuh_configurator.strategies import (
-    ...<5 lines>...
-    )
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/__init__.py", line 6, in <module>
-    from .core.config_manager import ConfigManager
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/core/__init__.py", line 5, in <module>
-    from .config_manager import ConfigManager
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/core/config_manager.py", line 10, in <module>
-    from ..utils.ssh_client import SSHClient, SSHCredentials
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/utils/ssh_client.py", line 6, in <module>
-    import paramiko
-ModuleNotFoundError: No module named 'paramiko'
 
-[+] Code de retour: 1
+pouertant out les serivce sont bien labncée !! donc erreur : 
+root@wazuh:/home/wazuh/wazuh-install-main# systemctl status wazuh-indexer wazuh-dashboard wazuh-manager
+● wazuh-indexer.service - wazuh-indexer
+     Loaded: loaded (/usr/lib/systemd/system/wazuh-indexer.service; enabled; pr>
+     Active: active (running) since Thu 2026-04-16 16:46:04 CEST; 1h 12min ago
+ Invocation: 11b5ccae58da4b20a860a3427a289fa4
+       Docs: https://documentation.wazuh.com
+   Main PID: 79184 (java)
+      Tasks: 73 (limit: 5377)
+     Memory: 1.1G (peak: 1.3G, swap: 1.3M, swap peak: 1.5M)
+        CPU: 2min 55.307s
+     CGroup: /system.slice/wazuh-indexer.service
+             └─79184 /usr/share/wazuh-indexer/jdk/bin/java -Xshare:auto -Dopens>
 
-Appuyez sur Entrée pour continuer...
+Apr 16 16:45:44 wazuh systemd-entrypoint[79184]: WARNING: System::setSecurityMa>
+Apr 16 16:45:44 wazuh systemd-entrypoint[79184]: WARNING: Please consider repor>
+Apr 16 16:45:44 wazuh systemd-entrypoint[79184]: WARNING: System::setSecurityMa>
+Apr 16 16:45:46 wazuh systemd-entrypoint[79184]: Apr 16, 2026 4:45:46 PM sun.ut>
+Apr 16 16:45:46 wazuh systemd-entrypoint[79184]: WARNING: COMPAT locale provide>
+Apr 16 16:45:47 wazuh systemd-entrypoint[79184]: WARNING: A terminally deprecat>
+Apr 16 16:45:47 wazuh systemd-entrypoint[79184]: WARNING: System::setSecurityMa>
+Apr 16 16:45:47 wazuh systemd-entrypoint[79184]: WARNING: Please consider repor>
+Apr 16 16:45:47 wazuh systemd-entrypoint[79184]: WARNING: System::setSecurityMa>
+Apr 16 16:46:04 wazuh systemd[1]: Started wazuh-indexer.service - wazuh-indexer.
+
+● wazuh-dashboard.service - wazuh-dashboard
+     Loaded: loaded (/etc/systemd/system/wazuh-dashboard.service; enabled; pres>
+     Active: active (running) since Thu 2026-04-16 17:08:24 CEST; 50min ago
+ Invocation: 383d264e323a4b4488350ec6c4d452cb
+   Main PID: 137363 (node)
+      Tasks: 11 (limit: 5377)
+     Memory: 223.6M (peak: 273.9M)
+        CPU: 19.784s
+     CGroup: /system.slice/wazuh-dashboard.service
+             └─137363 /usr/share/wazuh-dashboard/node/bin/node --no-warnings -->
+
+Apr 16 17:56:06 wazuh opensearch-dashboards[137363]: {"type":"response","@times>
+Apr 16 17:56:06 wazuh opensearch-dashboards[137363]: {"type":"response","@times>
+Apr 16 17:56:06 wazuh opensearch-dashboards[137363]: {"type":"response","@times>
+Apr 16 17:56:06 wazuh opensearch-dashboards[137363]: {"type":"response","@times>
+Apr 16 17:56:06 wazuh opensearch-dashboards[137363]: {"type":"response","@times>
+Apr 16 17:56:06 wazuh opensearch-dashboards[137363]: {"type":"response","@times>
+Apr 16 17:56:07 wazuh opensearch-dashboards[137363]: {"type":"response","@times>
+Apr 16 17:56:07 wazuh opensearch-dashboards[137363]: {"type":"response","@times>
+Apr 16 17:56:07 wazuh opensearch-dashboards[137363]: {"type":"response","@times>
+Apr 16 17:56:07 wazuh opensearch-dashboards[137363]: {"type":"response","@times>
+
+● wazuh-manager.service - Wazuh manager
+     Loaded: loaded (/usr/lib/systemd/system/wazuh-manager.service; enabled; pr>
+     Active: active (running) since Thu 2026-04-16 17:08:22 CEST; 50min ago
+ Invocation: 2649c9c92e9b4037af96304579ca4ca6
+      Tasks: 211 (limit: 5377)
+     Memory: 1.4G (peak: 1.4G)
+        CPU: 2min 49.665s
+
+
+CONFIOGURATOR / 
+
+lmode vérifg 1: 
+
 
 
  ██████╗ ██████╗ ███████╗██████╗
@@ -53,33 +136,429 @@ Appuyez sur Entrée pour continuer...
     By VulneZe - github.com/VulneZe/wazuh-install
     ====================================================
 
-2026-04-16 17:42:59 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
-2026-04-16 17:42:59 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
-2026-04-16 17:42:59 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
-2026-04-16 17:42:59 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
-2026-04-16 17:42:59 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
-2026-04-16 17:42:59 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
-2026-04-16 17:42:59 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
-Traceback (most recent call last):
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator.py", line 264, in <module>
-    main()
-    ~~~~^^
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator.py", line 182, in main
-    config_manager.register_configurator('performance', PerformanceConfigurator(wazuh_path=args.wazuh_path))
-                                                        ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/strategies/performance_configurator.py", line 28, in __init__
-    self.system_memory = self._get_system_memory()
-                         ~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/strategies/performance_configurator.py", line 135, in _get_system_memory
-    match = re.search(r"MemTotal:\s+(\d+)", meminfo)
-            ^^
-NameError: name 're' is not defined. Did you forget to import 're'?
+2026-04-16 17:59:20 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
+2026-04-16 17:59:20 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
+2026-04-16 17:59:20 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
+2026-04-16 17:59:20 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
+2026-04-16 17:59:20 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
+2026-04-16 17:59:20 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
+2026-04-16 17:59:20 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
+2026-04-16 17:59:20 - wazuh_configurator.core.config_manager - INFO - Configurator 'performance' enregistré
+2026-04-16 17:59:20 - wazuh_configurator.core.config_manager - INFO - Configurator 'monitoring' enregistré
+2026-04-16 17:59:20 - wazuh_configurator.core.config_manager - INFO - Configurator 'security-modules' enregistré
+2026-04-16 17:59:20 - wazuh_configurator.core.config_manager - INFO - Configurator 'dashboard' enregistré
+2026-04-16 17:59:20 - __main__ - INFO - Verification des configurations...
+2026-04-16 17:59:20 - __main__ - INFO - Verification security...
+2026-04-16 17:59:20 - wazuh_configurator.strategies.security_configurator - INFO - Verification configuration securite...
+2026-04-16 17:59:20 - __main__ - INFO - [-] security: Securite: 3/4 verifications OK
+2026-04-16 17:59:20 - __main__ - WARNING - [!] Regles pare-feu incompletes
+2026-04-16 17:59:20 - __main__ - INFO - Verification performance...
+2026-04-16 17:59:20 - wazuh_configurator.strategies.performance_configurator - INFO - Verification configuration performance...
+2026-04-16 17:59:20 - __main__ - INFO - [+] performance: Performance: 4/4 verifications OK
+2026-04-16 17:59:20 - __main__ - INFO - Verification monitoring...
+2026-04-16 17:59:20 - wazuh_configurator.strategies.monitoring_configurator - INFO - Verification configuration monitoring...
+2026-04-16 17:59:20 - __main__ - INFO - [+] monitoring: Monitoring: 4/4 verifications OK
+2026-04-16 17:59:20 - __main__ - INFO - Verification security-modules...
+2026-04-16 17:59:20 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification des modules de sécurité Wazuh...
+2026-04-16 17:59:20 - wazuh_configurator.strategies.security_modules_configurator - INFO - ============================================================
+2026-04-16 17:59:20 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification Vulnerability Detector...
+2026-04-16 17:59:20 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vulnerability Detector activé
+2026-04-16 17:59:20 - wazuh_configurator.strategies.security_modules_configurator - WARNING - Intégration CVE/NVD non configurée
+2026-04-16 17:59:20 - wazuh_configurator.strategies.security_modules_configurator - WARNING - Rapports de vulnérabilités non configurés
+2026-04-16 17:59:20 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification CIS Benchmarks...
+2026-04-16 17:59:20 - wazuh_configurator.strategies.security_modules_configurator - INFO - CIS Benchmarks activé (22 règles)
+2026-04-16 17:59:20 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification File Integrity Monitoring (FIM)...
+2026-04-16 17:59:20 - wazuh_configurator.strategies.security_modules_configurator - INFO - FIM activé (0 répertoires surveillés)
+2026-04-16 17:59:20 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification MITRE ATT&CK...
+2026-04-16 17:59:20 - wazuh_configurator.strategies.security_modules_configurator - INFO - MITRE ATT&CK activé (12 règles)
+2026-04-16 17:59:20 - wazuh_configurator.strategies.security_modules_configurator - INFO - ============================================================
+2026-04-16 17:59:20 - __main__ - INFO - [-] security-modules: Modules de sécurité: 3/4 vérifications OK
+2026-04-16 17:59:20 - __main__ - INFO - Verification dashboard...
+2026-04-16 17:59:20 - wazuh_configurator.strategies.dashboard_configurator - INFO - Vérification de la configuration des dashboards...
+2026-04-16 17:59:20 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-16 17:59:20 - wazuh_configurator.strategies.dashboard_configurator - WARNING - Dashboard non accessible (service probablement non démarré)
+2026-04-16 17:59:20 - __main__ - INFO - [-] dashboard: Dashboards: Service non disponible
+2026-04-16 17:59:20 - __main__ - WARNING - [!] Dashboard service non démarré - Configuration ignorée
 
-[+] Code de retour: 1
+[+] Code de retour: 0
+
+Appuyez sur Entrée pour continuer...
+
+mode fix : 
+
+ ██████╗ ██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+2026-04-16 17:58:50 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
+2026-04-16 17:58:50 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
+2026-04-16 17:58:50 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
+2026-04-16 17:58:50 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
+2026-04-16 17:58:50 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
+2026-04-16 17:58:50 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
+2026-04-16 17:58:50 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
+2026-04-16 17:58:50 - wazuh_configurator.core.config_manager - INFO - Configurator 'performance' enregistré
+2026-04-16 17:58:50 - wazuh_configurator.core.config_manager - INFO - Configurator 'monitoring' enregistré
+2026-04-16 17:58:50 - wazuh_configurator.core.config_manager - INFO - Configurator 'security-modules' enregistré
+2026-04-16 17:58:50 - wazuh_configurator.core.config_manager - INFO - Configurator 'dashboard' enregistré
+2026-04-16 17:58:50 - __main__ - INFO - [*] Mode correction pour Wazuh existant...
+2026-04-16 17:58:50 - __main__ - INFO - [*] Verification des configurations actuelles...
+2026-04-16 17:58:50 - __main__ - INFO - Verification des configurations...
+2026-04-16 17:58:50 - __main__ - INFO - Verification security...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_configurator - INFO - Verification configuration securite...
+2026-04-16 17:58:50 - __main__ - INFO - [-] security: Securite: 3/4 verifications OK
+2026-04-16 17:58:50 - __main__ - WARNING - [!] Regles pare-feu incompletes
+2026-04-16 17:58:50 - __main__ - INFO - Verification performance...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.performance_configurator - INFO - Verification configuration performance...
+2026-04-16 17:58:50 - __main__ - INFO - [+] performance: Performance: 4/4 verifications OK
+2026-04-16 17:58:50 - __main__ - INFO - Verification monitoring...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.monitoring_configurator - INFO - Verification configuration monitoring...
+2026-04-16 17:58:50 - __main__ - INFO - [+] monitoring: Monitoring: 4/4 verifications OK
+2026-04-16 17:58:50 - __main__ - INFO - Verification security-modules...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification des modules de sécurité Wazuh...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_modules_configurator - INFO - ============================================================
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification Vulnerability Detector...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vulnerability Detector activé
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_modules_configurator - WARNING - Intégration CVE/NVD non configurée
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_modules_configurator - WARNING - Rapports de vulnérabilités non configurés
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification CIS Benchmarks...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_modules_configurator - INFO - CIS Benchmarks activé (22 règles)
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification File Integrity Monitoring (FIM)...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_modules_configurator - INFO - FIM activé (0 répertoires surveillés)
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification MITRE ATT&CK...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_modules_configurator - INFO - MITRE ATT&CK activé (12 règles)
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_modules_configurator - INFO - ============================================================
+2026-04-16 17:58:50 - __main__ - INFO - [-] security-modules: Modules de sécurité: 3/4 vérifications OK
+2026-04-16 17:58:50 - __main__ - INFO - Verification dashboard...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.dashboard_configurator - INFO - Vérification de la configuration des dashboards...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-16 17:58:50 - wazuh_configurator.strategies.dashboard_configurator - WARNING - Dashboard non accessible (service probablement non démarré)
+2026-04-16 17:58:50 - __main__ - INFO - [-] dashboard: Dashboards: Service non disponible
+2026-04-16 17:58:50 - __main__ - WARNING - [!] Dashboard service non démarré - Configuration ignorée
+2026-04-16 17:58:50 - __main__ - INFO -
+[*] Application des corrections...
+2026-04-16 17:58:50 - __main__ - INFO - Application des configurations...
+2026-04-16 17:58:50 - __main__ - INFO - Application security...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_configurator - INFO - Application configuration securite...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_configurator - INFO - Configuration SSL/TLS...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_configurator - INFO - Génération du certificat SSL/TLS...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_configurator - INFO - Certificats SSL/TLS générés et configurés
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_configurator - WARNING - NOTE: Certificat auto-signé pour développement/test
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_configurator - WARNING - Pour production, utiliser Let's Encrypt ou certificat signé par CA
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_configurator - INFO - Generation mots de passe forts...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_configurator - INFO - Mots de passe forts generes et écrits dans les fichiers Wazuh
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_configurator - INFO - Mots de passe sauvegardés dans: /var/ossec/etc/wazuh-passwords.txt
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_configurator - INFO - Configuration API authentication...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_configurator - INFO - API authentication JWT configurée
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_configurator - INFO - Clé JWT générée et configurée
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_configurator - INFO - L'API utilisera JWT avec Basic Auth comme fallback
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_configurator - INFO - Configuration regles pare-feu...
+2026-04-16 17:58:50 - wazuh_configurator.strategies.security_configurator - WARNING - UFW non disponible - Installation...
+2026-04-16 17:58:56 - wazuh_configurator.strategies.security_configurator - INFO - UFW installé
+2026-04-16 17:58:56 - wazuh_configurator.strategies.security_configurator - INFO - Configuration de base UFW...
+2026-04-16 17:59:02 - wazuh_configurator.strategies.security_configurator - INFO - Autorisation SSH (port 22)...
+2026-04-16 17:59:02 - wazuh_configurator.strategies.security_configurator - INFO - Autorisation port 9200 (Wazuh Indexer API)...
+2026-04-16 17:59:03 - wazuh_configurator.strategies.security_configurator - INFO - Autorisation port 1514 (Wazuh Manager (events))...
+2026-04-16 17:59:03 - wazuh_configurator.strategies.security_configurator - INFO - Autorisation port 1515 (Wazuh Manager (agents))...
+2026-04-16 17:59:03 - wazuh_configurator.strategies.security_configurator - INFO - Autorisation port 55000 (Wazuh API)...
+2026-04-16 17:59:03 - wazuh_configurator.strategies.security_configurator - INFO - Autorisation port 443 (HTTPS (Dashboard))...
+2026-04-16 17:59:03 - wazuh_configurator.strategies.security_configurator - INFO - Activation UFW...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_configurator - INFO - Regles pare-feu appliquées:
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_configurator - INFO - Status: active
+
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW       Anywhere
+9200/tcp                   ALLOW       Anywhere
+1514/tcp                   ALLOW       Anywhere
+1515/tcp                   ALLOW       Anywhere
+55000/tcp                  ALLOW       Anywhere
+443/tcp                    ALLOW       Anywhere
+22/tcp (v6)                ALLOW       Anywhere (v6)
+9200/tcp (v6)              ALLOW       Anywhere (v6)
+1514/tcp (v6)              ALLOW       Anywhere (v6)
+1515/tcp (v6)              ALLOW       Anywhere (v6)
+55000/tcp (v6)             ALLOW       Anywhere (v6)
+443/tcp (v6)               ALLOW       Anywhere (v6)
+
+
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_configurator - INFO - Configuration pare-feu terminée
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_configurator - WARNING - SSH autorisé (port 22) - Ne pas oublier de configurer l'authentification par clé SSH
+2026-04-16 17:59:04 - __main__ - INFO - [+] security: Securite: 4/4 configurations appliquees
+2026-04-16 17:59:04 - __main__ - INFO - Application performance...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.performance_configurator - INFO - Application configuration performance...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.performance_configurator - INFO - Configuration JVM memory...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.performance_configurator - INFO - JVM memory configure: 1GB min, 2GB max
+2026-04-16 17:59:04 - wazuh_configurator.strategies.performance_configurator - INFO - Configuration rotation logs...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.performance_configurator - INFO - Rotation logs deja configuree
+2026-04-16 17:59:04 - wazuh_configurator.strategies.performance_configurator - INFO - Configuration nettoyage disque...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.performance_configurator - INFO - Nettoyage disque configure (cron daily)
+2026-04-16 17:59:04 - wazuh_configurator.strategies.performance_configurator - INFO - Configuration pool connexions...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.performance_configurator - INFO - Pool connexions configure
+2026-04-16 17:59:04 - __main__ - INFO - [+] performance: Performance: 4/4 configurations appliquees
+2026-04-16 17:59:04 - __main__ - INFO - Application monitoring...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.monitoring_configurator - INFO - Application configuration monitoring...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.monitoring_configurator - INFO - Configuration monitoring services...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.monitoring_configurator - INFO - Monitoring services configure (cron 5min)
+2026-04-16 17:59:04 - wazuh_configurator.strategies.monitoring_configurator - INFO - Configuration niveau logs...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.monitoring_configurator - INFO - Niveau logs configure (INFO)
+2026-04-16 17:59:04 - wazuh_configurator.strategies.monitoring_configurator - INFO - Configuration alertes...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.monitoring_configurator - INFO - Alertes deja configurees
+2026-04-16 17:59:04 - wazuh_configurator.strategies.monitoring_configurator - INFO - Configuration health checks...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.monitoring_configurator - INFO - Health checks configurees
+2026-04-16 17:59:04 - __main__ - INFO - [+] monitoring: Monitoring: 4/4 configurations appliquees
+2026-04-16 17:59:04 - __main__ - INFO - Application security-modules...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - INFO - Application de la configuration des modules de sécurité...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - INFO - ============================================================
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - INFO - Configuration Vulnerability Detector...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - WARNING - Vulnerability Detector déjà configuré, mise à jour...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - INFO - Configuration CIS Benchmarks...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - WARNING - CIS Benchmarks déjà configuré, mise à jour...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - INFO - Configuration File Integrity Monitoring (FIM)...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - WARNING - FIM déjà configuré, mise à jour...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - INFO - Configuration MITRE ATT&CK...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - WARNING - MITRE ATT&CK déjà configuré, mise à jour...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - INFO - ============================================================
+2026-04-16 17:59:04 - __main__ - INFO - [+] security-modules: Modules de sécurité: 4/4 configurations appliquées
+2026-04-16 17:59:04 - __main__ - INFO - Application dashboard...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.dashboard_configurator - INFO - Application de la configuration des dashboards...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-16 17:59:04 - wazuh_configurator.strategies.dashboard_configurator - WARNING - Dashboard non accessible (service probablement non démarré)
+2026-04-16 17:59:04 - __main__ - INFO - [-] dashboard: Dashboards: Service non disponible
+2026-04-16 17:59:04 - __main__ - INFO -
+[*] Validation des corrections...
+2026-04-16 17:59:04 - wazuh_configurator.core.config_manager - INFO - Validation de toutes les configurations...
+2026-04-16 17:59:04 - wazuh_configurator.core.config_manager - INFO - Validation configuration: security
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_configurator - INFO - Validation configuration securite...
+2026-04-16 17:59:04 - wazuh_configurator.core.config_manager - INFO - Validation configuration: performance
+2026-04-16 17:59:04 - wazuh_configurator.strategies.performance_configurator - INFO - Validation configuration performance...
+2026-04-16 17:59:04 - wazuh_configurator.core.config_manager - INFO - Validation configuration: monitoring
+2026-04-16 17:59:04 - wazuh_configurator.strategies.monitoring_configurator - INFO - Validation configuration monitoring...
+2026-04-16 17:59:04 - wazuh_configurator.core.config_manager - INFO - Validation configuration: security-modules
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - INFO - Validation de la configuration des modules de sécurité...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - INFO - ============================================================
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - INFO - Validation Vulnerability Detector...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vulnerability Detector validé
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - INFO - Validation CIS Benchmarks...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - INFO - CIS Benchmarks validé
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - INFO - Validation File Integrity Monitoring (FIM)...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - ERROR - FIM: validation échouée
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - ERROR -    - alerts: échec
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - INFO - Validation MITRE ATT&CK...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - INFO - MITRE ATT&CK validé
+2026-04-16 17:59:04 - wazuh_configurator.strategies.security_modules_configurator - INFO - ============================================================
+2026-04-16 17:59:04 - wazuh_configurator.core.config_manager - INFO - Validation configuration: dashboard
+2026-04-16 17:59:04 - wazuh_configurator.strategies.dashboard_configurator - INFO - Validation de la configuration des dashboards...
+2026-04-16 17:59:04 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-16 17:59:04 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+
+[+] Code de retour: 0
+
+
+
+
+
+
+
+PARTIE CONFORTIAITON SPEICFIQUE / SECURTER 1 
+
+FIX 5 / 
+
+ ██████╗ ██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+2026-04-16 17:54:52 - wazuh_configurator.core.config_manager - INFO - Initialisa
+2026-04-16 17:54:52 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detect
+2026-04-16 17:54:52 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh
+2026-04-16 17:54:52 - wazuh_configurator.core.wazuh_detector - INFO - [+] Versio
+2026-04-16 17:54:52 - wazuh_configurator.core.wazuh_detector - INFO - [+] Compos
+2026-04-16 17:54:53 - wazuh_configurator.core.config_manager - INFO - Gestionnai
+2026-04-16 17:54:53 - wazuh_configurator.core.config_manager - INFO - Configurat
+2026-04-16 17:54:53 - wazuh_configurator.core.config_manager - INFO - Configurat
+2026-04-16 17:54:53 - wazuh_configurator.core.config_manager - INFO - Configurat
+2026-04-16 17:54:53 - wazuh_configurator.core.config_manager - INFO - Configurat
+2026-04-16 17:54:53 - wazuh_configurator.core.config_manager - INFO - Configurat
+2026-04-16 17:54:53 - __main__ - INFO - [*] Mode correction pour Wazuh existant.
+2026-04-16 17:54:53 - __main__ - INFO - [*] Verification des configurations actu
+2026-04-16 17:54:53 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:54:53 - __main__ - INFO - [-] security: Securite: 3/4 verification
+2026-04-16 17:54:53 - __main__ - WARNING -    [!] Regles pare-feu incompletes
+2026-04-16 17:54:53 - __main__ - INFO -
+[*] Application des corrections...
+2026-04-16 17:54:53 - wazuh_configurator.core.config_manager - INFO - Applicatio
+2026-04-16 17:54:53 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:54:53 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:54:53 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:54:53 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:54:53 - wazuh_configurator.strategies.security_configurator - WARN
+2026-04-16 17:54:53 - wazuh_configurator.strategies.security_configurator - WARN
+2026-04-16 17:54:53 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:54:53 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:54:53 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:54:53 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:54:53 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:54:53 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:54:53 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:54:53 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:54:53 - wazuh_configurator.strategies.security_configurator - WARN
+2026-04-16 17:55:00 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:55:00 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:55:05 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:55:06 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:55:06 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:55:06 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:55:06 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:55:06 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:55:06 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:55:07 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:55:07 - wazuh_configurator.strategies.security_configurator - INFO
+
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW       Anywhere
+9200/tcp                   ALLOW       Anywhere
+1514/tcp                   ALLOW       Anywhere
+1515/tcp                   ALLOW       Anywhere
+55000/tcp                  ALLOW       Anywhere
+443/tcp                    ALLOW       Anywhere
+22/tcp (v6)                ALLOW       Anywhere (v6)
+9200/tcp (v6)              ALLOW       Anywhere (v6)
+1514/tcp (v6)              ALLOW       Anywhere (v6)
+1515/tcp (v6)              ALLOW       Anywhere (v6)
+55000/tcp (v6)             ALLOW       Anywhere (v6)
+443/tcp (v6)               ALLOW       Anywhere (v6)
+
+
+2026-04-16 17:55:07 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:55:07 - wazuh_configurator.strategies.security_configurator - WARN
+2026-04-16 17:55:07 - __main__ - INFO - [+] security: Securite: 4/4 configuratio
+2026-04-16 17:55:07 - __main__ - INFO -
+[*] Validation des corrections...
+2026-04-16 17:55:07 - wazuh_configurator.strategies.security_configurator - INFO
+2026-04-16 17:55:07 - __main__ - INFO - [-] security: Securite: 3/4 verification
+
+[+] Code de retour: 0
 
 Appuyez sur Entrée pour continuer...
 
 
+OPTION PERFORMANCE : FIOX § 
+
+ ██████╗ ██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+2026-04-16 18:00:03 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
+2026-04-16 18:00:03 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
+2026-04-16 18:00:03 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
+2026-04-16 18:00:03 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
+2026-04-16 18:00:03 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
+2026-04-16 18:00:03 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
+2026-04-16 18:00:03 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
+2026-04-16 18:00:03 - wazuh_configurator.core.config_manager - INFO - Configurator 'performance' enregistré
+2026-04-16 18:00:03 - wazuh_configurator.core.config_manager - INFO - Configurator 'monitoring' enregistré
+2026-04-16 18:00:03 - wazuh_configurator.core.config_manager - INFO - Configurator 'security-modules' enregistré
+2026-04-16 18:00:03 - wazuh_configurator.core.config_manager - INFO - Configurator 'dashboard' enregistré
+2026-04-16 18:00:03 - __main__ - INFO - [*] Mode correction pour Wazuh existant...
+2026-04-16 18:00:03 - __main__ - INFO - [*] Verification des configurations actuelles...
+2026-04-16 18:00:03 - wazuh_configurator.strategies.performance_configurator - INFO - Verification configuration performance...
+2026-04-16 18:00:03 - __main__ - INFO - [+] performance: Performance: 4/4 verifications OK
+2026-04-16 18:00:03 - __main__ - INFO -
+[*] Application des corrections...
+2026-04-16 18:00:03 - wazuh_configurator.core.config_manager - INFO - Application configuration: performance
+2026-04-16 18:00:03 - wazuh_configurator.strategies.performance_configurator - INFO - Application configuration performance...
+2026-04-16 18:00:03 - wazuh_configurator.strategies.performance_configurator - INFO - Configuration JVM memory...
+2026-04-16 18:00:03 - wazuh_configurator.strategies.performance_configurator - INFO - JVM memory configure: 1GB min, 2GB max
+2026-04-16 18:00:03 - wazuh_configurator.strategies.performance_configurator - INFO - Configuration rotation logs...
+2026-04-16 18:00:03 - wazuh_configurator.strategies.performance_configurator - INFO - Rotation logs deja configuree
+2026-04-16 18:00:03 - wazuh_configurator.strategies.performance_configurator - INFO - Configuration nettoyage disque...
+2026-04-16 18:00:03 - wazuh_configurator.strategies.performance_configurator - INFO - Nettoyage disque configure (cron daily)
+2026-04-16 18:00:03 - wazuh_configurator.strategies.performance_configurator - INFO - Configuration pool connexions...
+2026-04-16 18:00:03 - wazuh_configurator.strategies.performance_configurator - INFO - Pool connexions configure
+2026-04-16 18:00:03 - __main__ - INFO - [+] performance: Performance: 4/4 configurations appliquees
+2026-04-16 18:00:03 - __main__ - INFO -
+[*] Validation des corrections...
+2026-04-16 18:00:03 - wazuh_configurator.strategies.performance_configurator - INFO - Validation configuration performance...
+2026-04-16 18:00:03 - __main__ - INFO - [+] performance: Performance: 4/4 verifications OK
+
+[+] Code de retour: 0
+
+Appuyez sur Entrée pour continuer...
+
+MONIROTING / FIX / 
+
+ ██████╗ ██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+2026-04-16 18:00:17 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
+2026-04-16 18:00:17 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
+2026-04-16 18:00:17 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
+2026-04-16 18:00:17 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
+2026-04-16 18:00:17 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
+2026-04-16 18:00:17 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
+2026-04-16 18:00:17 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
+2026-04-16 18:00:17 - wazuh_configurator.core.config_manager - INFO - Configurator 'performance' enregistré
+2026-04-16 18:00:17 - wazuh_configurator.core.config_manager - INFO - Configurator 'monitoring' enregistré
+2026-04-16 18:00:17 - wazuh_configurator.core.config_manager - INFO - Configurator 'security-modules' enregistré
+2026-04-16 18:00:17 - wazuh_configurator.core.config_manager - INFO - Configurator 'dashboard' enregistré
+2026-04-16 18:00:17 - __main__ - INFO - [*] Mode correction pour Wazuh existant...
+2026-04-16 18:00:17 - __main__ - INFO - [*] Verification des configurations actuelles...
+2026-04-16 18:00:17 - wazuh_configurator.strategies.monitoring_configurator - INFO - Verification configuration monitoring...
+2026-04-16 18:00:17 - __main__ - INFO - [+] monitoring: Monitoring: 4/4 verifications OK
+2026-04-16 18:00:17 - __main__ - INFO -
+[*] Application des corrections...
+2026-04-16 18:00:17 - wazuh_configurator.core.config_manager - INFO - Application configuration: monitoring
+2026-04-16 18:00:17 - wazuh_configurator.strategies.monitoring_configurator - INFO - Application configuration monitoring...
+2026-04-16 18:00:17 - wazuh_configurator.strategies.monitoring_configurator - INFO - Configuration monitoring services...
+2026-04-16 18:00:17 - wazuh_configurator.strategies.monitoring_configurator - INFO - Monitoring services configure (cron 5min)
+2026-04-16 18:00:17 - wazuh_configurator.strategies.monitoring_configurator - INFO - Configuration niveau logs...
+2026-04-16 18:00:17 - wazuh_configurator.strategies.monitoring_configurator - INFO - Niveau logs configure (INFO)
+2026-04-16 18:00:17 - wazuh_configurator.strategies.monitoring_configurator - INFO - Configuration alertes...
+2026-04-16 18:00:17 - wazuh_configurator.strategies.monitoring_configurator - INFO - Alertes deja configurees
+2026-04-16 18:00:17 - wazuh_configurator.strategies.monitoring_configurator - INFO - Configuration health checks...
+2026-04-16 18:00:17 - wazuh_configurator.strategies.monitoring_configurator - INFO - Health checks configurees
+2026-04-16 18:00:17 - __main__ - INFO - [+] monitoring: Monitoring: 4/4 configurations appliquees
+2026-04-16 18:00:17 - __main__ - INFO -
+[*] Validation des corrections...
+2026-04-16 18:00:17 - wazuh_configurator.strategies.monitoring_configurator - INFO - Validation configuration monitoring...
+2026-04-16 18:00:17 - __main__ - INFO - [+] monitoring: Monitoring: 4/4 verifications OK
+
+[+] Code de retour: 0
+
+Appuyez sur Entrée pour continuer...
+
+SECURITY MOPDUEL /§ 
+ERROR AUSSI / 
 
 
  ██████╗ ██████╗ ███████╗██████╗
@@ -93,42 +572,115 @@ Appuyez sur Entrée pour continuer...
     By VulneZe - github.com/VulneZe/wazuh-install
     ====================================================
 
-2026-04-16 17:43:23 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
-2026-04-16 17:43:23 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
-2026-04-16 17:43:23 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
-2026-04-16 17:43:23 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
-2026-04-16 17:43:23 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
-2026-04-16 17:43:23 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
-2026-04-16 17:43:23 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
-Traceback (most recent call last):
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator.py", line 264, in <module>
-    main()
-    ~~~~^^
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator.py", line 182, in main
-    config_manager.register_configurator('performance', PerformanceConfigurator(wazuh_path=args.wazuh_path))
-                                                        ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/strategies/performance_configurator.py", line 28, in __init__
-    self.system_memory = self._get_system_memory()
-                         ~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "/home/wazuh/Downloads/wazuh-install-main/wazuh_configurator/strategies/performance_configurator.py", line 135, in _get_system_memory
-    match = re.search(r"MemTotal:\s+(\d+)", meminfo)
-            ^^
-NameError: name 're' is not defined. Did you forget to import 're'?
+2026-04-16 18:00:43 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
+2026-04-16 18:00:43 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
+2026-04-16 18:00:43 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
+2026-04-16 18:00:43 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
+2026-04-16 18:00:43 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
+2026-04-16 18:00:43 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
+2026-04-16 18:00:43 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
+2026-04-16 18:00:43 - wazuh_configurator.core.config_manager - INFO - Configurator 'performance' enregistré
+2026-04-16 18:00:43 - wazuh_configurator.core.config_manager - INFO - Configurator 'monitoring' enregistré
+2026-04-16 18:00:43 - wazuh_configurator.core.config_manager - INFO - Configurator 'security-modules' enregistré
+2026-04-16 18:00:43 - wazuh_configurator.core.config_manager - INFO - Configurator 'dashboard' enregistré
+2026-04-16 18:00:43 - __main__ - INFO - [*] Mode correction pour Wazuh existant...
+2026-04-16 18:00:43 - __main__ - INFO - [*] Verification des configurations actuelles...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification des modules de sécurité Wazuh...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - ============================================================
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification Vulnerability Detector...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vulnerability Detector activé
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - WARNING - Intégration CVE/NVD non configurée
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - WARNING - Rapports de vulnérabilités non configurés
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification CIS Benchmarks...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - CIS Benchmarks activé (22 règles)
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification File Integrity Monitoring (FIM)...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - FIM activé (0 répertoires surveillés)
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vérification MITRE ATT&CK...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - MITRE ATT&CK activé (12 règles)
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - ============================================================
+2026-04-16 18:00:43 - __main__ - INFO - [-] security-modules: Modules de sécurité: 3/4 vérifications OK
+2026-04-16 18:00:43 - __main__ - INFO -
+[*] Application des corrections...
+2026-04-16 18:00:43 - wazuh_configurator.core.config_manager - INFO - Application configuration: security-modules
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - Application de la configuration des modules de sécurité...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - ============================================================
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - Configuration Vulnerability Detector...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - WARNING - Vulnerability Detector déjà configuré, mise à jour...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - Configuration CIS Benchmarks...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - WARNING - CIS Benchmarks déjà configuré, mise à jour...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - Configuration File Integrity Monitoring (FIM)...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - WARNING - FIM déjà configuré, mise à jour...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - Configuration MITRE ATT&CK...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - WARNING - MITRE ATT&CK déjà configuré, mise à jour...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - ============================================================
+2026-04-16 18:00:43 - __main__ - INFO - [+] security-modules: Modules de sécurité: 4/4 configurations appliquées
+2026-04-16 18:00:43 - __main__ - INFO -
+[*] Validation des corrections...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - Validation de la configuration des modules de sécurité...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - ============================================================
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - Validation Vulnerability Detector...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - Vulnerability Detector validé
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - Validation CIS Benchmarks...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - CIS Benchmarks validé
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - Validation File Integrity Monitoring (FIM)...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - ERROR - FIM: validation échouée
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - ERROR -    - alerts: échec
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - Validation MITRE ATT&CK...
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - MITRE ATT&CK validé
+2026-04-16 18:00:43 - wazuh_configurator.strategies.security_modules_configurator - INFO - ============================================================
+2026-04-16 18:00:43 - __main__ - INFO - [-] security-modules: Modules de sécurité: 3/4 validations OK
 
-[+] Code de retour: 1
+[+] Code de retour: 0
 
 Appuyez sur Entrée pour continuer...
+ERROR AUSSI OPTIN DASHBAORD / 
+ ██████╗ ██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
 
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
 
+2026-04-16 18:01:05 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
+2026-04-16 18:01:05 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
+2026-04-16 18:01:05 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
+2026-04-16 18:01:05 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
+2026-04-16 18:01:05 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
+2026-04-16 18:01:05 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
+2026-04-16 18:01:05 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
+2026-04-16 18:01:05 - wazuh_configurator.core.config_manager - INFO - Configurator 'performance' enregistré
+2026-04-16 18:01:05 - wazuh_configurator.core.config_manager - INFO - Configurator 'monitoring' enregistré
+2026-04-16 18:01:05 - wazuh_configurator.core.config_manager - INFO - Configurator 'security-modules' enregistré
+2026-04-16 18:01:05 - wazuh_configurator.core.config_manager - INFO - Configurator 'dashboard' enregistré
+2026-04-16 18:01:05 - __main__ - INFO - [*] Mode correction pour Wazuh existant...
+2026-04-16 18:01:05 - __main__ - INFO - [*] Verification des configurations actuelles...
+2026-04-16 18:01:05 - wazuh_configurator.strategies.dashboard_configurator - INFO - Vérification de la configuration des dashboards...
+2026-04-16 18:01:05 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-16 18:01:05 - wazuh_configurator.strategies.dashboard_configurator - WARNING - Dashboard non accessible (service probablement non démarré)
+2026-04-16 18:01:05 - __main__ - INFO - [-] dashboard: Dashboards: Service non disponible
+2026-04-16 18:01:05 - __main__ - WARNING -    [!] Dashboard service non démarré - Configuration ignorée
+2026-04-16 18:01:05 - __main__ - INFO -
+[*] Application des corrections...
+2026-04-16 18:01:05 - wazuh_configurator.core.config_manager - INFO - Application configuration: dashboard
+2026-04-16 18:01:05 - wazuh_configurator.strategies.dashboard_configurator - INFO - Application de la configuration des dashboards...
+2026-04-16 18:01:05 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-16 18:01:05 - wazuh_configurator.strategies.dashboard_configurator - WARNING - Dashboard non accessible (service probablement non démarré)
+2026-04-16 18:01:05 - __main__ - INFO - [-] dashboard: Dashboards: Service non disponible
+2026-04-16 18:01:05 - __main__ - INFO -
+[*] Validation des corrections...
+2026-04-16 18:01:05 - wazuh_configurator.strategies.dashboard_configurator - INFO - Validation de la configuration des dashboards...
+2026-04-16 18:01:05 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-16 18:01:05 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-16 18:01:05 - __main__ - INFO - [-] dashboard: Dashboards: Validation échouée
 
+[+] Code de retour: 0
 
-
-
-
-
-
-
-
+Appuyez sur Entrée pour continuer...
+ 
 
 
 

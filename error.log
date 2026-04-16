@@ -1,33 +1,3 @@
-QUAND JE LANCE le cofngourtato via le wazuhè_menue ou non : 
-
-
-
-fix : 
- ██████╗ ██████╗ ███████╗██████╗
-██╔════╝██╔═══██╗██╔════╝██╔══██╗
-██║     ██║   ██║█████╗  ██║  ██║
-██║     ██║   ██║██╔══╝  ██║  ██║
-╚██████╗╚██████╔╝███████╗██████╔╝
- ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
-
-    Configurator v1.0 - Advanced Configuration Management
-    By VulneZe - github.com/VulneZe/wazuh-install
-    ====================================================
-
-usage: wazuh_configurator.py [-h] [--remote-host REMOTE_HOST] [--ssh-user SSH_USER] [--ssh-key SSH_KEY]
-                             [--ssh-password SSH_PASSWORD] [--ssh-port SSH_PORT] [--manager-host MANAGER_HOST]
-                             [--indexer-host INDEXER_HOST] [--dashboard-host DASHBOARD_HOST]
-                             [--manager-port MANAGER_PORT] [--indexer-port INDEXER_PORT]
-                             [--dashboard-port DASHBOARD_PORT] [--custom-ports CUSTOM_PORTS] [--wazuh-path WAZUH_PATH]
-                             {detect,check,apply,validate,rollback,fix} ...
-wazuh_configurator.py: error: unrecognized arguments: --manager-host 172.20.10.4 --indexer-host 172.20.10.4 --dashboard-host 172.20.10.4
-
-[+] Code de retour: 2
-
-Appuyez sur Entrée pour continuer...
-
-
-
 
  ██████╗ ██████╗ ███████╗██████╗
 ██╔════╝██╔═══██╗██╔════╝██╔══██╗
@@ -40,117 +10,46 @@ Appuyez sur Entrée pour continuer...
     By VulneZe - github.com/VulneZe/wazuh-install
     ====================================================
 
-2026-04-16 23:00:06 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
-2026-04-16 23:00:06 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
-2026-04-16 23:00:06 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
-2026-04-16 23:00:06 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
-2026-04-16 23:00:06 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
-2026-04-16 23:00:06 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
-2026-04-16 23:00:06 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
-2026-04-16 23:00:06 - wazuh_configurator.core.config_manager - INFO - Configurator 'performance' enregistré
-2026-04-16 23:00:06 - wazuh_configurator.strategies.dashboard_configurator - INFO - Dashboard URL: https://localhost:5601
-2026-04-16 23:00:06 - wazuh_configurator.core.config_manager - INFO - Configurator 'dashboard' enregistré
-2026-04-16 23:00:06 - wazuh_configurator.strategies.dashboard_configurator - INFO - Vérification de la configuration des dashboards...
-2026-04-16 23:00:06 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-16 23:00:06 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif
-2026-04-16 23:00:06 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif
-2026-04-16 23:00:06 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Note: La vérification de l'API HTTP est désactivée
-2026-04-16 23:00:06 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] La création de dashboards nécessite une connexion API manuelle
-2026-04-16 23:00:06 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-16 23:00:06 - __main__ - INFO - [+] dashboard: Dashboards: Service actif
-2026-04-16 23:00:06 - __main__ - WARNING -    [!] API HTTP non accessible - création de dashboards manuelle requise
 
 ============================================================
-RÉCAPITULATIF
+MENU INTERACTIF
 ============================================================
 
-[!] WARNINGS (1):
-   1. dashboard: API HTTP non accessible - création de dashboards manuelle requise
-============================================================
+Configuration des services Wazuh:
+(Appuyez sur Entrée pour utiliser les valeurs par défaut)
+Adresse IP/hostname du Manager (défaut: localhost): 172.20.10.4
+Adresse IP/hostname de l'Indexer (défaut: localhost): 172.20.10.4
+Adresse IP/hostname du Dashboard (défaut: localhost): 172.20.10.4
+Port Manager (défaut: 1514):
+Port Indexer (défaut: 9200):
+Port Dashboard (défaut: 443):
 
+Commandes disponibles:
+1. check - Vérifier les configurations
+2. apply - Appliquer les configurations
+3. validate - Valider les configurations
+4. rollback - Annuler les configurations
+5. fix - Corriger les configurations
+0. Quitter
 
-[+] Code de retour: 0
+Choisissez une commande (0-5): 5
 
-Appuyez sur Entrée pour continuer...
+Configurations disponibles:
+1. security - Configuration de sécurité
+2. performance - Configuration de performance
+3. dashboard - Configuration des dashboards
+4. all - Toutes les configurations
 
-
-
-
-
-DASHBAORD FIX / 
- ██████╗ ██████╗ ███████╗██████╗
-██╔════╝██╔═══██╗██╔════╝██╔══██╗
-██║     ██║   ██║█████╗  ██║  ██║
-██║     ██║   ██║██╔══╝  ██║  ██║
-╚██████╗╚██████╔╝███████╗██████╔╝
- ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
-
-    Configurator v1.0 - Advanced Configuration Management
-    By VulneZe - github.com/VulneZe/wazuh-install
-    ====================================================
-
-2026-04-16 23:00:22 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
-2026-04-16 23:00:22 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
-2026-04-16 23:00:22 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
-2026-04-16 23:00:22 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
-2026-04-16 23:00:22 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
-2026-04-16 23:00:22 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
-2026-04-16 23:00:22 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
-2026-04-16 23:00:22 - wazuh_configurator.core.config_manager - INFO - Configurator 'performance' enregistré
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - Dashboard URL: https://localhost:5601
-2026-04-16 23:00:22 - wazuh_configurator.core.config_manager - INFO - Configurator 'dashboard' enregistré
-2026-04-16 23:00:22 - __main__ - INFO - [*] Mode correction pour Wazuh existant...
-2026-04-16 23:00:22 - __main__ - INFO - [*] Verification des configurations actuelles...
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - Vérification de la configuration des dashboards...
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Note: La vérification de l'API HTTP est désactivée
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] La création de dashboards nécessite une connexion API manuelle
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-16 23:00:22 - __main__ - INFO - [+] dashboard: Dashboards: Service actif
-2026-04-16 23:00:22 - __main__ - WARNING -    [!] API HTTP non accessible - création de dashboards manuelle requise
-2026-04-16 23:00:22 - __main__ - INFO -
-[*] Application des corrections...
-2026-04-16 23:00:22 - wazuh_configurator.core.config_manager - INFO - Application configuration: dashboard
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - Application de la configuration des dashboards...
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif (IP: localhost)
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Création automatique des dashboards...
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création de l'index pattern...
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création index pattern: Dashboard non accessible: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/saved_objects/index-pattern/wazuh-alerts-* (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fa007dc01a0>: Failed to establish a new connection: [Errno 111] Connection refused'))
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création des visualisations...
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création visualization/soc-ssh-pie: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/saved_objects/visualization/soc-ssh-pie (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fa007f53890>: Failed to establish a new connection: [Errno 111] Connection refused'))
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création du dashboard SOC...
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création dashboard/soc-ad-ssh: HTTPSConnectionPool(host='localhost', port=5601): Max retries exceeded with url: /api/saved_objects/dashboard/soc-ad-ssh (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fa007dd0190>: Failed to establish a new connection: [Errno 111] Connection refused'))
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-16 23:00:22 - __main__ - INFO - [-] dashboard: Dashboards: 0/3 configurations appliquées
-2026-04-16 23:00:22 - __main__ - INFO -
-[*] Validation des corrections...
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - Validation de la configuration des dashboards...
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Note: La validation de l'API HTTP est désactivée
-2026-04-16 23:00:22 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-16 23:00:22 - __main__ - INFO - [+] dashboard: Dashboards: Service actif - Validation OK
-2026-04-16 23:00:22 - __main__ - WARNING - [!] Validation API non effectuée - configuration manuelle requise
-
-============================================================
-RÉCAPITULATIF
-============================================================
-
-[!] WARNINGS (2):
-   1. dashboard: API HTTP non accessible - création de dashboards manuelle requise
-   2. dashboard: Validation API non effectuée - configuration manuelle requise
-
-[-] ERREURS (1):
-   1. dashboard: Dashboards: 0/3 configurations appliquées
-============================================================
-
-
-[+] Code de retour: 0
-
-
-
-
-
+Choisissez une configuration (1-4): 3
+Traceback (most recent call last):
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 486, in <module>
+    main()
+    ~~~~^^
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 295, in main
+    add_common_args(detect_parser)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 279, in add_common_args
+    for arg, help_text in common_args:
+        ^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 2)
+root@wazuh:/home/wazuh/wazuh-install#

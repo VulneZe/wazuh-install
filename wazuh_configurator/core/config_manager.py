@@ -190,6 +190,18 @@ class ConfigManager:
         
         return results
     
+    def rollback_config(self, name: str) -> ConfigResult:
+        """Rollback a specific configuration"""
+        configurator = self.get_configurator(name)
+        if not configurator:
+            return ConfigResult(
+                success=False,
+                message=f"Configurator '{name}' non trouvé"
+            )
+        
+        self._logger.info(f"Rollback configuration: {name}")
+        return configurator.rollback()
+    
     def get_installation_info(self) -> WazuhInstallation:
         """Get current Wazuh installation information"""
         return self.installation

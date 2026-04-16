@@ -153,6 +153,18 @@ def interactive_menu():
     print("MENU INTERACTIF")
     print("=" * 60)
     
+    # Demander les IP/ports si nécessaire
+    print("\nConfiguration des services Wazuh:")
+    print("(Appuyez sur Entrée pour utiliser les valeurs par défaut)")
+    
+    manager_host = input("Adresse IP/hostname du Manager (défaut: localhost): ").strip() or "localhost"
+    indexer_host = input("Adresse IP/hostname de l'Indexer (défaut: localhost): ").strip() or "localhost"
+    dashboard_host = input("Adresse IP/hostname du Dashboard (défaut: localhost): ").strip() or "localhost"
+    
+    manager_port = input("Port Manager (défaut: 1514): ").strip() or "1514"
+    indexer_port = input("Port Indexer (défaut: 9200): ").strip() or "9200"
+    dashboard_port = input("Port Dashboard (défaut: 5601): ").strip() or "5601"
+    
     # Choisir la commande
     print("\nCommandes disponibles:")
     print("1. check - Vérifier les configurations")
@@ -176,7 +188,7 @@ def interactive_menu():
     command = command_map.get(command_choice)
     if command is None:
         print("\nAu revoir!")
-        return None, None
+        return None, None, None, None, None, None, None, None
     
     # Choisir la configuration
     print("\nConfigurations disponibles:")
@@ -196,7 +208,7 @@ def interactive_menu():
     
     config = config_map.get(config_choice, "all")
     
-    return command, config
+    return command, config, manager_host, indexer_host, dashboard_host, manager_port, indexer_port, dashboard_port
 
 
 def main():
@@ -204,12 +216,24 @@ def main():
     
     # Si aucun argument, afficher le menu interactif
     if len(sys.argv) == 1:
-        command, config = interactive_menu()
+        command, config, manager_host, indexer_host, dashboard_host, manager_port, indexer_port, dashboard_port = interactive_menu()
         if command is None:
             return
         
         # Simuler les arguments
         sys.argv.extend([command, "--config", config])
+        if manager_host != "localhost":
+            sys.argv.extend(["--manager-host", manager_host])
+        if indexer_host != "localhost":
+            sys.argv.extend(["--indexer-host", indexer_host])
+        if dashboard_host != "localhost":
+            sys.argv.extend(["--dashboard-host", dashboard_host])
+        if manager_port != "1514":
+            sys.argv.extend(["--manager-port", manager_port])
+        if indexer_port != "9200":
+            sys.argv.extend(["--indexer-port", indexer_port])
+        if dashboard_port != "5601":
+            sys.argv.extend(["--dashboard-port", dashboard_port])
     
     parser = argparse.ArgumentParser(
         description="Wazuh Configurator - Advanced Configuration Management",
@@ -222,6 +246,12 @@ def main():
     parser.add_argument('--ssh-key', '-k', help='Chemin de la clé SSH pour connexion distante')
     parser.add_argument('--ssh-password', '-p', help='Mot de passe SSH pour connexion distante')
     parser.add_argument('--ssh-port', default=22, type=int, help='Port SSH (défaut: 22)')
+    parser.add_argument('--manager-host', help='Adresse IP/hostname du Wazuh Manager (défaut: localhost)')
+    parser.add_argument('--indexer-host', help='Adresse IP/hostname du Wazuh Indexer (défaut: localhost)')
+    parser.add_argument('--dashboard-host', help='Adresse IP/hostname du Wazuh Dashboard (défaut: localhost)')
+    parser.add_argument('--manager-port', default=1514, type=int, help='Port Manager (défaut: 1514)')
+    parser.add_argument('--indexer-port', default=9200, type=int, help='Port Indexer (défaut: 9200)')
+    parser.add_argument('--dashboard-port', default=5601, type=int, help='Port Dashboard (défaut: 5601)')
     parser.add_argument('--custom-ports', help='Ports personnalisés (format: indexer:9200,manager:1514,api:55000)')
     parser.add_argument('--wazuh-path', default='/var/ossec', help='Chemin d installation Wazuh (défaut: /var/ossec)')
     
@@ -291,7 +321,11 @@ def main():
     # Register configurators with remote configuration
     config_manager.register_configurator('security', SecurityConfigurator(wazuh_path=args.wazuh_path))
     config_manager.register_configurator('performance', PerformanceConfigurator(wazuh_path=args.wazuh_path))
-    config_manager.register_configurator('dashboard', DashboardConfigurator(wazuh_path=args.wazuh_path))
+    config_manager.register_configurator('dashboard', DashboardConfigurator(
+        wazuh_path=args.wazuh_path,
+        dashboard_host=args.dashboard_host or "localhost",
+        dashboard_port=args.dashboard_port or 5601
+    ))
     
     # Execute command
     if args.command == 'detect':

@@ -23,47 +23,22 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 class DashboardConfigurator(BaseConfigurator):
     """Configuration des dashboards Wazuh via API OpenSearch Dashboards"""
     
-    def __init__(self, wazuh_path: str = "/var/ossec"):
+    def __init__(self, wazuh_path: str = "/var/ossec", dashboard_host: str = "localhost", dashboard_port: int = 5601):
         super().__init__(wazuh_path)
         self.paths = WazuhPaths()
-        self.dashboard_ip = self._detect_server_ip()
-        self.dashboard_url = f"https://{self.dashboard_ip}:5601"
+        self.dashboard_host = dashboard_host
+        self.dashboard_port = dashboard_port
+        self.dashboard_url = f"https://{dashboard_host}:{dashboard_port}"
         self.dashboard_username = "admin"
         self.dashboard_password = None
         self.verify_ssl = False
         self._logger = WazuhLogger(__name__, use_json=False)
         self.index_pattern = "wazuh-alerts-*"
         
+        self._logger.info(f"Dashboard URL: {self.dashboard_url}")
+        
         # Charger les identifiants depuis le fichier de mots de passe Wazuh
         self._load_credentials()
-    
-    def _detect_server_ip(self) -> str:
-        """Détecter l'IP du serveur automatiquement"""
-        try:
-            # Essayer de trouver l'IP réelle (pas 127.x.x.x)
-            hostname = socket.gethostname()
-            ip = socket.gethostbyname(hostname)
-            
-            # Si l'IP est 127.x.x.x, essayer de trouver l'IP réelle
-            if ip.startswith("127."):
-                self._logger.warning(f"IP détectée est loopback ({ip}), recherche de l'IP réelle...")
-                # Essayer de se connecter à un DNS externe pour trouver l'IP locale
-                try:
-                    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                    s.connect(("8.8.8.8", 80))
-                    real_ip = s.getsockname()[0]
-                    s.close()
-                    self._logger.info(f"IP réelle détectée: {real_ip}")
-                    return real_ip
-                except Exception as e:
-                    self._logger.warning(f"Impossible de détecter l'IP réelle, utilisation de 127.0.0.1: {e}")
-                    return "127.0.0.1"
-            
-            self._logger.info(f"IP détectée: {ip}")
-            return ip
-        except Exception as e:
-            self._logger.warning(f"Impossible de détecter l'IP, utilisation de 127.0.0.1: {e}")
-            return "127.0.0.1"
     
     def _load_credentials(self):
         """Charger les identifiants depuis le fichier de mots de passe Wazuh"""

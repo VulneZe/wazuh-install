@@ -6,6 +6,7 @@ import os
 import subprocess
 from typing import Dict, Optional
 from dataclasses import dataclass
+from ..utils.logger import WazuhLogger
 
 
 @dataclass
@@ -49,27 +50,28 @@ class WazuhDetector:
     
     def __init__(self):
         self.installation = WazuhInstallation(installed=False)
+        self._logger = WazuhLogger(__name__, use_json=False)
     
     def detect_installation(self) -> WazuhInstallation:
         """Detect if Wazuh is installed and gather information"""
-        print("[*] Detection de l'installation Wazuh...")
+        self._logger.info("[*] Detection de l'installation Wazuh...")
         
         # Check if Wazuh is installed
         wazuh_path = self._find_wazuh_path()
         if not wazuh_path:
-            print("[-] Wazuh non détecté sur ce système")
+            self._logger.warning("[-] Wazuh non détecté sur ce système")
             return self.installation
         
         self.installation.installed = True
-        print(f"[+] Wazuh détecté dans: {wazuh_path}")
+        self._logger.info(f"[+] Wazuh détecté dans: {wazuh_path}")
         
         # Get version
         self.installation.version = self._get_wazuh_version()
-        print(f"[+] Version Wazuh: {self.installation.version}")
+        self._logger.info(f"[+] Version Wazuh: {self.installation.version}")
         
         # Detect components
         self.installation.components = self._detect_components()
-        print(f"[+] Composants détectés: {list(self.installation.components.keys())}")
+        self._logger.info(f"[+] Composants détectés: {list(self.installation.components.keys())}")
         
         # Get config paths
         self.installation.config_paths = self._get_config_paths()

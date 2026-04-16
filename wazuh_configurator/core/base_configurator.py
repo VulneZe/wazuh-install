@@ -8,6 +8,7 @@ import os
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional
 from dataclasses import dataclass
+from ..utils.logger import WazuhLogger
 
 
 @dataclass
@@ -34,6 +35,7 @@ class BaseConfigurator(ABC):
         self.wazuh_path = wazuh_path
         self.config_files = {}
         self.backup_files = {}
+        self._logger = WazuhLogger(__name__, use_json=False)
     
     @abstractmethod
     def check(self) -> ConfigResult:
@@ -58,11 +60,11 @@ class BaseConfigurator(ABC):
     def backup_config(self, file_path: str) -> bool:
         """Backup a configuration file before modification"""
         if not os.path.exists(file_path):
-            print(f"[-] File does not exist: {file_path}")
+            self._logger.error(f"[-] File does not exist: {file_path}")
             return False
         
         if not os.access(file_path, os.R_OK):
-            print(f"[-] No read permission: {file_path}")
+            self._logger.error(f"[-] No read permission: {file_path}")
             return False
         
         try:
@@ -71,41 +73,41 @@ class BaseConfigurator(ABC):
             self.backup_files[file_path] = backup_path
             return True
         except (OSError, IOError) as e:
-            print(f"[-] Backup failed for {file_path}: {e}")
+            self._logger.error(f"[-] Backup failed for {file_path}: {e}")
             return False
     
     def restore_config(self, file_path: str) -> bool:
         """Restore a configuration file from backup"""
         if file_path not in self.backup_files:
-            print(f"[-] No backup found for {file_path}")
+            self._logger.error(f"[-] No backup found for {file_path}")
             return False
         
         if not os.access(self.backup_files[file_path], os.R_OK):
-            print(f"[-] No read permission for backup: {self.backup_files[file_path]}")
+            self._logger.error(f"[-] No read permission for backup: {self.backup_files[file_path]}")
             return False
         
         try:
             shutil.copy2(self.backup_files[file_path], file_path)
             return True
         except (OSError, IOError) as e:
-            print(f"[-] Restore failed for {file_path}: {e}")
+            self._logger.error(f"[-] Restore failed for {file_path}: {e}")
             return False
     
     def read_config_file(self, file_path: str) -> Optional[str]:
         """Read a configuration file"""
         if not os.path.exists(file_path):
-            print(f"[-] File does not exist: {file_path}")
+            self._logger.error(f"[-] File does not exist: {file_path}")
             return None
         
         if not os.access(file_path, os.R_OK):
-            print(f"[-] No read permission: {file_path}")
+            self._logger.error(f"[-] No read permission: {file_path}")
             return None
         
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 return f.read()
         except (OSError, IOError) as e:
-            print(f"[-] Failed to read {file_path}: {e}")
+            self._logger.error(f"[-] Failed to read {file_path}: {e}")
             return None
     
     def write_config_file(self, file_path: str, content: str) -> bool:
@@ -113,11 +115,11 @@ class BaseConfigurator(ABC):
         try:
             os.makedirs(os.path.dirname(file_path), exist_ok=True)
         except (OSError, IOError) as e:
-            print(f"[-] Failed to create directory: {e}")
+            self._logger.error(f"[-] Failed to create directory: {e}")
             return False
         
         if not os.access(os.path.dirname(file_path), os.W_OK):
-            print(f"[-] No write permission: {file_path}")
+            self._logger.error(f"[-] No write permission: {file_path}")
             return False
         
         try:
@@ -125,5 +127,5 @@ class BaseConfigurator(ABC):
                 f.write(content)
             return True
         except (OSError, IOError) as e:
-            print(f"[-] Failed to write {file_path}: {e}")
+            self._logger.error(f"[-] Failed to write {file_path}: {e}")
             return False

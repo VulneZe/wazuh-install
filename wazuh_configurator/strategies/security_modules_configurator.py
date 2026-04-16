@@ -53,7 +53,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
         mitre_result = self._check_mitre_attack()
         results.append(mitre_result)
         
-        print("=" * 60)
+        self._logger.info("=" * 60)
         
         success_count = sum(1 for r in results if r.success)
         total_count = len(results)
@@ -92,7 +92,7 @@ class SecurityModulesConfigurator(BaseConfigurator):
         mitre_result = self._apply_mitre_attack()
         results.append(mitre_result)
         
-        print("=" * 60)
+        self._logger.info("=" * 60)
         
         success_count = sum(1 for r in results if r.success)
         total_count = len(results)

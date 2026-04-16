@@ -5,6 +5,9 @@ File Handler - Utility for file operations
 import os
 import shutil
 from typing import Optional
+from .logger import WazuhLogger
+
+_logger = WazuhLogger(__name__, use_json=False)
 
 
 class FileHandler:
@@ -17,7 +20,7 @@ class FileHandler:
             with open(file_path, 'r') as f:
                 return f.read()
         except Exception as e:
-            print(f"[-] Error reading {file_path}: {e}")
+            _logger.error(f"[-] Error reading {file_path}: {e}")
             return None
     
     @staticmethod
@@ -31,7 +34,7 @@ class FileHandler:
                 f.write(content)
             return True
         except Exception as e:
-            print(f"[-] Error writing {file_path}: {e}")
+            _logger.error(f"[-] Error writing {file_path}: {e}")
             return False
     
     @staticmethod
@@ -42,7 +45,7 @@ class FileHandler:
             shutil.copy2(file_path, backup_path)
             return backup_path
         except Exception as e:
-            print(f"[-] Error backing up {file_path}: {e}")
+            _logger.error(f"[-] Error backing up {file_path}: {e}")
             return None
     
     @staticmethod
@@ -52,7 +55,7 @@ class FileHandler:
             shutil.copy2(backup_path, original_path)
             return True
         except Exception as e:
-            print(f"[-] Error restoring {original_path}: {e}")
+            _logger.error(f"[-] Error restoring {original_path}: {e}")
             return False
     
     @staticmethod
@@ -67,5 +70,5 @@ class FileHandler:
             os.makedirs(directory_path, exist_ok=True)
             return True
         except Exception as e:
-            print(f"[-] Error creating directory {directory_path}: {e}")
+            _logger.error(f"[-] Error creating directory {directory_path}: {e}")
             return False

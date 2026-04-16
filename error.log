@@ -23,7 +23,7 @@
 [+] Dépendance présente: tar
 [+] Dépendance présente: gzip
 [+] Toutes les dépendances sont présentes
-[+] Mémoire: 4.6 GB
+[+] Mémoire: 4.4 GB
 [+] Espace disque: 39 GB disponibles
 [+] Java: Installé
 [+] Ports: Aucun conflit
@@ -37,13 +37,64 @@
    - Wazuh Indexer
    - Wazuh Server
    - Wazuh Dashboard
-16/04/2026 12:03:07 INFO: Starting Wazuh installation assistant. Wazuh version: 4.14.4
-16/04/2026 12:03:07 INFO: Verbose logging redirected to /var/log/wazuh-install.log
-16/04/2026 12:03:07 INFO: The recommended systems are: Red Hat Enterprise Linux 7, 8, 9; CentOS 7, 8; Amazon Linux 2; Amazon Linux 2023; Ubuntu 16.04, 18.04, 20.04, 22.04; Rocky Linux 9.4.
-16/04/2026 12:03:07 WARNING: The current system does not match with the list of recommended systems. The installation may not work properly.
-16/04/2026 12:03:13 ERROR: Wazuh dashboard already installed.
-[!] Erreur détectée: 16/04/2026 12:03:13 ERROR: Wazuh dashboard already installed.
-16/04/2026 12:03:13 INFO: If you want to overwrite the current installation, run this script adding the option -o/--overwrite. This will erase all the existing configuration and data.
+16/04/2026 15:24:26 INFO: Starting Wazuh installation assistant. Wazuh version: 4.14.4
+16/04/2026 15:24:26 INFO: Verbose logging redirected to /var/log/wazuh-install.log
+16/04/2026 15:24:26 INFO: The recommended systems are: Red Hat Enterprise Linux 7, 8, 9; CentO                                                                                                                                          S 7, 8; Amazon Linux 2; Amazon Linux 2023; Ubuntu 16.04, 18.04, 20.04, 22.04; Rocky Linux 9.4.
+16/04/2026 15:24:26 WARNING: The current system does not match with the list of recommended sy                                                                                                                                          stems. The installation may not work properly.
+16/04/2026 15:24:34 INFO: Verifying that your system meets the recommended minimum hardware re                                                                                                                                          quirements.
+16/04/2026 15:24:34 INFO: Wazuh web interface port will be 443.
+16/04/2026 15:24:43 INFO: Wazuh repository added.
+16/04/2026 15:24:43 INFO: --- Configuration files ---
+16/04/2026 15:24:43 INFO: Generating configuration files.
+16/04/2026 15:24:44 INFO: Generating the root certificate.
+16/04/2026 15:24:44 INFO: Generating Admin certificates.
+16/04/2026 15:24:44 INFO: Generating Wazuh indexer certificates.
+16/04/2026 15:24:44 INFO: Generating Filebeat certificates.
+16/04/2026 15:24:44 INFO: Generating Wazuh dashboard certificates.
+16/04/2026 15:24:45 INFO: Created wazuh-install-files.tar. It contains the Wazuh cluster key,                                                                                                                                           certificates, and passwords necessary for installation.
+16/04/2026 15:24:45 INFO: --- Wazuh indexer ---
+16/04/2026 15:24:45 INFO: Starting Wazuh indexer installation.
+16/04/2026 15:33:24 INFO: Wazuh indexer installation finished.
+16/04/2026 15:33:24 INFO: Wazuh indexer post-install configuration finished.
+16/04/2026 15:33:24 INFO: Starting service wazuh-indexer.
+16/04/2026 15:33:46 INFO: wazuh-indexer service started.
+16/04/2026 15:33:46 INFO: Initializing Wazuh indexer cluster security settings.
+16/04/2026 15:33:52 INFO: Wazuh indexer cluster security configuration initialized.
+16/04/2026 15:33:52 INFO: Wazuh indexer cluster initialized.
+16/04/2026 15:33:52 INFO: --- Wazuh server ---
+16/04/2026 15:33:52 INFO: Starting the Wazuh manager installation.
+16/04/2026 15:58:24 INFO: Wazuh manager installation finished.
+16/04/2026 15:58:24 INFO: Wazuh manager vulnerability detection configuration finished.
+16/04/2026 15:58:24 INFO: Starting service wazuh-manager.
+16/04/2026 15:58:45 INFO: wazuh-manager service started.
+16/04/2026 15:58:45 INFO: Starting Filebeat installation.
+16/04/2026 16:03:27 INFO: Filebeat installation finished.
+16/04/2026 16:03:31 INFO: Filebeat post-install configuration finished.
+16/04/2026 16:03:31 INFO: Starting service filebeat.
+16/04/2026 16:03:34 INFO: filebeat service started.
+16/04/2026 16:03:34 INFO: --- Wazuh dashboard ---
+16/04/2026 16:03:34 INFO: Starting Wazuh dashboard installation.
+16/04/2026 16:18:35 INFO: Wazuh dashboard installation finished.
+16/04/2026 16:18:36 INFO: Wazuh dashboard post-install configuration finished.
+16/04/2026 16:18:36 INFO: Starting service wazuh-dashboard.
+16/04/2026 16:18:38 INFO: wazuh-dashboard service started.
+16/04/2026 16:18:39 INFO: Updating the internal users.
+16/04/2026 16:19:14 INFO: A backup of the internal users has been saved in the /etc/wazuh-indexer/internalusers-backup folder.
+16/04/2026 16:19:45 INFO: The filebeat.yml file has been updated to use the Filebeat Keystore username and password.
+16/04/2026 16:21:01 ERROR: wazuh-manager could not be started.
+[!] Erreur détectée: 16/04/2026 16:21:01 ERROR: wazuh-manager could not be started.
+16/04/2026 16:21:04 INFO: --- Removing existing Wazuh installation ---
+16/04/2026 16:21:04 INFO: Removing Wazuh manager.
+16/04/2026 16:21:47 INFO: Wazuh manager removed.
+16/04/2026 16:21:47 INFO: Removing Wazuh indexer.
+16/04/2026 16:21:54 INFO: Wazuh indexer removed.
+16/04/2026 16:21:55 INFO: Removing Filebeat.
+16/04/2026 16:21:57 INFO: Filebeat removed.
+16/04/2026 16:21:58 INFO: Removing Wazuh dashboard.
+16/04/2026 16:22:06 INFO: Wazuh dashboard removed.
+16/04/2026 16:22:07 INFO: Installation cleaned. Check the /var/log/wazuh-install.log file to learn more about the issue.
 [-] Erreur lors de l'installation (code: 1)
 
 [+] Code de retour: 0
+
+Appuyez sur Entrée pour continuer...

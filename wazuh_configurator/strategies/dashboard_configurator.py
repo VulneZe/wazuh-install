@@ -40,9 +40,25 @@ class DashboardConfigurator(BaseConfigurator):
     def _detect_server_ip(self) -> str:
         """Détecter l'IP du serveur automatiquement"""
         try:
-            # Essayer de se connecter à l'IP locale
+            # Essayer de trouver l'IP réelle (pas 127.x.x.x)
             hostname = socket.gethostname()
             ip = socket.gethostbyname(hostname)
+            
+            # Si l'IP est 127.x.x.x, essayer de trouver l'IP réelle
+            if ip.startswith("127."):
+                self._logger.warning(f"IP détectée est loopback ({ip}), recherche de l'IP réelle...")
+                # Essayer de se connecter à un DNS externe pour trouver l'IP locale
+                try:
+                    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                    s.connect(("8.8.8.8", 80))
+                    real_ip = s.getsockname()[0]
+                    s.close()
+                    self._logger.info(f"IP réelle détectée: {real_ip}")
+                    return real_ip
+                except Exception as e:
+                    self._logger.warning(f"Impossible de détecter l'IP réelle, utilisation de 127.0.0.1: {e}")
+                    return "127.0.0.1"
+            
             self._logger.info(f"IP détectée: {ip}")
             return ip
         except Exception as e:

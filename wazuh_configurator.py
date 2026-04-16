@@ -276,19 +276,35 @@ def main():
     
     def add_common_args(parser):
         """Ajouter les arguments communs à un parser"""
-        for arg, help_text in common_args:
-            if arg == '--ssh-port':
-                parser.add_argument(arg, default=22, type=int, help=help_text)
-            elif arg == '--manager-port':
-                parser.add_argument(arg, default=1514, type=int, help=help_text)
-            elif arg == '--indexer-port':
-                parser.add_argument(arg, default=9200, type=int, help=help_text)
-            elif arg == '--dashboard-port':
-                parser.add_argument(arg, default=443, type=int, help=help_text)
-            elif arg == '--wazuh-path':
-                parser.add_argument(arg, default='/var/ossec', help=help_text)
+        for item in common_args:
+            if len(item) == 3:
+                arg, short_arg, help_text = item
+                if arg == '--ssh-port':
+                    parser.add_argument(arg, short_arg, default=22, type=int, help=help_text)
+                elif arg == '--manager-port':
+                    parser.add_argument(arg, short_arg, default=1514, type=int, help=help_text)
+                elif arg == '--indexer-port':
+                    parser.add_argument(arg, short_arg, default=9200, type=int, help=help_text)
+                elif arg == '--dashboard-port':
+                    parser.add_argument(arg, short_arg, default=443, type=int, help=help_text)
+                elif arg == '--wazuh-path':
+                    parser.add_argument(arg, short_arg, default='/var/ossec', help=help_text)
+                else:
+                    parser.add_argument(arg, short_arg, help=help_text)
             else:
-                parser.add_argument(arg, help=help_text)
+                arg, help_text = item
+                if arg == '--ssh-port':
+                    parser.add_argument(arg, default=22, type=int, help=help_text)
+                elif arg == '--manager-port':
+                    parser.add_argument(arg, default=1514, type=int, help=help_text)
+                elif arg == '--indexer-port':
+                    parser.add_argument(arg, default=9200, type=int, help=help_text)
+                elif arg == '--dashboard-port':
+                    parser.add_argument(arg, default=443, type=int, help=help_text)
+                elif arg == '--wazuh-path':
+                    parser.add_argument(arg, default='/var/ossec', help=help_text)
+                else:
+                    parser.add_argument(arg, help=help_text)
     
     # Commande detect
     detect_parser = subparsers.add_parser('detect', help='Detecter installation Wazuh')

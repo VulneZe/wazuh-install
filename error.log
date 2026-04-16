@@ -1,4 +1,4 @@
-
+DASHBAORD FIX / 
  ██████╗ ██████╗ ███████╗██████╗
 ██╔════╝██╔═══██╗██╔════╝██╔══██╗
 ██║     ██║   ██║█████╗  ██║  ██║
@@ -10,114 +10,232 @@
     By VulneZe - github.com/VulneZe/wazuh-install
     ====================================================
 
+2026-04-16 23:16:58 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
+2026-04-16 23:16:58 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
+2026-04-16 23:16:58 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
+2026-04-16 23:16:58 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
+2026-04-16 23:16:58 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
+2026-04-16 23:16:58 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
+2026-04-16 23:16:58 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
+2026-04-16 23:16:58 - wazuh_configurator.core.config_manager - INFO - Configurator 'performance' enregistré
+2026-04-16 23:16:58 - wazuh_configurator.strategies.dashboard_configurator - INFO - Dashboard URL: https://localhost:443
+2026-04-16 23:16:58 - wazuh_configurator.core.config_manager - INFO - Configurator 'dashboard' enregistré
+2026-04-16 23:16:58 - __main__ - INFO - [*] Mode correction pour Wazuh existant...
+2026-04-16 23:16:58 - __main__ - INFO - [*] Verification des configurations actuelles...
+2026-04-16 23:16:58 - wazuh_configurator.strategies.dashboard_configurator - INFO - Vérification de la configuration des dashboards...
+2026-04-16 23:16:58 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-16 23:16:58 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif
+2026-04-16 23:16:58 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif
+2026-04-16 23:16:58 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Note: La vérification de l'API HTTP est désactivée
+2026-04-16 23:16:58 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] La création de dashboards nécessite une connexion API manuelle
+2026-04-16 23:16:58 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-16 23:16:58 - __main__ - INFO - [+] dashboard: Dashboards: Service actif
+2026-04-16 23:16:58 - __main__ - WARNING -    [!] API HTTP non accessible - création de dashboards manuelle requise
+2026-04-16 23:16:58 - __main__ - INFO -
+[*] Application des corrections...
+2026-04-16 23:16:58 - wazuh_configurator.core.config_manager - INFO - Application configuration: dashboard
+2026-04-16 23:16:58 - wazuh_configurator.strategies.dashboard_configurator - INFO - Application de la configuration des dashboards...
+2026-04-16 23:16:58 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-16 23:16:58 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif (IP: localhost)
+2026-04-16 23:16:58 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Création automatique des dashboards...
+2026-04-16 23:16:58 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création de l'index pattern...
+2026-04-16 23:16:59 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Erreur création index pattern: 401
+2026-04-16 23:16:59 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création des visualisations...
+2026-04-16 23:16:59 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-ssh-pie: 401
+2026-04-16 23:16:59 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création du dashboard SOC...
+2026-04-16 23:16:59 - wazuh_configurator.strategies.dashboard_configurator - INFO -   dashboard/soc-ad-ssh: 401
+2026-04-16 23:16:59 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-16 23:16:59 - __main__ - INFO - [-] dashboard: Dashboards: 0/3 configurations appliquées
+2026-04-16 23:16:59 - __main__ - INFO -
+[*] Validation des corrections...
+2026-04-16 23:16:59 - wazuh_configurator.strategies.dashboard_configurator - INFO - Validation de la configuration des dashboards...
+2026-04-16 23:16:59 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-16 23:16:59 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif
+2026-04-16 23:16:59 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Note: La validation de l'API HTTP est désactivée
+2026-04-16 23:16:59 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-16 23:16:59 - __main__ - INFO - [+] dashboard: Dashboards: Service actif - Validation OK
+2026-04-16 23:16:59 - __main__ - WARNING - [!] Validation API non effectuée - configuration manuelle requise
 
 ============================================================
-MENU INTERACTIF
+RÉCAPITULATIF
 ============================================================
 
-Configuration des services Wazuh:
-(Appuyez sur Entrée pour utiliser les valeurs par défaut)
-Adresse IP/hostname du Manager (défaut: localhost): 172.20.10.4
-Adresse IP/hostname de l'Indexer (défaut: localhost): 172.20.10.4
-Adresse IP/hostname du Dashboard (défaut: localhost): 172.20.10.4
-Port Manager (défaut: 1514):
-Port Indexer (défaut: 9200):
-Port Dashboard (défaut: 443):
+[!] WARNINGS (2):
+   1. dashboard: API HTTP non accessible - création de dashboards manuelle requise
+   2. dashboard: Validation API non effectuée - configuration manuelle requise
 
-Commandes disponibles:
-1. check - Vérifier les configurations
-2. apply - Appliquer les configurations
-3. validate - Valider les configurations
-4. rollback - Annuler les configurations
-5. fix - Corriger les configurations
-0. Quitter
-
-Choisissez une commande (0-5): 5
-
-Configurations disponibles:
-1. security - Configuration de sécurité
-2. performance - Configuration de performance
-3. dashboard - Configuration des dashboards
-4. all - Toutes les configurations
-
-Choisissez une configuration (1-4): 3
-Traceback (most recent call last):
-  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 486, in <module>
-    main()
-    ~~~~^^
-  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 295, in main
-    add_common_args(detect_parser)
-    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
-  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 279, in add_common_args
-    for arg, help_text in common_args:
-        ^^^^^^^^^^^^^^
-ValueError: too many values to unpack (expected 2)
-root@wazuh:/home/wazuh/wazuh-install#
-
-wazuh menue : 
-
- ██████╗ ██████╗ ███████╗██████╗
-██╔════╝██╔═══██╗██╔════╝██╔══██╗
-██║     ██║   ██║█████╗  ██║  ██║
-██║     ██║   ██║██╔══╝  ██║  ██║
-╚██████╗╚██████╔╝███████╗██████╔╝
- ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
-
-    Configurator v1.0 - Advanced Configuration Management
-    By VulneZe - github.com/VulneZe/wazuh-install
-    ====================================================
-
-Traceback (most recent call last):
-  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 486, in <module>
-    main()
-    ~~~~^^
-  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 295, in main
-    add_common_args(detect_parser)
-    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
-  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 279, in add_common_args
-    for arg, help_text in common_args:
-        ^^^^^^^^^^^^^^
-ValueError: too many values to unpack (expected 2)
-
-[+] Code de retour: 1
+[-] ERREURS (1):
+   1. dashboard: Dashboards: 0/3 configurations appliquées
+============================================================
 
 
-
-FIX : dashboarsd:  
- ██████╗ ██████╗ ███████╗██████╗
-██╔════╝██╔═══██╗██╔════╝██╔══██╗
-██║     ██║   ██║█████╗  ██║  ██║
-██║     ██║   ██║██╔══╝  ██║  ██║
-╚██████╗╚██████╔╝███████╗██████╔╝
- ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
-
-    Configurator v1.0 - Advanced Configuration Management
-    By VulneZe - github.com/VulneZe/wazuh-install
-    ====================================================
-
-Traceback (most recent call last):
-  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 486, in <module>
-    main()
-    ~~~~^^
-  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 295, in main
-    add_common_args(detect_parser)
-    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
-  File "/home/wazuh/wazuh-install/wazuh_configurator.py", line 279, in add_common_args
-    for arg, help_text in common_args:
-        ^^^^^^^^^^^^^^
-ValueError: too many values to unpack (expected 2)
-
-[+] Code de retour: 1
+[+] Code de retour: 0
 
 Appuyez sur Entrée pour continuer...
 
 
+( pas de demande de conf et d'adrerese demander ) 
+
+Oui — maintenant le problème a changé, et il est beaucoup plus précis :
+
+Avant
+
+Connection refused = mauvais port (5601)
+
+Maintenant
+
+401 = le script atteint bien le Dashboard sur 443, mais il n’est pas authentifié pour appeler l’API des objets sauvegardés. Tes vérifications montrent bien que le Dashboard écoute sur 443, que server.port: 443 est configuré, et qu’un GET / renvoie une redirection vers /app/login, donc l’accès HTTP arrive bien au Dashboard.
+
+Le log du script confirme ça :
+
+Dashboard URL: https://localhost:443
+...
+Erreur création index pattern: 401
+...
+visualization/soc-ssh-pie: 401
+...
+dashboard/soc-ad-ssh: 401
+D’où ça vient exactement
+
+Très probablement d’un de ces deux points :
+
+Le script n’envoie pas d’authentification Dashboard valide
+Le Wazuh Dashboard utilise une authentification utilisateur pour l’accès UI et aux objets du Dashboard. La gestion des mots de passe Wazuh distingue bien les utilisateurs du Dashboard / API, et l’accès Dashboard n’est pas anonyme.
+Le script appelle l’API Saved Objects sans les bons headers
+OpenSearch Dashboards exige un header anti-CSRF pour certaines requêtes API. La doc OpenSearch indique explicitement qu’un appel Dashboards peut échouer si le header osd-xsrf est absent ou incorrect.
+
+Vu ton log précédent du Dashboard, on voit d’ailleurs que les appels web réussis depuis le navigateur incluent :
+
+osd-xsrf: osd-fetch
+
+Donc ton outil doit probablement faire des POST/PUT vers /api/saved_objects/... sans session valide et possiblement sans header osd-xsrf.
+
+Ce que ça veut dire en pratique
+
+Ton outil n’a plus un problème de port.
+Il a maintenant un problème de login au Dashboard API.
+
+Le message du script va dans le même sens :
+
+API HTTP non accessible - création de dashboards manuelle requise
+La création de dashboards nécessite une connexion API manuelle
+
+vérification : 
+
+root@wazuh:/home/wazuh/wazuh-install-main# curl -k -I https://127.0.0.1
+HTTP/1.1 302 Found
+location: /app/login?
+osd-name: wazuh
+x-frame-options: sameorigin
+cache-control: private, no-cache, no-store, must-revalidate
+set-cookie: security_authentication=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; HttpOnly; Path=/
+content-length: 0
+Date: Thu, 16 Apr 2026 21:18:31 GMT
+Connection: keep-alive
+Keep-Alive: timeout=120
+
+root@wazuh:/home/wazuh/wazuh-install-main# curl -k -u 'admin:TON_MDP_DASHBOARD' \
+  -H 'osd-xsrf: true' \
+  'https://127.0.0.1/api/saved_objects/_find?type=index-pattern'
+{"statusCode":401,"error":"Unauthorized","message":"Authentication Exception"}root@wazuh:/home/wazuh/wazuh-install-main#
 
 
 
 
+signfique : Ton test prouve ceci :
+
+https://127.0.0.1 répond → Dashboard OK
+https://127.0.0.1:5601 ne répond pas → normal
+https://127.0.0.1/api/saved_objects/... répond 401 → l’API Dashboard est joignable, mais les identifiants utilisés ne sont pas acceptés.
+
+Le header osd-xsrf est bien requis pour certaines requêtes Dashboards, mais ici ton 401 sur un appel direct indique surtout un souci d’identifiants. OpenSearch Dashboards utilise bien une authentification HTTP de base par défaut, et Wazuh documente l’usage du compte admin pour se connecter au Dashboard.
+
+Ce que ça veut dire pour ton outil
+
+Ton outil n’a plus un problème de port.
+Il a maintenant un problème de login Dashboard :
+
+soit il n’envoie aucun login
+soit il envoie un mauvais mot de passe
+soit il essaie un compte qui n’a pas les bons droi
 
 
+
+test lmanuelle pour que tu ai les infos : 
+
+root@wazuh:/home/wazuh/wazuh-install-main# cat /var/ossec/etc/wazuh-passwords.txt
+# Wazuh Passwords - Generated by Wazuh Configurator
+# Date: Thu Apr 16 07:16:35 PM CEST 2026
+# IMPORTANT: Keep this file secure and change passwords regularly
+
+# Wazuh Manager API
+api_user: a:WI.~qRl(rk9(Q]6-^CzEW<FGkk"1SN
+
+# Wazuh Indexer
+indexer_admin: :e)DggrBO2rZ-}Bd';h^t[ka%{AD:Yu2
+
+# Wazuh Dashboard
+admin: w[}!ZI0mg}i~Gv)1pM&}[1Bu(aVl_pt2
+dashboard_user: yA@)JUp9ICCl%~RZn}"OAr4T%Z$xl9*c
+root@wazuh:/home/wazuh/wazuh-install-main#
+umber\",\"esTypes\":[\"long\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.process.vm_size\",\"type\":\"number\",\"esTypes\":[\"long\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.program.architecture\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.program.description\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.program.format\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.program.install_time\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.program.location\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.program.multiarch\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.program.name\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.program.priority\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.program.section\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.program.size\",\"type\":\"number\",\"esTypes\":[\"long\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.program.source\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.program.vendor\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.program.version\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.protocol\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.pwd\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.command\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.cis\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.cis_csc\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.cis_csc_v7\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.cis_csc_v8\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.cmmc_v2.0\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.gdpr_IV\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.gpg_13\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.hipaa\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.iso_27001-2013\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.mitre_mitigations\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.mitre_tactics\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.mitre_techniques\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.nist_800_53\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.nist_sp_800-53\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.pci_dss\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.pci_dss_v3.2.1\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.pci_dss_v4.0\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.soc_2\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.compliance.tsc\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.description\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.directory\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.file\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.id\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.previous_result\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.process\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.rationale\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.reason\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.references\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.registry\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.remediation\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.result\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.check.title\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.description\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.failed\",\"type\":\"number\",\"esTypes\":[\"integer\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.file\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.invalid\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.name\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.passed\",\"type\":\"number\",\"esTypes\":[\"integer\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.policy\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.policy_id\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.scan_id\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.score\",\"type\":\"number\",\"esTypes\":[\"long\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.total_checks\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.sca.type\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.scan_id\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.shell\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.srcip\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.srcport\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.srcuser\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.system_name\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.timestamp\",\"type\":\"date\",\"esTypes\":[\"date\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.title\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.tty\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.type\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.uid\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.url\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.version\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.virustotal.description\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.virustotal.error\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.virustotal.found\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.virustotal.malicious\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.virustotal.permalink\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.virustotal.positives\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.virustotal.scan_date\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.virustotal.sha1\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.virustotal.source.alert_id\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.virustotal.source.file\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.virustotal.source.md5\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.virustotal.source.sha1\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.virustotal.total\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.assigner\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cve\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cve_version\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss2.base_score\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss2.exploitability_score\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss2.impact_score\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss2.vector.access_complexity\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss2.vector.attack_vector\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss2.vector.authentication\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss2.vector.availability\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss2.vector.confidentiality_impact\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss2.vector.integrity_impact\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss2.vector.privileges_required\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss2.vector.scope\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss2.vector.user_interaction\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss3.base_score\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss3.exploitability_score\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss3.impact_score\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss3.vector.access_complexity\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss3.vector.attack_vector\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss3.vector.authentication\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss3.vector.availability\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss3.vector.confidentiality_impact\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss3.vector.integrity_impact\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss3.vector.privileges_required\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss3.vector.scope\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cvss.cvss3.vector.user_interaction\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.cwe_reference\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.package.architecture\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.package.condition\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.package.generated_cpe\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.package.name\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.package.source\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.package.version\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.published\",\"type\":\"date\",\"esTypes\":[\"date\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.rationale\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.reference\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.scanner.reference\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.severity\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.status\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.title\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"data.vulnerability.updated\",\"type\":\"date\",\"esTypes\":[\"date\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"decoder.accumulate\",\"type\":\"number\",\"esTypes\":[\"long\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"decoder.fts\",\"type\":\"number\",\"esTypes\":[\"long\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"decoder.ftscomment\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"decoder.name\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"decoder.parent\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"full_log\",\"type\":\"string\",\"esTypes\":[\"text\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":false,\"readFromDocValues\":false},{\"count\":0,\"name\":\"host\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"id\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"input.type\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"location\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"manager.name\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"message\",\"type\":\"string\",\"esTypes\":[\"text\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":false,\"readFromDocValues\":false},{\"count\":0,\"name\":\"offset\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"predecoder.hostname\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"predecoder.program_name\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"predecoder.timestamp\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"previous_log\",\"type\":\"string\",\"esTypes\":[\"text\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":false,\"readFromDocValues\":false},{\"count\":0,\"name\":\"previous_output\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"program_name\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.cis\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.cis_csc\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.cis_csc_v7\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.cis_csc_v8\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.cve\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.description\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.firedtimes\",\"type\":\"number\",\"esTypes\":[\"long\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.frequency\",\"type\":\"number\",\"esTypes\":[\"long\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.gdpr\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.gdpr_IV\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.gpg13\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.gpg_13\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.groups\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.hipaa\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.id\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.info\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.iso_27001-2013\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.level\",\"type\":\"number\",\"esTypes\":[\"long\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.mail\",\"type\":\"boolean\",\"esTypes\":[\"boolean\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.mitre.id\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.mitre.tactic\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.mitre.technique\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.mitre_mitigations\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.mitre_tactics\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.mitre_techniques\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.nist_800_53\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.nist_sp_800-53\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.pci_dss\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.soc_2\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"rule.tsc\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.audit.effective_user.id\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.audit.effective_user.name\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.audit.group.id\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.audit.group.name\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.audit.login_user.id\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.audit.login_user.name\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.audit.process.id\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.audit.process.name\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.audit.process.ppid\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.audit.user.id\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.audit.user.name\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.diff\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.event\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.gid_after\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.gid_before\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.gname_after\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.gname_before\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.hard_links\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.inode_after\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.inode_before\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.md5_after\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.md5_before\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.mode\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.mtime_after\",\"type\":\"date\",\"esTypes\":[\"date\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.mtime_before\",\"type\":\"date\",\"esTypes\":[\"date\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.path\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.perm_after\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.perm_before\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.sha1_after\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.sha1_before\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.sha256_after\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.sha256_before\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.size_after\",\"type\":\"number\",\"esTypes\":[\"long\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.size_before\",\"type\":\"number\",\"esTypes\":[\"long\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.tags\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.uid_after\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.uid_before\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.uname_after\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"syscheck.uname_before\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"timestamp\",\"type\":\"date\",\"esTypes\":[\"date\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"title\",\"type\":\"string\",\"esTypes\":[\"keyword\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"count\":0,\"name\":\"type\",\"type\":\"string\",\"esTypes\":[\"text\"],\"scripted\":false,\"searchable\":true,\"aggregatable\":false,\"readFromDocValues\":false}]","sourceFilters":"[{\"value\":\"@timestamp\"}]"},"references":[],"migrationVersion":{"index-pattern":"7.6.0"},"updated_at":"2026-04-16T20:36:41.591Z","version":"WzIyLDJd","namespaces":["default"],"score":0}]}root@wazuh:/home/wazuh/wazuh-install-main# curl -k -u 'admin:GRJeUg+wE3G5Pchtos56hm+nBqHn2yRg' \                                      curl -k -u 'admin:GRJeUg+wE3G5Pchtos56hm+nBqHn2yRg' \
+  -H 'osd-xsrf: true' \
+  'https://127.0.0.1/api/saved_objects/_find?type=dashboard'
+{"page":1,"per_page":20,"total":0,"saved_objects":[]}root@wazuh:/home/wazuh/wazuh-install-main#
+root@wazuh:/home/wazuh/wazuh-install-main# systemctl restart wazuh-dashboard
+systemctl restart wazuh-manager
+systemctl restart wazuh-indexer
+
+
+
+RETEST  : ert CONLUSION : Oui — là, la source du problème est nette :
+
+Ce qui marche
+
+Ta commande manuelle marche avec le nouveau mot de passe admin :
+
+curl -k -u 'admin:GRJeUg+wE3G5Pchtos56hm+nBqHn2yRg' \
+  -H 'osd-xsrf: true' \
+  'https://127.0.0.1/api/saved_objects/_find?type=dashboard'
+
+Elle renvoie :
+
+{"page":1,"per_page":20,"total":0,"saved_objects":[]}
+
+Donc :
+
+le Dashboard est joignable,
+l’authentification Dashboard marche,
+le header osd-xsrf est bon,
+l’API Saved Objects fonctionne.
+Ce qui ne marche pas
+
+Ton outil continue à faire :
+
+Erreur création index pattern: 401
+visualization/soc-ssh-pie: 401
+dashboard/soc-ad-ssh: 401
+
+Donc maintenant, le problème ne vient plus de Wazuh.
+Il vient du script VulneZe, qui n’envoie pas les bons identifiants admin au Dashboard, ou n’envoie pas l’auth du tout.
+
+Conclusion
+
+Le bug restant est dans l’outil, pas dans ton infra.
+
+Ce qu’il faut corriger dans le script
+
+Il faut trouver où le script fait les requêtes vers :
+
+/api/saved_objects/index-pattern/...
+/api/saved_objects/visualization/...
+/api/saved_objects/dashboard/...
+
+et lui faire envoyer :
+
+l’URL https://localhost:443
+l’auth Basic admin:<NOUVEAU_MDP>
+le header osd-xsrf: true
 
 
 

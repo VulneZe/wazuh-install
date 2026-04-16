@@ -6,6 +6,7 @@ Dashboard Configurator - Dashboard configuration strategy
 
 import os
 import json
+import subprocess
 import requests
 from typing import Dict, Optional
 from ..core.base_configurator import BaseConfigurator, ConfigResult
@@ -244,7 +245,6 @@ class DashboardConfigurator(BaseConfigurator):
     def _check_dashboard_connection(self) -> bool:
         """Vérifier la connexion au dashboard via systemctl"""
         try:
-            import subprocess
             result = subprocess.run(
                 ["systemctl", "is-active", "wazuh-dashboard"],
                 capture_output=True,

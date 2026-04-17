@@ -1,3 +1,7 @@
+NOUVEAU RETOUR  : 
+
+
+
 
  ██████╗ ██████╗ ███████╗██████╗
 ██╔════╝██╔═══██╗██╔════╝██╔══██╗
@@ -10,90 +14,316 @@
     By VulneZe - github.com/VulneZe/wazuh-install
     ====================================================
 
-2026-04-17 10:11:35 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
-2026-04-17 10:11:35 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
-2026-04-17 10:11:35 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
-2026-04-17 10:11:35 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
-2026-04-17 10:11:35 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
-2026-04-17 10:11:35 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
-2026-04-17 10:11:35 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
-2026-04-17 10:11:35 - wazuh_configurator.core.config_manager - INFO - Configurator 'performance' enregistré
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - Dashboard URL: https://localhost:443
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Mot de passe admin chargé depuis /var/ossec/etc/wazuh-passwords.txt
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Validation des identifiants admin réussie
-2026-04-17 10:11:35 - wazuh_configurator.core.config_manager - INFO - Configurator 'dashboard' enregistré
-2026-04-17 10:11:35 - __main__ - INFO - [*] Mode correction pour Wazuh existant...
-2026-04-17 10:11:35 - __main__ - INFO - [*] Verification des configurations actuelles...
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - Vérification de la configuration des dashboards...
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Note: La vérification de l'API HTTP est désactivée
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] La création de dashboards nécessite une connexion API manuelle
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-17 10:11:35 - __main__ - INFO - [+] dashboard: Dashboards: Service actif
-2026-04-17 10:11:35 - __main__ - WARNING -    [!] API HTTP non accessible - création de dashboards manuelle requise
-2026-04-17 10:11:35 - __main__ - INFO -
+2026-04-17 10:27:40 - wazuh_configurator.core.config_manager - INFO - Initialisation                                 du gestionnaire de configuration...
+2026-04-17 10:27:40 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection d                                e l'installation Wazuh...
+2026-04-17 10:27:40 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détec                                té dans: /var/ossec
+2026-04-17 10:27:40 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Waz                                uh: Unknown
+2026-04-17 10:27:40 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants                                 détectés: ['indexer', 'manager', 'dashboard']
+2026-04-17 10:27:40 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de                                 configuration initialisé
+2026-04-17 10:27:40 - wazuh_configurator.core.config_manager - INFO - Configurator 's                                ecurity' enregistré
+2026-04-17 10:27:40 - wazuh_configurator.core.config_manager - INFO - Configurator 'p                                erformance' enregistré
+2026-04-17 10:27:40 - wazuh_configurator.strategies.dashboard_configurator - INFO - D                                ashboard URL: https://172.20.10.4:443
+2026-04-17 10:27:40 - wazuh_configurator.strategies.dashboard_configurator - INFO - [                                +] Mot de passe admin chargé depuis /var/ossec/etc/wazuh-passwords.txt
+2026-04-17 10:27:40 - wazuh_configurator.strategies.dashboard_configurator - INFO - [                                +] Validation des identifiants admin réussie
+2026-04-17 10:27:40 - wazuh_configurator.core.config_manager - INFO - Configurator 'd                                ashboard' enregistré
+2026-04-17 10:27:40 - __main__ - INFO - [*] Mode correction pour Wazuh existant...
+2026-04-17 10:27:40 - __main__ - INFO - [*] Verification des configurations actuelles                                ...
+2026-04-17 10:27:40 - __main__ - INFO - Verification des configurations...
+2026-04-17 10:27:40 - __main__ - INFO - Verification security...
+2026-04-17 10:27:40 - wazuh_configurator.strategies.security_configurator - INFO - Ve                                rification configuration securite...
+2026-04-17 10:27:40 - __main__ - INFO - [-] security: Securite: 2/4 verifications OK
+2026-04-17 10:27:40 - __main__ - WARNING - [!] API authentication non configuree
+2026-04-17 10:27:40 - __main__ - WARNING - [!] Regles pare-feu incompletes
+2026-04-17 10:27:40 - __main__ - INFO - Verification performance...
+2026-04-17 10:27:40 - wazuh_configurator.strategies.performance_configurator - INFO -                                 Verification configuration performance...
+2026-04-17 10:27:40 - __main__ - INFO - [+] performance: Performance: 4/4 verificatio                                ns OK
+2026-04-17 10:27:40 - __main__ - INFO - Verification dashboard...
+2026-04-17 10:27:40 - wazuh_configurator.strategies.dashboard_configurator - INFO - V                                érification de la configuration des dashboards...
+2026-04-17 10:27:40 - wazuh_configurator.strategies.dashboard_configurator - INFO - =                                ===========================================================
+2026-04-17 10:27:40 - wazuh_configurator.strategies.dashboard_configurator - INFO - [                                +] Dashboard service actif
+2026-04-17 10:27:40 - wazuh_configurator.strategies.dashboard_configurator - INFO - [                                +] Dashboard service actif
+2026-04-17 10:27:40 - wazuh_configurator.strategies.dashboard_configurator - INFO - [                                +] Note: La vérification de l'API HTTP est désactivée
+2026-04-17 10:27:40 - wazuh_configurator.strategies.dashboard_configurator - INFO - [                                +] La création de dashboards nécessite une connexion API manuelle
+2026-04-17 10:27:40 - wazuh_configurator.strategies.dashboard_configurator - INFO - =                                ===========================================================
+2026-04-17 10:27:40 - __main__ - INFO - [+] dashboard: Dashboards: Service actif
+2026-04-17 10:27:40 - __main__ - WARNING - [!] API HTTP non accessible - création de                                 dashboards manuelle requise
+2026-04-17 10:27:40 - __main__ - INFO -
 [*] Application des corrections...
-2026-04-17 10:11:35 - wazuh_configurator.core.config_manager - INFO - Application configuration: dashboard
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - Application de la configuration des dashboards professionnels...
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif (IP: localhost)
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Création de 2 dashboards professionnels...
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création de l'index pattern...
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Tentative de connexion à https://localhost:443/api/saved_objects/index-pattern/wazuh-alerts-* avec user: admin
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Index pattern créé ou existe déjà
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création des visualisations pour les dashboards professionnels...
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Traitement du dashboard: SOC Overview
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création visualization/soc-alerts-timeline: WazuhLogger.info() got an unexpected keyword argument 'end'
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-alerts-timeline
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création visualization/soc-alerts-level: WazuhLogger.info() got an unexpected keyword argument 'end'
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-alerts-level
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création visualization/soc-top-agents: WazuhLogger.info() got an unexpected keyword argument 'end'
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-top-agents
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création visualization/soc-top-rules: WazuhLogger.info() got an unexpected keyword argument 'end'
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-top-rules
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création visualization/soc-rule-groups: WazuhLogger.info() got an unexpected keyword argument 'end'
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-rule-groups
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création visualization/soc-recent-alerts: WazuhLogger.info() got an unexpected keyword argument 'end'
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-recent-alerts
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Traitement du dashboard: SSH & Authentication Monitoring
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création visualization/ssh-connections-timeline: WazuhLogger.info() got an unexpected keyword argument 'end'
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: ssh-connections-timeline
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création visualization/ssh-users-pie: WazuhLogger.info() got an unexpected keyword argument 'end'
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: ssh-users-pie
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création visualization/ssh-source-ips: WazuhLogger.info() got an unexpected keyword argument 'end'
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: ssh-source-ips
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création visualization/ssh-recent-logins: WazuhLogger.info() got an unexpected keyword argument 'end'
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: ssh-recent-logins
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Visualisations créées: 0/10
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création des dashboards professionnels...
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création du dashboard: SOC Overview
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création dashboard/soc-overview-dashboard: WazuhLogger.info() got an unexpected keyword argument 'end'
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création dashboard: SOC Overview
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création du dashboard: SSH & Authentication Monitoring
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - ERROR - Erreur création dashboard/ssh-auth-monitoring-dashboard: WazuhLogger.info() got an unexpected keyword argument 'end'
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création dashboard: SSH & Authentication Monitoring
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboards créés: 0/2
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-17 10:11:35 - __main__ - INFO - [-] dashboard: Dashboards: 1/3 configurations appliquées
-2026-04-17 10:11:35 - __main__ - INFO -
-[*] Validation des corrections...
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - Validation de la configuration des dashboards...
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] API Dashboard accessible et authentifiée
-2026-04-17 10:11:35 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
-Traceback (most recent call last):
-  File "/home/wazuh/wazuh-install-main/wazuh_configurator.py", line 502, in <module>
-    main()
-    ~~~~^^
-  File "/home/wazuh/wazuh-install-main/wazuh_configurator.py", line 483, in main
-    result = config_manager.get_configurator(args.config).validate()
-  File "/home/wazuh/wazuh-install-main/wazuh_configurator/strategies/dashboard_configurator.py", line 268, in validate
-    index_pattern_exists = self._check_index_pattern_exists()
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'DashboardConfigurator' object has no attribute '_check_index_pattern_exists'
+2026-04-17 10:27:40 - __main__ - INFO - Application des configurations...
+2026-04-17 10:27:40 - __main__ - INFO - Application security...
+2026-04-17 10:27:40 - wazuh_configurator.strategies.security_configurator - INFO - Ap                                plication configuration securite...
+2026-04-17 10:27:40 - wazuh_configurator.strategies.security_configurator - INFO - Co                                nfiguration SSL/TLS...
+2026-04-17 10:27:40 - wazuh_configurator.strategies.security_configurator - INFO - Gé                                nération du certificat SSL/TLS...
+2026-04-17 10:27:40 - wazuh_configurator.strategies.security_configurator - INFO - Ce                                rtificats SSL/TLS générés et configurés
+2026-04-17 10:27:40 - wazuh_configurator.strategies.security_configurator - WARNING -                                 NOTE: Certificat auto-signé pour développement/test
+2026-04-17 10:27:40 - wazuh_configurator.strategies.security_configurator - WARNING -                                 Pour production, utiliser Let's Encrypt ou certificat signé par CA
+2026-04-17 10:27:40 - wazuh_configurator.strategies.security_configurator - INFO - Ge                                neration mots de passe forts...
+2026-04-17 10:27:41 - wazuh_configurator.strategies.security_configurator - INFO - Mo                                ts de passe forts generes et écrits dans les fichiers Wazuh
+2026-04-17 10:27:41 - wazuh_configurator.strategies.security_configurator - INFO - Mo                                ts de passe sauvegardés dans: /var/ossec/etc/wazuh-passwords.txt
+2026-04-17 10:27:41 - wazuh_configurator.strategies.security_configurator - INFO - Co                                nfiguration API authentication...
+2026-04-17 10:27:41 - wazuh_configurator.strategies.security_configurator - INFO - AP                                I authentication JWT configurée
+2026-04-17 10:27:41 - wazuh_configurator.strategies.security_configurator - INFO - Cl                                é JWT générée et configurée
+2026-04-17 10:27:41 - wazuh_configurator.strategies.security_configurator - INFO - L'                                API utilisera JWT avec Basic Auth comme fallback
+2026-04-17 10:27:41 - wazuh_configurator.strategies.security_configurator - INFO - Co                                nfiguration regles pare-feu...
+2026-04-17 10:27:41 - wazuh_configurator.strategies.security_configurator - WARNING -                                 UFW non disponible - Installation...
+2026-04-17 10:27:55 - wazuh_configurator.strategies.security_configurator - INFO - UFW installé
+2026-04-17 10:27:55 - wazuh_configurator.strategies.security_configurator - INFO - Configuration de base UFW...
+2026-04-17 10:28:01 - wazuh_configurator.strategies.security_configurator - INFO - Autorisation SSH (port 22)...
+2026-04-17 10:28:02 - wazuh_configurator.strategies.security_configurator - INFO - Autorisation port 9200 (Wazuh Indexer API)...
+2026-04-17 10:28:02 - wazuh_configurator.strategies.security_configurator - INFO - Autorisation port 1514 (Wazuh Manager (events))...
+2026-04-17 10:28:02 - wazuh_configurator.strategies.security_configurator - INFO - Autorisation port 1515 (Wazuh Manager (agents))...
+2026-04-17 10:28:02 - wazuh_configurator.strategies.security_configurator - INFO - Autorisation port 55000 (Wazuh API)...
+2026-04-17 10:28:02 - wazuh_configurator.strategies.security_configurator - INFO - Autorisation port 443 (HTTPS (Dashboard))...
+2026-04-17 10:28:03 - wazuh_configurator.strategies.security_configurator - INFO - Activation UFW...
+2026-04-17 10:28:03 - wazuh_configurator.strategies.security_configurator - INFO - Regles pare-feu appliquées:
+2026-04-17 10:28:03 - wazuh_configurator.strategies.security_configurator - INFO - Status: active
 
-[+] Code de retour: 1
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW       Anywhere
+9200/tcp                   ALLOW       Anywhere
+1514/tcp                   ALLOW       Anywhere
+1515/tcp                   ALLOW       Anywhere
+55000/tcp                  ALLOW       Anywhere
+443/tcp                    ALLOW       Anywhere
+22/tcp (v6)                ALLOW       Anywhere (v6)
+9200/tcp (v6)              ALLOW       Anywhere (v6)
+1514/tcp (v6)              ALLOW       Anywhere (v6)
+1515/tcp (v6)              ALLOW       Anywhere (v6)
+55000/tcp (v6)             ALLOW       Anywhere (v6)
+443/tcp (v6)               ALLOW       Anywhere (v6)
+
+
+2026-04-17 10:28:03 - wazuh_configurator.strategies.security_configurator - INFO - Configuration pare-feu terminée
+2026-04-17 10:28:03 - wazuh_configurator.strategies.security_configurator - WARNING - SSH autorisé (port 22) - Ne pas oublier de configurer l'authentification par clé SSH
+2026-04-17 10:28:03 - __main__ - INFO - [+] security: Securite: 4/4 configurations appliquees
+2026-04-17 10:28:03 - __main__ - INFO - Application performance...
+2026-04-17 10:28:03 - wazuh_configurator.strategies.performance_configurator - INFO - Application configuration performance...
+2026-04-17 10:28:03 - wazuh_configurator.strategies.performance_configurator - INFO - Configuration JVM memory...
+2026-04-17 10:28:03 - wazuh_configurator.strategies.performance_configurator - INFO - JVM memory configure: 1GB min, 2GB max
+2026-04-17 10:28:03 - wazuh_configurator.strategies.performance_configurator - INFO - Configuration rotation logs...
+2026-04-17 10:28:03 - wazuh_configurator.strategies.performance_configurator - INFO - Rotation logs deja configuree
+2026-04-17 10:28:03 - wazuh_configurator.strategies.performance_configurator - INFO - Configuration nettoyage disque...
+2026-04-17 10:28:03 - wazuh_configurator.strategies.performance_configurator - INFO - Nettoyage disque configure (cron daily)
+2026-04-17 10:28:03 - wazuh_configurator.strategies.performance_configurator - INFO - Configuration pool connexions...
+2026-04-17 10:28:03 - wazuh_configurator.strategies.performance_configurator - INFO - Pool connexions configure
+2026-04-17 10:28:03 - __main__ - INFO - [+] performance: Performance: 4/4 configurations appliquees
+2026-04-17 10:28:03 - __main__ - INFO - Application dashboard...
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - Application de la configuration des dashboards professionnels...
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif (IP: 172.20.10.4)
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Création de 2 dashboards professionnels...
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création de l'index pattern...
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Tentative de connexion à https://172.20.10.4:443/api/saved_objects/index-pattern/wazuh-alerts-* avec user: admin
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Index pattern créé ou existe déjà
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création des visualisations pour les dashboards professionnels...
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Traitement du dashboard: SOC Overview
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-alerts-timeline: 500
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Erreur 500: {"statusCode":500,"error":"Internal Server Error","message":"An internal server error occurred."}
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-alerts-timeline
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-alerts-level: 500
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Erreur 500: {"statusCode":500,"error":"Internal Server Error","message":"An internal server error occurred."}
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-alerts-level
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-top-agents: 500
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Erreur 500: {"statusCode":500,"error":"Internal Server Error","message":"An internal server error occurred."}
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-top-agents
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-top-rules: 500
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Erreur 500: {"statusCode":500,"error":"Internal Server Error","message":"An internal server error occurred."}
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-top-rules
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-rule-groups: 500
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Erreur 500: {"statusCode":500,"error":"Internal Server Error","message":"An internal server error occurred."}
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-rule-groups
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-recent-alerts: 500
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Erreur 500: {"statusCode":500,"error":"Internal Server Error","message":"An internal server error occurred."}
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-recent-alerts
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Traitement du dashboard: SSH & Authentication Monitoring
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/ssh-connections-timeline: 500
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Erreur 500: {"statusCode":500,"error":"Internal Server Error","message":"An internal server error occurred."}
+2026-04-17 10:28:03 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: ssh-connections-timeline
+2026-04-17 10:28:04 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/ssh-users-pie: 500
+2026-04-17 10:28:04 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Erreur 500: {"statusCode":500,"error":"Internal Server Error","message":"An internal server error occurred."}
+2026-04-17 10:28:04 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: ssh-users-pie
+2026-04-17 10:28:04 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/ssh-source-ips: 500
+2026-04-17 10:28:04 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Erreur 500: {"statusCode":500,"error":"Internal Server Error","message":"An internal server error occurred."}
+2026-04-17 10:28:04 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: ssh-source-ips
+2026-04-17 10:28:04 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/ssh-recent-logins: 500
+2026-04-17 10:28:04 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Erreur 500: {"statusCode":500,"error":"Internal Server Error","message":"An internal server error occurred."}
+2026-04-17 10:28:04 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: ssh-recent-logins
+2026-04-17 10:28:04 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Visualisations créées: 0/10
+2026-04-17 10:28:04 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création des dashboards professionnels...
+2026-04-17 10:28:04 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création du dashboard: SOC Overview
+2026-04-17 10:28:04 - wazuh_configurator.strategies.dashboard_configurator - INFO -   dashboard/soc-overview-dashboard: 409
+2026-04-17 10:28:04 - wazuh_configurator.strategies.dashboard_configurator - INFO -   dashboard/soc-overview-dashboard: 200
+2026-04-17 10:28:04 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard créé: SOC Overview
+2026-04-17 10:28:04 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création du dashboard: SSH & Authentication Monitoring
+2026-04-17 10:28:04 - wazuh_configurator.strategies.dashboard_configurator - INFO -   dashboard/ssh-auth-monitoring-dashboard: 409
+2026-04-17 10:28:05 - wazuh_configurator.strategies.dashboard_configurator - INFO -   dashboard/ssh-auth-monitoring-dashboard: 200
+2026-04-17 10:28:05 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard créé: SSH & Authentication Monitoring
+2026-04-17 10:28:05 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboards créés: 2/2
+2026-04-17 10:28:05 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-17 10:28:05 - __main__ - INFO - [-] dashboard: Dashboards: 2/3 configurations appliquées
+2026-04-17 10:28:05 - __main__ - INFO -
+[*] Validation des corrections...
+2026-04-17 10:28:05 - wazuh_configurator.core.config_manager - INFO - Validation de toutes les configurations...
+2026-04-17 10:28:05 - wazuh_configurator.core.config_manager - INFO - Validation configuration: security
+2026-04-17 10:28:05 - wazuh_configurator.strategies.security_configurator - INFO - Validation configuration securite...
+2026-04-17 10:28:05 - wazuh_configurator.core.config_manager - INFO - Validation configuration: performance
+2026-04-17 10:28:05 - wazuh_configurator.strategies.performance_configurator - INFO - Validation configuration performance...
+2026-04-17 10:28:05 - wazuh_configurator.core.config_manager - INFO - Validation configuration: dashboard
+2026-04-17 10:28:05 - wazuh_configurator.strategies.dashboard_configurator - INFO - Validation de la configuration des dashboards...
+2026-04-17 10:28:05 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-17 10:28:05 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] API Dashboard accessible et authentifiée
+2026-04-17 10:28:05 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+
+============================================================
+RÉCAPITULATIF
+============================================================
+
+[!] WARNINGS (3):
+   1. security: API authentication non configuree
+   2. security: Regles pare-feu incompletes
+   3. dashboard: API HTTP non accessible - création de dashboards manuelle requise
+
+[-] ERREURS (2):
+   1. security: Securite: 2/4 verifications OK
+   2. dashboard: Dashboards: 2/3 configurations appliquées
+============================================================
+
+
+[+] Code de retour: 0
+
+Appuyez sur Entrée pour continuer.
+
+
+
+
+
+dashboartd:   TOUT LES DASHVBAIRSD SIOBNT EN ECHEC / 
+
+
+ ██████╗ ██████╗ ███████╗██████╗
+██╔════╝██╔═══██╗██╔════╝██╔══██╗
+██║     ██║   ██║█████╗  ██║  ██║
+██║     ██║   ██║██╔══╝  ██║  ██║
+╚██████╗╚██████╔╝███████╗██████╔╝
+ ╚═════╝ ╚═════╝ ╚══════╝╚═════╝
+
+    Configurator v1.0 - Advanced Configuration Management
+    By VulneZe - github.com/VulneZe/wazuh-install
+    ====================================================
+
+2026-04-17 10:28:24 - wazuh_configurator.core.config_manager - INFO - Initialisation du gestionnaire de configuration...
+2026-04-17 10:28:24 - wazuh_configurator.core.wazuh_detector - INFO - [*] Detection de l'installation Wazuh...
+2026-04-17 10:28:24 - wazuh_configurator.core.wazuh_detector - INFO - [+] Wazuh détecté dans: /var/ossec
+2026-04-17 10:28:24 - wazuh_configurator.core.wazuh_detector - INFO - [+] Version Wazuh: Unknown
+2026-04-17 10:28:24 - wazuh_configurator.core.wazuh_detector - INFO - [+] Composants détectés: ['indexer', 'manager', 'dashboard']
+2026-04-17 10:28:24 - wazuh_configurator.core.config_manager - INFO - Gestionnaire de configuration initialisé
+2026-04-17 10:28:24 - wazuh_configurator.core.config_manager - INFO - Configurator 'security' enregistré
+2026-04-17 10:28:24 - wazuh_configurator.core.config_manager - INFO - Configurator 'performance' enregistré
+2026-04-17 10:28:24 - wazuh_configurator.strategies.dashboard_configurator - INFO - Dashboard URL: https://localhost:443
+2026-04-17 10:28:24 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Mot de passe admin chargé depuis /var/ossec/etc/wazuh-passwords.txt
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] ERREUR: Mot de passe admin invalide (401)
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Le mot de passe chargé depuis wazuh-passwords.txt n'est pas accepté par le Dashboard
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Veuillez mettre à jour le mot de passe dans /var/ossec/etc/wazuh-passwords.txt
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Ou utiliser le mot de passe actuel du Dashboard
+2026-04-17 10:28:25 - wazuh_configurator.core.config_manager - INFO - Configurator 'dashboard' enregistré
+2026-04-17 10:28:25 - __main__ - INFO - [*] Mode correction pour Wazuh existant...
+2026-04-17 10:28:25 - __main__ - INFO - [*] Verification des configurations actuelles...
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - INFO - Vérification de la configuration des dashboards...
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Note: La vérification de l'API HTTP est désactivée
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] La création de dashboards nécessite une connexion API manuelle
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-17 10:28:25 - __main__ - INFO - [+] dashboard: Dashboards: Service actif
+2026-04-17 10:28:25 - __main__ - WARNING -    [!] API HTTP non accessible - création de dashboards manuelle requise
+2026-04-17 10:28:25 - __main__ - INFO -
+[*] Application des corrections...
+2026-04-17 10:28:25 - wazuh_configurator.core.config_manager - INFO - Application configuration: dashboard
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - INFO - Application de la configuration des dashboards professionnels...
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboard service actif (IP: localhost)
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Création de 2 dashboards professionnels...
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création de l'index pattern...
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Tentative de connexion à https://localhost:443/api/saved_objects/index-pattern/wazuh-alerts-* avec user: admin
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Erreur création index pattern: 401
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Erreur d'authentification 401 - vérifiez le mot de passe admin
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] URL: https://localhost:443/api/saved_objects/index-pattern/wazuh-alerts-*
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] User: admin
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Password loaded: Yes
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création des visualisations pour les dashboards professionnels...
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Traitement du dashboard: SOC Overview
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-alerts-timeline: 401
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-alerts-timeline: 401
+2026-04-17 10:28:25 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-alerts-timeline
+2026-04-17 10:28:26 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-alerts-level: 401
+2026-04-17 10:28:26 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-alerts-level: 401
+2026-04-17 10:28:26 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-alerts-level
+2026-04-17 10:28:26 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-top-agents: 401
+2026-04-17 10:28:26 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-top-agents: 401
+2026-04-17 10:28:26 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-top-agents
+2026-04-17 10:28:26 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-top-rules: 401
+2026-04-17 10:28:26 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-top-rules: 401
+2026-04-17 10:28:26 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-top-rules
+2026-04-17 10:28:26 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-rule-groups: 401
+2026-04-17 10:28:26 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-rule-groups: 401
+2026-04-17 10:28:26 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-rule-groups
+2026-04-17 10:28:27 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-recent-alerts: 401
+2026-04-17 10:28:27 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/soc-recent-alerts: 401
+2026-04-17 10:28:27 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: soc-recent-alerts
+2026-04-17 10:28:27 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Traitement du dashboard: SSH & Authentication Monitoring
+2026-04-17 10:28:27 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/ssh-connections-timeline: 401
+2026-04-17 10:28:27 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/ssh-connections-timeline: 401
+2026-04-17 10:28:27 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: ssh-connections-timeline
+2026-04-17 10:28:27 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/ssh-users-pie: 401
+2026-04-17 10:28:27 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/ssh-users-pie: 401
+2026-04-17 10:28:27 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: ssh-users-pie
+2026-04-17 10:28:27 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/ssh-source-ips: 401
+2026-04-17 10:28:27 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/ssh-source-ips: 401
+2026-04-17 10:28:27 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: ssh-source-ips
+2026-04-17 10:28:28 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/ssh-recent-logins: 401
+2026-04-17 10:28:28 - wazuh_configurator.strategies.dashboard_configurator - INFO -   visualization/ssh-recent-logins: 401
+2026-04-17 10:28:28 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création visualisation: ssh-recent-logins
+2026-04-17 10:28:28 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Visualisations créées: 0/10
+2026-04-17 10:28:28 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création des dashboards professionnels...
+2026-04-17 10:28:28 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création du dashboard: SOC Overview
+2026-04-17 10:28:28 - wazuh_configurator.strategies.dashboard_configurator - INFO -   dashboard/soc-overview-dashboard: 401
+2026-04-17 10:28:28 - wazuh_configurator.strategies.dashboard_configurator - INFO -   dashboard/soc-overview-dashboard: 401
+2026-04-17 10:28:28 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création dashboard: SOC Overview
+2026-04-17 10:28:28 - wazuh_configurator.strategies.dashboard_configurator - INFO - [*] Création du dashboard: SSH & Authentication Monitoring
+2026-04-17 10:28:28 - wazuh_configurator.strategies.dashboard_configurator - INFO -   dashboard/ssh-auth-monitoring-dashboard: 401
+2026-04-17 10:28:28 - wazuh_configurator.strategies.dashboard_configurator - INFO -   dashboard/ssh-auth-monitoring-dashboard: 401
+2026-04-17 10:28:28 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] Échec création dashboard: SSH & Authentication Monitoring
+2026-04-17 10:28:28 - wazuh_configurator.strategies.dashboard_configurator - INFO - [+] Dashboards créés: 0/2
+2026-04-17 10:28:28 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-17 10:28:28 - __main__ - INFO - [-] dashboard: Dashboards: 0/3 configurations appliquées
+2026-04-17 10:28:28 - __main__ - INFO -
+[*] Validation des corrections...
+2026-04-17 10:28:28 - wazuh_configurator.strategies.dashboard_configurator - INFO - Validation de la configuration des dashboards...
+2026-04-17 10:28:28 - wazuh_configurator.strategies.dashboard_configurator - INFO - ============================================================
+2026-04-17 10:28:29 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] ERREUR: Mot de passe admin invalide (401)
+2026-04-17 10:28:29 - wazuh_configurator.strategies.dashboard_configurator - ERROR - [-] Le mot de passe dans wazuh-passwords.txt n'est pas accepté
+2026-04-17 10:28:29 - wazuh_configurator.strategies.dashboard_configurator - WARNING - [-] API Dashboard non accessible ou mot de passe invalide
+2026-04-17 10:28:29 - __main__ - INFO - [-] dashboard: Dashboards: API non accessible
+2026-04-17 10:28:29 - __main__ - WARNING - [!] API Dashboard non accessible - vérifiez le mot de passe admin
+
+============================================================
+RÉCAPITULATIF
+============================================================
+
+[!] WARNINGS (2):
+   1. dashboard: API HTTP non accessible - création de dashboards manuelle requise
+   2. dashboard: API Dashboard non accessible - vérifiez le mot de passe admin
+
+[-] ERREURS (2):
+   1. dashboard: Dashboards: 0/3 configurations appliquées
+   2. dashboard: Dashboards: API non accessible
+============================================================
+
+
+[+] Code de retour: 0
 
 Appuyez sur Entrée pour continuer...
+
+

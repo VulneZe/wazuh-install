@@ -100,7 +100,7 @@ SSH_AUTH_MONITORING_DASHBOARD = {
                         "perPage": 20,
                         "showPartialRows": False,
                         "showMetricsAtAllLevels": False,
-                        "sort": {"columnIndex": null, "direction": "desc"},
+                        "sort": {"columnIndex": None, "direction": "desc"},
                         "showTotal": True,
                         "totalFunc": "sum"
                     },
@@ -136,7 +136,7 @@ SSH_AUTH_MONITORING_DASHBOARD = {
                         "perPage": 50,
                         "showPartialRows": False,
                         "showMetricsAtAllLevels": False,
-                        "sort": {"columnIndex": null, "direction": "desc"},
+                        "sort": {"columnIndex": None, "direction": "desc"},
                         "showTotal": False,
                         "totalFunc": "sum"
                     },

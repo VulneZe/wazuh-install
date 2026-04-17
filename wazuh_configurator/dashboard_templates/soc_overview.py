@@ -154,7 +154,7 @@ SOC_OVERVIEW_DASHBOARD = {
                         "perPage": 10,
                         "showPartialRows": False,
                         "showMetricsAtAllLevels": False,
-                        "sort": {"columnIndex": null, "direction": null},
+                        "sort": {"columnIndex": None, "direction": None},
                         "showTotal": True,
                         "totalFunc": "sum",
                         "percentageCol": ""
@@ -215,7 +215,7 @@ SOC_OVERVIEW_DASHBOARD = {
                         "perPage": 50,
                         "showPartialRows": False,
                         "showMetricsAtAllLevels": False,
-                        "sort": {"columnIndex": null, "direction": "desc"},
+                        "sort": {"columnIndex": None, "direction": "desc"},
                         "showTotal": False,
                         "totalFunc": "sum"
                     },

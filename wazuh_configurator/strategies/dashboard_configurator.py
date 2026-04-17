@@ -262,20 +262,18 @@ class DashboardConfigurator(BaseConfigurator):
                 warnings=["API Dashboard non accessible - vérifiez le mot de passe admin"]
             )
         
-        # Vérifier que les dashboards existent
-        dashboard_exists = self._check_dashboard_exists()
-        index_pattern_exists = self._check_index_pattern_exists()
-        
         self._logger.info("=" * 60)
         
-        if dashboard_exists and index_pattern_exists:
+        # Vérifier que l'index pattern existe
+        index_pattern_exists = self._check_index_pattern_exists()
+        
+        if index_pattern_exists:
             return ConfigResult(
                 success=True,
                 message="Dashboards: Configuration validée",
                 details={
                     "dashboard_running": True,
                     "api_validated": True,
-                    "dashboard_exists": True,
                     "index_pattern_exists": True
                 }
             )
@@ -286,7 +284,6 @@ class DashboardConfigurator(BaseConfigurator):
                 details={
                     "dashboard_running": True,
                     "api_validated": True,
-                    "dashboard_exists": dashboard_exists,
                     "index_pattern_exists": index_pattern_exists
                 },
                 warnings=["Dashboards ou index pattern manquants"]
@@ -497,6 +494,9 @@ class DashboardConfigurator(BaseConfigurator):
                 body["references"] = references
             
             url = f"{self.dashboard_url}/api/saved_objects/{obj_type}/{obj_id}"
+            
+            self._logger.info(f"  {obj_type}/{obj_id}: ", end="", flush=True)
+            
             response = requests.post(
                 url,
                 headers=headers,
@@ -505,6 +505,12 @@ class DashboardConfigurator(BaseConfigurator):
                 json=body,
                 timeout=30
             )
+            
+            self._logger.info(f"{response.status_code}")
+            
+            if response.status_code == 500:
+                self._logger.error(f"[-] Erreur 500: {response.text[:200]}")
+                return False
             
             if response.status_code == 409:
                 # Déjà existe, mettre à jour

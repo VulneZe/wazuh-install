@@ -151,10 +151,10 @@ SSH_AUTH_MONITORING_DASHBOARD = {
     ],
     "layout": {
         "panels": [
-            {"gridData": {"x": 0, "y": 0, "w": 24, "h": 15, "i": "1"}, "version": "2.19.4", "panelIndex": "1", "embeddableConfig": {}, "panelRefName": "panel_0"},
-            {"gridData": {"x": 24, "y": 0, "w": 24, "h": 15, "i": "2"}, "version": "2.19.4", "panelIndex": "2", "embeddableConfig": {}, "panelRefName": "panel_1"},
-            {"gridData": {"x": 0, "y": 15, "w": 24, "h": 15, "i": "3"}, "version": "2.19.4", "panelIndex": "3", "embeddableConfig": {}, "panelRefName": "panel_2"},
-            {"gridData": {"x": 24, "y": 15, "w": 24, "h": 15, "i": "4"}, "version": "2.19.4", "panelIndex": "4", "embeddableConfig": {}, "panelRefName": "panel_3"}
+            {"id": "ssh-connections-timeline", "gridData": {"x": 0, "y": 0, "w": 24, "h": 15, "i": "1"}, "version": "2.19.4", "panelIndex": "1", "embeddableConfig": {}, "panelRefName": "panel_0"},
+            {"id": "ssh-users-pie", "gridData": {"x": 24, "y": 0, "w": 24, "h": 15, "i": "2"}, "version": "2.19.4", "panelIndex": "2", "embeddableConfig": {}, "panelRefName": "panel_1"},
+            {"id": "ssh-source-ips", "gridData": {"x": 0, "y": 15, "w": 24, "h": 15, "i": "3"}, "version": "2.19.4", "panelIndex": "3", "embeddableConfig": {}, "panelRefName": "panel_2"},
+            {"id": "ssh-recent-logins", "gridData": {"x": 24, "y": 15, "w": 24, "h": 15, "i": "4"}, "version": "2.19.4", "panelIndex": "4", "embeddableConfig": {}, "panelRefName": "panel_3"}
         ]
     }
 }

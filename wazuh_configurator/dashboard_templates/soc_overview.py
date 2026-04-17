@@ -230,12 +230,12 @@ SOC_OVERVIEW_DASHBOARD = {
     ],
     "layout": {
         "panels": [
-            {"gridData": {"x": 0, "y": 0, "w": 24, "h": 15, "i": "1"}, "version": "2.19.4", "panelIndex": "1", "embeddableConfig": {}, "panelRefName": "panel_0"},
-            {"gridData": {"x": 24, "y": 0, "w": 24, "h": 15, "i": "2"}, "version": "2.19.4", "panelIndex": "2", "embeddableConfig": {}, "panelRefName": "panel_1"},
-            {"gridData": {"x": 0, "y": 15, "w": 24, "h": 15, "i": "3"}, "version": "2.19.4", "panelIndex": "3", "embeddableConfig": {}, "panelRefName": "panel_2"},
-            {"gridData": {"x": 24, "y": 15, "w": 24, "h": 15, "i": "4"}, "version": "2.19.4", "panelIndex": "4", "embeddableConfig": {}, "panelRefName": "panel_3"},
-            {"gridData": {"x": 0, "y": 30, "w": 16, "h": 15, "i": "5"}, "version": "2.19.4", "panelIndex": "5", "embeddableConfig": {}, "panelRefName": "panel_4"},
-            {"gridData": {"x": 16, "y": 30, "w": 32, "h": 15, "i": "6"}, "version": "2.19.4", "panelIndex": "6", "embeddableConfig": {}, "panelRefName": "panel_5"}
+            {"id": "soc-alerts-timeline", "gridData": {"x": 0, "y": 0, "w": 24, "h": 15, "i": "1"}, "version": "2.19.4", "panelIndex": "1", "embeddableConfig": {}, "panelRefName": "panel_0"},
+            {"id": "soc-alerts-level", "gridData": {"x": 24, "y": 0, "w": 24, "h": 15, "i": "2"}, "version": "2.19.4", "panelIndex": "2", "embeddableConfig": {}, "panelRefName": "panel_1"},
+            {"id": "soc-top-agents", "gridData": {"x": 0, "y": 15, "w": 24, "h": 15, "i": "3"}, "version": "2.19.4", "panelIndex": "3", "embeddableConfig": {}, "panelRefName": "panel_2"},
+            {"id": "soc-top-rules", "gridData": {"x": 24, "y": 15, "w": 24, "h": 15, "i": "4"}, "version": "2.19.4", "panelIndex": "4", "embeddableConfig": {}, "panelRefName": "panel_3"},
+            {"id": "soc-rule-groups", "gridData": {"x": 0, "y": 30, "w": 16, "h": 15, "i": "5"}, "version": "2.19.4", "panelIndex": "5", "embeddableConfig": {}, "panelRefName": "panel_4"},
+            {"id": "soc-recent-alerts", "gridData": {"x": 16, "y": 30, "w": 32, "h": 15, "i": "6"}, "version": "2.19.4", "panelIndex": "6", "embeddableConfig": {}, "panelRefName": "panel_5"}
         ]
     }
 }

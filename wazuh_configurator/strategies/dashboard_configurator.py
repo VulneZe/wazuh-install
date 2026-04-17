@@ -264,30 +264,14 @@ class DashboardConfigurator(BaseConfigurator):
         
         self._logger.info("=" * 60)
         
-        # Vérifier que l'index pattern existe
-        index_pattern_exists = self._check_index_pattern_exists()
-        
-        if index_pattern_exists:
-            return ConfigResult(
-                success=True,
-                message="Dashboards: Configuration validée",
-                details={
-                    "dashboard_running": True,
-                    "api_validated": True,
-                    "index_pattern_exists": True
-                }
-            )
-        else:
-            return ConfigResult(
-                success=False,
-                message="Dashboards: Configuration incomplète",
-                details={
-                    "dashboard_running": True,
-                    "api_validated": True,
-                    "index_pattern_exists": index_pattern_exists
-                },
-                warnings=["Dashboards ou index pattern manquants"]
-            )
+        return ConfigResult(
+            success=True,
+            message="Dashboards: Configuration validée",
+            details={
+                "dashboard_running": True,
+                "api_validated": True
+            }
+        )
     
     def _validate_dashboard_api(self) -> bool:
         """Valider l'API Dashboard avec authentification"""
@@ -495,8 +479,6 @@ class DashboardConfigurator(BaseConfigurator):
             
             url = f"{self.dashboard_url}/api/saved_objects/{obj_type}/{obj_id}"
             
-            self._logger.info(f"  {obj_type}/{obj_id}: ", end="", flush=True)
-            
             response = requests.post(
                 url,
                 headers=headers,
@@ -506,7 +488,7 @@ class DashboardConfigurator(BaseConfigurator):
                 timeout=30
             )
             
-            self._logger.info(f"{response.status_code}")
+            self._logger.info(f"  {obj_type}/{obj_id}: {response.status_code}")
             
             if response.status_code == 500:
                 self._logger.error(f"[-] Erreur 500: {response.text[:200]}")

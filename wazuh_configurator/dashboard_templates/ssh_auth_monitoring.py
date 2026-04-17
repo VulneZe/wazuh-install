@@ -15,50 +15,10 @@ SSH_AUTH_MONITORING_DASHBOARD = {
             "description": "Tendance des connexions SSH sur les dernières 24 heures",
             "attributes": {
                 "title": "Connexions SSH par heure (24h)",
-                "visState": {
-                    "title": "Connexions SSH par heure (24h)",
-                    "type": "line",
-                    "params": {
-                        "grid": {"categoryLines": False},
-                        "categoryAxes": [{
-                            "id": "CategoryAxis-1",
-                            "type": "category",
-                            "position": "bottom",
-                            "show": True,
-                            "style": {},
-                            "scale": {"type": "linear"},
-                            "labels": {"show": True, "filter": True, "truncate": 100},
-                            "title": {"text": "Heure"}
-                        }],
-                        "valueAxes": [{
-                            "id": "ValueAxis-1",
-                            "name": "LeftAxis-1",
-                            "type": "value",
-                            "position": "left",
-                            "show": True,
-                            "style": {},
-                            "scale": {"type": "linear", "mode": "normal"},
-                            "labels": {"show": True, "rotate": 0, "filter": False, "truncate": 100},
-                            "title": {"text": "Nombre"}
-                        }],
-                        "seriesParams": [{
-                            "show": True,
-                            "type": "line",
-                            "mode": "normal",
-                            "data": {"label": "Count", "id": "1"},
-                            "valueAxis": "ValueAxis-1",
-                            "drawLinesBetweenPoints": True,
-                            "lineWidth": 2,
-                            "showCircles": True
-                        }],
-                        "addTooltip": True,
-                        "addLegend": True,
-                        "legendPosition": "right"
-                    }
-                },
-                "uiState": {},
+                "visState": '{"title":"Connexions SSH par heure (24h)","type":"line","params":{"grid":{"categoryLines":false},"categoryAxes":[{"id":"CategoryAxis-1","type":"category","position":"bottom","show":true,"style":{},"scale":{"type":"linear"},"labels":{"show":true,"filter":true,"truncate":100},"title":{"text":"Heure"}}],"valueAxes":[{"id":"ValueAxis-1","name":"LeftAxis-1","type":"value","position":"left","show":true,"style":{},"scale":{"type":"linear","mode":"normal"},"labels":{"show":true,"rotate":0,"filter":false,"truncate":100},"title":{"text":"Nombre"}}],"seriesParams":[{"show":true,"type":"line","mode":"normal","data":{"label":"Count","id":"1"},"valueAxis":"ValueAxis-1","drawLinesBetweenPoints":true,"lineWidth":2,"showCircles":true}],"addTooltip":true,"addLegend":true,"legendPosition":"right"}}',
+                "uiState": '{}',
                 "kibanaSavedObjectMeta": {
-                    "searchSourceJSON": "{\"index\":\"wazuh-alerts-*\",\"query\":{\"query\":\"rule.groups:sshd\",\"language\":\"lucene\"},\"filter\":[],\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"params\":{},\"schema\":\"metric\"},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"params\":{\"field\":\"@timestamp\",\"timeRange\":{\"from\":\"now-24h\",\"to\":\"now\"},\"useNormalizedOpenSearchInterval\":true,\"scaleMetricValues\":false,\"interval\":\"auto\",\"drop_partials\":false,\"min_doc_count\":1,\"extended_bounds\":{}},\"schema\":\"segment\"}]}"
+                    "searchSourceJSON": '{"index":"wazuh-alerts-*","query":{"query":"rule.groups:sshd","language":"lucene"},"filter":[],"aggs":[{"id":"1","enabled":true,"type":"count","params":{},"schema":"metric"},{"id":"2","enabled":true,"type":"date_histogram","params":{"field":"@timestamp","timeRange":{"from":"now-24h","to":"now"},"useNormalizedOpenSearchInterval":true,"scaleMetricValues":false,"interval":"auto","drop_partials":false,"min_doc_count":1,"extended_bounds":{}},"schema":"segment"}]}'
                 }
             }
         },
@@ -69,20 +29,10 @@ SSH_AUTH_MONITORING_DASHBOARD = {
             "description": "Distribution des utilisateurs de SSH",
             "attributes": {
                 "title": "Connexions SSH par utilisateur",
-                "visState": {
-                    "title": "Connexions SSH par utilisateur",
-                    "type": "pie",
-                    "params": {
-                        "addTooltip": True,
-                        "addLegend": True,
-                        "legendPosition": "right",
-                        "isDonut": True,
-                        "labels": {"show": True, "values": True, "last_level": True, "truncate": 100}
-                    }
-                },
-                "uiState": {},
+                "visState": '{"title":"Connexions SSH par utilisateur","type":"pie","params":{"addTooltip":true,"addLegend":true,"legendPosition":"right","isDonut":true,"labels":{"show":true,"values":true,"last_level":true,"truncate":100}}}',
+                "uiState": '{}',
                 "kibanaSavedObjectMeta": {
-                    "searchSourceJSON": "{\"index\":\"wazuh-alerts-*\",\"query\":{\"query\":\"rule.groups:sshd AND data.eventtype:logged_in\",\"language\":\"lucene\"},\"filter\":[],\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"params\":{},\"schema\":\"metric\"},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"params\":{\"field\":\"data.dstuser\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":20,\"otherBucket\":false,\"missingBucket\":false},\"schema\":\"segment\"}]}"
+                    "searchSourceJSON": '{"index":"wazuh-alerts-*","query":{"query":"rule.groups:sshd AND data.eventtype:logged_in","language":"lucene"},"filter":[],"aggs":[{"id":"1","enabled":true,"type":"count","params":{},"schema":"metric"},{"id":"2","enabled":true,"type":"terms","params":{"field":"data.dstuser","orderBy":"1","order":"desc","size":20,"otherBucket":false,"missingBucket":false},"schema":"segment"}]}'
                 }
             }
         },
@@ -93,32 +43,10 @@ SSH_AUTH_MONITORING_DASHBOARD = {
             "description": "IPs les plus actives pour les connexions SSH",
             "attributes": {
                 "title": "Top 20 IP sources de connexions SSH",
-                "visState": {
-                    "title": "Top 20 IP sources de connexions SSH",
-                    "type": "table",
-                    "params": {
-                        "perPage": 20,
-                        "showPartialRows": False,
-                        "showMetricsAtAllLevels": False,
-                        "sort": {"columnIndex": None, "direction": "desc"},
-                        "showTotal": True,
-                        "totalFunc": "sum"
-                    },
-                    "aggs": [
-                        {"id": "1", "enabled": True, "type": "count", "params": {}, "schema": "metric"},
-                        {"id": "2", "enabled": True, "type": "terms", "params": {
-                            "field": "data.srcip",
-                            "orderBy": "1",
-                            "order": "desc",
-                            "size": 20,
-                            "otherBucket": False,
-                            "missingBucket": False
-                        }, "schema": "bucket"}
-                    ]
-                },
-                "uiState": {},
+                "visState": '{"title":"Top 20 IP sources de connexions SSH","type":"table","params":{"perPage":20,"showPartialRows":false,"showMetricsAtAllLevels":false,"sort":{"columnIndex":null,"direction":"desc"},"showTotal":true,"totalFunc":"sum"},"aggs":[{"id":"1","enabled":true,"type":"count","params":{},"schema":"metric"},{"id":"2","enabled":true,"type":"terms","params":{"field":"data.srcip","orderBy":"1","order":"desc","size":20,"otherBucket":false,"missingBucket":false},"schema":"bucket"}]}',
+                "uiState": '{}',
                 "kibanaSavedObjectMeta": {
-                    "searchSourceJSON": "{\"index\":\"wazuh-alerts-*\",\"query\":{\"query\":\"rule.groups:sshd AND data.eventtype:logged_in\",\"language\":\"lucene\"},\"filter\":[],\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"params\":{},\"schema\":\"metric\"},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"params\":{\"field\":\"data.srcip\",\"orderBy\":\"1\",\"order\":\"desc\",\"size\":20,\"otherBucket\":false,\"missingBucket\":false},\"schema\":\"bucket\"}]}"
+                    "searchSourceJSON": '{"index":"wazuh-alerts-*","query":{"query":"rule.groups:sshd AND data.eventtype:logged_in","language":"lucene"},"filter":[],"aggs":[{"id":"1","enabled":true,"type":"count","params":{},"schema":"metric"},{"id":"2","enabled":true,"type":"terms","params":{"field":"data.srcip","orderBy":"1","order":"desc","size":20,"otherBucket":false,"missingBucket":false},"schema":"bucket"}]}'
                 }
             }
         },
@@ -129,22 +57,10 @@ SSH_AUTH_MONITORING_DASHBOARD = {
             "description": "Liste des connexions SSH les plus récentes",
             "attributes": {
                 "title": "Connexions SSH récentes (Dernières 50)",
-                "visState": {
-                    "title": "Connexions SSH récentes (Dernières 50)",
-                    "type": "table",
-                    "params": {
-                        "perPage": 50,
-                        "showPartialRows": False,
-                        "showMetricsAtAllLevels": False,
-                        "sort": {"columnIndex": None, "direction": "desc"},
-                        "showTotal": False,
-                        "totalFunc": "sum"
-                    },
-                    "aggs": []
-                },
-                "uiState": {},
+                "visState": '{"title":"Connexions SSH récentes (Dernières 50)","type":"table","params":{"perPage":50,"showPartialRows":false,"showMetricsAtAllLevels":false,"sort":{"columnIndex":null,"direction":"desc"},"showTotal":false,"totalFunc":"sum"},"aggs":[]}',
+                "uiState": '{}',
                 "kibanaSavedObjectMeta": {
-                    "searchSourceJSON": "{\"index\":\"wazuh-alerts-*\",\"query\":{\"query\":\"rule.groups:sshd AND data.eventtype:logged_in\",\"language\":\"lucene\"},\"filter\":[],\"sort\":[{\"@timestamp\":{\"order\":\"desc\"}}],\"size\":50}"
+                    "searchSourceJSON": '{"index":"wazuh-alerts-*","query":{"query":"rule.groups:sshd AND data.eventtype:logged_in","language":"lucene"},"filter":[],"sort":[{"@timestamp":{"order":"desc"}}],"size":50}'
                 }
             }
         }
